@@ -2,20 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Coach Board">
 <title>VAFA Coach Board</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body,#app{height:100%;width:100%;overflow:hidden}
+html,body{height:100%;width:100%;overflow:hidden;overscroll-behavior:none}
+#app{height:100vh;width:100vw;overflow:hidden;display:flex;flex-direction:column}
+@supports(height:100dvh){#app{height:100dvh}}
 body{background:#0c0a09;color:#fff;font-family:ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',sans-serif}
 button{cursor:pointer;font-family:inherit;-webkit-appearance:none}
 input,textarea,select{font-family:inherit;-webkit-appearance:none}
 input:focus,textarea:focus,select:focus{outline:none}
 select{background-image:none}
 svg{touch-action:none;user-select:none;-webkit-user-select:none}
+
+/* Field tab responsive layout */
+.field-layout{flex-direction:column}
+.field-roster{width:100%;max-height:38vh;border-top:1px solid #292524}
+@media(min-width:720px){
+  .field-layout{flex-direction:row !important}
+  .field-roster{width:300px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524}
+}
+
+/* Lineup tab generic side-by-side */
 @media(min-width:900px){
   .lg-row{flex-direction:row !important}
   .lg-sidebar{width:320px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524 !important}
@@ -115,19 +127,16 @@ function AFLField({half=false, svgRef, children}) {
     <svg ref=${svgRef} viewBox=${vb} preserveAspectRatio="xMidYMid meet"
       style="width:100%;height:100%;display:block;touch-action:none;user-select:none">
       <defs>
-        <radialGradient id="fieldGrad" cx="50%" cy="50%" r="65%">
-          <stop offset="0%" stop-color="#3a9450"/>
+        <radialGradient id="fieldGrad" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#4ca860"/>
+          <stop offset="60%" stop-color="#357a44"/>
           <stop offset="100%" stop-color="#1f5a2c"/>
         </radialGradient>
-        <pattern id="fieldStripes" width="3" height="3" patternUnits="userSpaceOnUse">
-          <rect width="3" height="3" fill="url(#fieldGrad)"/>
-          <rect width="3" height="1.5" fill="rgba(255,255,255,0.04)"/>
-        </pattern>
         <clipPath id="ovalClip"><ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY}/></clipPath>
         ${half ? html`<clipPath id="halfClip"><rect x=${-MARGIN} y=${-MARGIN} width=${FIELD_W+MARGIN*2} height=${FIELD_H/2+MARGIN}/></clipPath>` : null}
       </defs>
       <g clip-path=${half ? "url(#halfClip)" : ""}>
-        <ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY} fill="url(#fieldStripes)" stroke="#fff" stroke-width="0.5"/>
+        <ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY} fill="url(#fieldGrad)" stroke="#fff" stroke-width="0.5"/>
         <rect x=${CX-CSQ_HALF} y=${CY-CSQ_HALF} width=${CSQ_HALF*2} height=${CSQ_HALF*2} fill="none" stroke="#fff" stroke-width="0.35"/>
         ${!half ? html`
           <circle cx=${CX} cy=${CY} r="3.7" fill="none" stroke="#fff" stroke-width="0.3"/>
@@ -261,6 +270,8 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
   const [newNumber, setNewNumber] = useState("");
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [swapSlot1, setSwapSlot1] = useState(null);
+  const [draggedPlayer, setDraggedPlayer] = useState(null);
+  const [dragOverSlot, setDragOverSlot] = useState(null);
 
   const cg = games.find(g=>g.id===currentGameId);
   const icLog = cg ? (cg.interchangeLog||[]) : [];
@@ -318,101 +329,165 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
   const slotLabel = id => (FIELD_POSITIONS.find(p=>p.id===id)||{label:id}).label;
   const stBg = s => s===STATUS.INJURED?"#b91c1c":s===STATUS.UNAVAILABLE?"#44403c":"#1d4ed8";
 
+  // Drag-and-drop helpers (HTML5 native works on iPad with long-press)
+  const handleDragStart = (player) => (e) => {
+    setDraggedPlayer(player);
+    if (e.dataTransfer) {
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", player.id);
+    }
+  };
+  const handleDragEnd = () => { setDraggedPlayer(null); setDragOverSlot(null); };
+  const handleDragOver = (slotId) => (e) => {
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "move";
+    if (dragOverSlot !== slotId) setDragOverSlot(slotId);
+  };
+  const handleDrop = (slotId) => (e) => {
+    e.preventDefault();
+    if (draggedPlayer) assign(slotId, draggedPlayer.id);
+    setDraggedPlayer(null); setDragOverSlot(null);
+  };
+
   // ---- FIELD TAB ----
+  // Layout: field on left (or top on portrait), roster always visible on right (or bottom).
+  // Player tap-and-place: tap a roster player to "pick" it, then tap a slot to place.
+  const [pickedPlayer, setPickedPlayer] = useState(null);
+  const tapToPlace = (slotId) => {
+    if (pickedPlayer) {
+      assign(slotId, pickedPlayer.id);
+      setPickedPlayer(null);
+      setSelectedSlot(null);
+      return;
+    }
+    // No player picked -> select the slot to allow tap-from-roster placement
+    setSelectedSlot({type: FIELD_POSITIONS.find(p=>p.id===slotId) ? "field" : "bench", id: slotId});
+  };
+
   const FieldTab = () => html`
-    <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-      <div style="display:flex;flex:1;overflow:hidden;flex-direction:column" class="lg-row">
-        <div style="flex:1;background:#0c0a09;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch">
-          <div style="max-width:768px;margin:0 auto">
-            <div style="text-align:center;margin-bottom:8px;font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa">⬆ DEFENDING END</div>
+    <div style="display:flex;flex:1;overflow:hidden;flex-direction:column" class="field-layout">
+      <!-- LEFT/TOP: Field + bench -->
+      <div style="flex:1;background:#0c0a09;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;min-height:0">
+        <div style="padding:8px 12px;display:flex;flex-direction:column;align-items:center">
+          <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:4px">⬆ DEFENDING END</div>
+          <div style="width:100%;max-width:560px;aspect-ratio:100/130">
             <${AFLField}>
               ${FIELD_POSITIONS.map(pos => {
-                const player=playerInSlot(pos.id), sel=selectedSlot&&selectedSlot.id===pos.id;
-                const w=12, h=6;
+                const player=playerInSlot(pos.id);
+                const sel=selectedSlot&&selectedSlot.id===pos.id;
+                const isOver=dragOverSlot===pos.id;
+                const w=14, h=7;
                 return html`
                   <g key=${pos.id} transform=${`translate(${pos.x-w/2},${pos.y-h/2})`} style="cursor:pointer"
-                    onClick=${()=>setSelectedSlot({type:"field",id:pos.id})}>
-                    <rect width=${w} height=${h} rx="1.2"
-                      fill=${player?"#1E3A8A":"rgba(0,0,0,0.65)"}
-                      stroke=${sel?"#DC2626":"#fff"} stroke-width=${sel?"0.7":"0.35"}/>
+                    onClick=${()=>tapToPlace(pos.id)}
+                    ondragover=${handleDragOver(pos.id)}
+                    ondrop=${handleDrop(pos.id)}>
+                    <rect width=${w} height=${h} rx="1.4"
+                      fill=${isOver?"#FFD400":player?"#1E3A8A":"rgba(0,0,0,0.7)"}
+                      stroke=${sel?"#DC2626":isOver?"#FFD400":"#fff"} stroke-width=${sel||isOver?"0.7":"0.4"}/>
                     ${player ? html`
-                      <text x=${w/2} y="2.6" text-anchor="middle" font-size="2" font-weight="900" fill="#fff">${player.number?`#${player.number}`:pos.label}</text>
-                      <text x=${w/2} y="4.8" text-anchor="middle" font-size="1.5" font-weight="700" fill="#FFD400">${player.name.length>10?player.name.slice(0,9)+"…":player.name}</text>
-                    ` : html`<text x=${w/2} y="3.8" text-anchor="middle" font-size="2" font-weight="900" fill="#fff">${pos.label}</text>`}
+                      <text x=${w/2} y="3" text-anchor="middle" font-size="2.3" font-weight="900" fill="#fff">${player.number?`#${player.number}`:pos.label}</text>
+                      <text x=${w/2} y="5.6" text-anchor="middle" font-size="1.7" font-weight="700" fill="#FFD400">${player.name.length>11?player.name.slice(0,10)+"…":player.name}</text>
+                    ` : html`<text x=${w/2} y="4.4" text-anchor="middle" font-size="2.3" font-weight="900" fill="#fff">${pos.label}</text>`}
                   </g>`;
               })}
             </${AFLField}>
-            <div style="text-align:center;margin-top:8px;font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444">⬇ ATTACKING END</div>
-            <!-- BENCH -->
-            <div style="margin-top:12px;background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
-              <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px">BENCH</div>
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-                ${BENCH_SLOTS.map(b=>{
-                  const player=playerInSlot(b), sel=selectedSlot&&selectedSlot.id===b;
-                  return html`
-                    <button key=${b} onClick=${()=>setSelectedSlot({type:"bench",id:b})}
-                      style=${{aspectRatio:"3/2",borderRadius:"8px",padding:"8px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:"700",background:player?"#1d4ed8":"#292524",color:player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":"2px solid transparent",cursor:"pointer"}}>
-                      <div style="font-size:10px;opacity:.7">${b}</div>
-                      ${player ? html`
-                        <div style="font-size:16px">#${player.number||"•"}</div>
-                        <div style="font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:#fde047">${player.name}</div>
-                      ` : html`<div style="font-size:10px;opacity:.5">empty</div>`}
-                    </button>`;
-                })}
-              </div>
+          </div>
+          <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:4px">⬇ ATTACKING END</div>
+        </div>
+        <!-- BENCH -->
+        <div style="padding:0 12px 12px">
+          <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px">BENCH</div>
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px">
+              ${BENCH_SLOTS.map(b=>{
+                const player=playerInSlot(b);
+                const sel=selectedSlot&&selectedSlot.id===b;
+                const isOver=dragOverSlot===b;
+                return html`
+                  <button key=${b}
+                    onClick=${()=>tapToPlace(b)}
+                    ondragover=${handleDragOver(b)}
+                    ondrop=${handleDrop(b)}
+                    style=${{aspectRatio:"1/1",borderRadius:"8px",padding:"4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"11px",fontWeight:"700",background:isOver?"#FFD400":player?"#1d4ed8":"#292524",color:isOver?"#000":player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":isOver?"2px solid #FFD400":"2px solid transparent",cursor:"pointer"}}>
+                    <div style="font-size:9px;opacity:.7">${b}</div>
+                    ${player ? html`
+                      <div style="font-size:13px;font-weight:900">#${player.number||"•"}</div>
+                      <div style="font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:${isOver?'#000':'#fde047'}">${player.name.slice(0,7)}</div>
+                    ` : html`<div style="font-size:9px;opacity:.5">empty</div>`}
+                  </button>`;
+              })}
             </div>
           </div>
         </div>
-        <!-- ROSTER PANEL -->
-        <div style="width:100%;background:#1c1917;border-top:1px solid #292524;display:flex;flex-direction:column;max-height:45vh" class="lg-sidebar">
-          <div style="padding:12px;border-bottom:1px solid #292524;display:flex;align-items:center;justify-content:space-between">
-            <span style="font-size:13px;font-weight:700;letter-spacing:.1em;color:#d6d3d1">ROSTER</span>
+      </div>
+
+      <!-- RIGHT/BOTTOM: Roster panel (always visible) -->
+      <div class="field-roster" style="background:#1c1917;border-top:1px solid #292524;display:flex;flex-direction:column;flex-shrink:0">
+        <div style="padding:10px 12px;border-bottom:1px solid #292524;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:13px;font-weight:700;letter-spacing:.1em;color:#d6d3d1">ROSTER (${roster.filter(p=>!p.status||p.status===STATUS.ACTIVE).length})</div>
+            <div style="font-size:10px;color:#78716c;margin-top:2px">${pickedPlayer ? `Picked: ${pickedPlayer.name} — tap a position` : selectedSlot ? `Slot: ${slotLabel(selectedSlot.id)} — tap a player` : "Tap player then position, or drag"}</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            ${pickedPlayer ? html`<button onClick=${()=>setPickedPlayer(null)} style="font-size:11px;background:#dc2626;color:#fff;padding:4px 10px;border-radius:6px;border:none;cursor:pointer;font-weight:700">CANCEL</button>` : null}
             <button onClick=${()=>setEditing(!editing)} style="font-size:12px;color:#60a5fa;font-weight:700;background:none;border:none;cursor:pointer">${editing?"DONE":"EDIT"}</button>
           </div>
-          ${editing ? html`
-            <div style="padding:12px;border-bottom:1px solid #292524;background:#0c0a09">
-              <div style="display:flex;gap:8px">
-                <input type="text" placeholder="#" value=${newNumber} onInput=${e=>setNewNumber(e.target.value)}
-                  style="width:52px;background:#292524;color:#fff;padding:6px 8px;border-radius:6px;border:1px solid #44403c;font-size:13px;font-family:inherit"/>
-                <input type="text" placeholder="Player name" value=${newName} onInput=${e=>setNewName(e.target.value)}
-                  onKeyDown=${e=>e.key==="Enter"&&addPlayer()}
-                  style="flex:1;background:#292524;color:#fff;padding:6px 8px;border-radius:6px;border:1px solid #44403c;font-size:13px;font-family:inherit"/>
-                <button onClick=${addPlayer} style="background:#2563eb;color:#fff;padding:6px 12px;border-radius:6px;border:none;cursor:pointer;font-weight:700;display:flex;align-items:center">
-                  <${Icon} name="plus" size=${16}/>
-                </button>
-              </div>
-            </div>` : null}
-          ${selectedSlot && !editing ? html`
-            <div style="padding:12px;background:#2563eb;display:flex;align-items:center;gap:8px">
-              <div style="font-size:12px;font-weight:700;color:#fff;flex:1">
-                ${selectedSlot.type==="field" ? (FIELD_POSITIONS.find(p=>p.id===selectedSlot.id)||{name:selectedSlot.id}).name : `Bench ${selectedSlot.id}`}
-              </div>
-              ${lineup[selectedSlot.id] ? html`<button onClick=${()=>clearSlot(selectedSlot.id)} style="font-size:11px;background:#0c0a09;color:#fff;padding:2px 8px;border-radius:4px;border:none;cursor:pointer;font-weight:700">CLEAR</button>` : null}
-              <button onClick=${()=>setSelectedSlot(null)} style="background:none;border:none;cursor:pointer;color:#fff;display:flex"><${Icon} name="x" size=${16}/></button>
-            </div>` : null}
-          <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch">
-            ${roster.length===0 ? html`<div style="padding:24px;text-align:center;color:#78716c;font-size:13px">No players. Tap EDIT to add your squad.</div>` :
-              roster.map(p=>{
-                const a=isAssigned(p.id), st=p.status||STATUS.ACTIVE, unavail=st!==STATUS.ACTIVE;
-                return html`
-                  <div key=${p.id}
-                    onClick=${()=>{ if(editing)return; if(selectedSlot&&!unavail)assign(selectedSlot.id,p.id); }}
-                    style=${{display:"flex",alignItems:"center",gap:"12px",padding:"12px",borderBottom:"1px solid #292524",opacity:(a&&!selectedSlot)||unavail?".6":"1",cursor:selectedSlot&&!editing&&!unavail?"pointer":"default"}}>
-                    <div style=${{width:"36px",height:"36px",borderRadius:"8px",background:stBg(st),display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:"700",fontSize:"13px",flexShrink:"0",position:"relative"}}>
-                      ${p.number||p.name.slice(0,1).toUpperCase()}
-                      ${st===STATUS.INJURED?html`<span style="position:absolute;top:-4px;right:-4px;font-size:9px">🏥</span>`:null}
-                    </div>
-                    <div style="flex:1;min-width:0">
-                      <div style="font-size:13px;color:#fff;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div>
-                      ${st===STATUS.INJURED?html`<div style="font-size:10px;color:#f87171;font-weight:700">INJURED</div>`:
-                        st===STATUS.UNAVAILABLE?html`<div style="font-size:10px;color:#78716c">UNAVAILABLE</div>`:
-                        a?html`<div style="font-size:10px;color:#60a5fa">on field/bench</div>`:null}
-                    </div>
-                    ${editing?html`<button onClick=${()=>removePlayer(p.id)} style="background:none;border:none;cursor:pointer;color:#ef4444;display:flex"><${Icon} name="trash" size=${16}/></button>`:null}
-                  </div>`;
-              })
-            }
-          </div>
+        </div>
+        ${editing ? html`
+          <div style="padding:10px 12px;border-bottom:1px solid #292524;background:#0c0a09">
+            <div style="display:flex;gap:8px">
+              <input type="text" placeholder="#" value=${newNumber} onInput=${e=>setNewNumber(e.target.value)}
+                style="width:48px;background:#292524;color:#fff;padding:8px;border-radius:6px;border:1px solid #44403c;font-size:14px;font-family:inherit"/>
+              <input type="text" placeholder="Player name" value=${newName} onInput=${e=>setNewName(e.target.value)}
+                onKeyDown=${e=>e.key==="Enter"&&addPlayer()}
+                style="flex:1;background:#292524;color:#fff;padding:8px;border-radius:6px;border:1px solid #44403c;font-size:14px;font-family:inherit"/>
+              <button onClick=${addPlayer} style="background:#2563eb;color:#fff;padding:8px 14px;border-radius:6px;border:none;cursor:pointer;font-weight:700;display:flex;align-items:center">
+                <${Icon} name="plus" size=${16}/>
+              </button>
+            </div>
+          </div>` : null}
+        ${selectedSlot && !editing && lineup[selectedSlot.id] ? html`
+          <div style="padding:8px 12px;background:#1e3a8a;display:flex;align-items:center;gap:8px;border-bottom:1px solid #292524">
+            <div style="font-size:12px;color:#fff;flex:1">
+              <span style="font-weight:700">${slotLabel(selectedSlot.id)}</span>: ${(playerInSlot(selectedSlot.id)||{name:"-"}).name}
+            </div>
+            <button onClick=${()=>clearSlot(selectedSlot.id)} style="font-size:11px;background:#0c0a09;color:#fff;padding:4px 10px;border-radius:4px;border:none;cursor:pointer;font-weight:700">CLEAR</button>
+            <button onClick=${()=>setSelectedSlot(null)} style="background:none;border:none;cursor:pointer;color:#fff;display:flex"><${Icon} name="x" size=${16}/></button>
+          </div>` : null}
+        <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:120px">
+          ${roster.length===0 ? html`<div style="padding:24px;text-align:center;color:#78716c;font-size:13px">No players yet.<br/>Tap EDIT to add your squad.</div>` :
+            roster.map(p=>{
+              const a=isAssigned(p.id);
+              const st=p.status||STATUS.ACTIVE;
+              const unavail=st!==STATUS.ACTIVE;
+              const picked = pickedPlayer && pickedPlayer.id===p.id;
+              return html`
+                <div key=${p.id}
+                  draggable=${!editing && !unavail ? "true" : "false"}
+                  ondragstart=${handleDragStart(p)}
+                  ondragend=${handleDragEnd}
+                  onClick=${()=>{ 
+                    if(editing||unavail) return; 
+                    if (selectedSlot) { assign(selectedSlot.id, p.id); }
+                    else if (picked) { setPickedPlayer(null); }
+                    else { setPickedPlayer(p); }
+                  }}
+                  style=${{display:"flex",alignItems:"center",gap:"10px",padding:"10px 12px",borderBottom:"1px solid #292524",background:picked?"#1e3a8a":"transparent",opacity:unavail?".55":(a&&!picked&&!selectedSlot)?".7":"1",cursor:editing?"default":"pointer",userSelect:"none"}}>
+                  <div style=${{width:"36px",height:"36px",borderRadius:"8px",background:stBg(st),display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:"900",fontSize:"13px",flexShrink:"0",position:"relative"}}>
+                    ${p.number||p.name.slice(0,1).toUpperCase()}
+                    ${st===STATUS.INJURED?html`<span style="position:absolute;top:-4px;right:-4px;font-size:9px">🏥</span>`:null}
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;color:#fff;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div>
+                    ${st===STATUS.INJURED?html`<div style="font-size:10px;color:#f87171;font-weight:700">INJURED</div>`:
+                      st===STATUS.UNAVAILABLE?html`<div style="font-size:10px;color:#78716c">UNAVAILABLE</div>`:
+                      a?html`<div style="font-size:10px;color:#60a5fa">${slotLabel(Object.keys(lineup).find(k=>lineup[k]===p.id))}</div>`:null}
+                  </div>
+                  ${editing?html`<button onClick=${(e)=>{e.stopPropagation();removePlayer(p.id)}} style="background:none;border:none;cursor:pointer;color:#ef4444;display:flex"><${Icon} name="trash" size=${16}/></button>`:null}
+                </div>`;
+            })
+          }
         </div>
       </div>
     </div>`;
@@ -845,8 +920,10 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
                 <span style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#78716c;margin-top:4px">ADD STAT</span>
               </button>
             </div>`}
+          <div style="margin-top:12px;padding-bottom:24px">
+            <${NoteStrip}/>
+          </div>
         </div>
-        <${NoteStrip}/>
       </div>`;
   };
 
