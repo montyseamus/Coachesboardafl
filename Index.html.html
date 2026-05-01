@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Coach Board">
+<title>VAFA Coach Board</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body,#app{height:100%;width:100%;overflow:hidden}
+body{background:#0c0a09;color:#fff;font-family:ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',sans-serif}
+button{cursor:pointer;font-family:inherit;-webkit-appearance:none}
+input,textarea,select{font-family:inherit;-webkit-appearance:none}
+input:focus,textarea:focus,select:focus{outline:none}
+select{background-image:none}
+svg{touch-action:none;user-select:none;-webkit-user-select:none}
+@media(min-width:900px){
+  .lg-row{flex-direction:row !important}
+  .lg-sidebar{width:320px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524 !important}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#a8a29e;font-size:14px">Loading…</div>
+</div>
+<script>
+!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports):"function"==typeof define&&define.amd?define(["exports"],n):n(e.htmPreact={})}(this,function(e){var n,_,t,o,r,u,l,i={},c=[],f=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function s(e,n){for(var _ in n)e[_]=n[_];return e}function a(e){var n=e.parentNode;n&&n.removeChild(e)}function p(e,_,t){var o,r,u,l={};for(u in _)"key"==u?o=_[u]:"ref"==u?r=_[u]:l[u]=_[u];if(arguments.length>2&&(l.children=arguments.length>3?n.call(arguments,2):t),"function"==typeof e&&null!=e.defaultProps)for(u in e.defaultProps)void 0===l[u]&&(l[u]=e.defaultProps[u]);return h(e,l,o,r,null)}function h(e,n,o,r,u){var l={type:e,props:n,key:o,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==u?++t:u};return null!=_.vnode&&_.vnode(l),l}function d(e){return e.children}function v(e,n){this.props=e,this.context=n}function y(e,n){if(null==n)return e.__?y(e.__,e.__.__k.indexOf(e)+1):null;for(var _;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e)return _.__e;return"function"==typeof e.type?y(e):null}function m(e){var n,_;if(null!=(e=e.__)&&null!=e.__c){for(e.__e=e.__c.base=null,n=0;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e){e.__e=e.__c.base=_.__e;break}return m(e)}}function g(e){(!e.__d&&(e.__d=!0)&&o.push(e)&&!k.__r++||u!==_.debounceRendering)&&((u=_.debounceRendering)||r)(k)}function k(){for(var e;k.__r=o.length;)e=o.sort(function(e,n){return e.__v.__b-n.__v.__b}),o=[],e.some(function(e){var n,_,t,o,r,u;e.__d&&(r=(o=(n=e).__v).__e,(u=n.__P)&&(_=[],(t=s({},o)).__v=o.__v+1,D(u,o,t,n.__n,void 0!==u.ownerSVGElement,null!=o.__h?[r]:null,_,null==r?y(o):r,o.__h),w(_,o),o.__e!=r&&m(o)))})}function b(e,n,_,t,o,r,u,l,f,s){var a,p,v,m,g,k,b,H=t&&t.__k||c,E=H.length;for(_.__k=[],a=0;a<n.length;a++)if(null!=(m=_.__k[a]=null==(m=n[a])||"boolean"==typeof m?null:"string"==typeof m||"number"==typeof m||"bigint"==typeof m?h(null,m,null,null,m):Array.isArray(m)?h(d,{children:m},null,null,null):m.__b>0?h(m.type,m.props,m.key,null,m.__v):m)){if(m.__=_,m.__b=_.__b+1,null===(v=H[a])||v&&m.key==v.key&&m.type===v.type)H[a]=void 0;else for(p=0;p<E;p++){if((v=H[p])&&m.key==v.key&&m.type===v.type){H[p]=void 0;break}v=null}D(e,m,v=v||i,o,r,u,l,f,s),g=m.__e,(p=m.ref)&&v.ref!=p&&(b||(b=[]),v.ref&&b.push(v.ref,null,m),b.push(p,m.__c||g,m)),null!=g?(null==k&&(k=g),"function"==typeof m.type&&null!=m.__k&&m.__k===v.__k?m.__d=f=C(m,f,e):f=x(e,m,v,H,g,f),s||"option"!==_.type?"function"==typeof _.type&&(_.__d=f):e.value=""):f&&v.__e==f&&f.parentNode!=e&&(f=y(v))}for(_.__e=k,a=E;a--;)null!=H[a]&&("function"==typeof _.type&&null!=H[a].__e&&H[a].__e==_.__d&&(_.__d=y(t,a+1)),A(H[a],H[a]));if(b)for(a=0;a<b.length;a++)U(b[a],b[++a],b[++a])}function C(e,n,_){var t,o;for(t=0;t<e.__k.length;t++)(o=e.__k[t])&&(o.__=e,n="function"==typeof o.type?C(o,n,_):x(_,o,o,e.__k,o.__e,n));return n}function x(e,n,_,t,o,r){var u,l,i;if(void 0!==n.__d)u=n.__d,n.__d=void 0;else if(null==_||o!=r||null==o.parentNode)e:if(null==r||r.parentNode!==e)e.appendChild(o),u=null;else{for(l=r,i=0;(l=l.nextSibling)&&i<t.length;i+=2)if(l==o)break e;e.insertBefore(o,r),u=r}return void 0!==u?u:o.nextSibling}function H(e,n,_){"-"===n[0]?e.setProperty(n,_):e[n]=null==_?"":"number"!=typeof _||f.test(n)?_:_+"px"}function E(e,n,_,t,o){var r;e:if("style"===n)if("string"==typeof _)e.style.cssText=_;else{if("string"==typeof t&&(e.style.cssText=t=""),t)for(n in t)_&&n in _||H(e.style,n,"");if(_)for(n in _)t&&_[n]===t[n]||H(e.style,n,_[n])}else if("o"===n[0]&&"n"===n[1])r=n!==(n=n.replace(/Capture$/,"")),n=n.toLowerCase()in e?n.toLowerCase().slice(2):n.slice(2),e.l||(e.l={}),e.l[n+r]=_,_?t||e.addEventListener(n,r?S:P,r):e.removeEventListener(n,r?S:P,r);else if("dangerouslySetInnerHTML"!==n){if(o)n=n.replace(/xlink[H:h]/,"h").replace(/sName$/,"s");else if("href"!==n&&"list"!==n&&"form"!==n&&"tabIndex"!==n&&"download"!==n&&n in e)try{e[n]=null==_?"":_;break e}catch(e){}"function"==typeof _||(null!=_&&(!1!==_||"a"===n[0]&&"r"===n[1])?e.setAttribute(n,_):e.removeAttribute(n))}}function P(e){this.l[e.type+!1](_.event?_.event(e):e)}function S(e){this.l[e.type+!0](_.event?_.event(e):e)}function D(e,n,t,o,r,u,l,i,c){var f,a,p,h,y,m,g,k,C,x,H,E=n.type;if(void 0!==n.constructor)return null;null!=t.__h&&(c=t.__h,i=n.__e=t.__e,n.__h=null,u=[i]),(f=_.__b)&&f(n);try{e:if("function"==typeof E){if(k=n.props,C=(f=E.contextType)&&o[f.__c],x=f?C?C.props.value:f.__:o,t.__c?g=(a=n.__c=t.__c).__=a.__E:("prototype"in E&&E.prototype.render?n.__c=a=new E(k,x):(n.__c=a=new v(k,x),a.constructor=E,a.render=M),C&&C.sub(a),a.props=k,a.state||(a.state={}),a.context=x,a.__n=o,p=a.__d=!0,a.__h=[]),null==a.__s&&(a.__s=a.state),null!=E.getDerivedStateFromProps&&(a.__s==a.state&&(a.__s=s({},a.__s)),s(a.__s,E.getDerivedStateFromProps(k,a.__s))),h=a.props,y=a.state,p)null==E.getDerivedStateFromProps&&null!=a.componentWillMount&&a.componentWillMount(),null!=a.componentDidMount&&a.__h.push(a.componentDidMount);else{if(null==E.getDerivedStateFromProps&&k!==h&&null!=a.componentWillReceiveProps&&a.componentWillReceiveProps(k,x),!a.__e&&null!=a.shouldComponentUpdate&&!1===a.shouldComponentUpdate(k,a.__s,x)||n.__v===t.__v){a.props=k,a.state=a.__s,n.__v!==t.__v&&(a.__d=!1),a.__v=n,n.__e=t.__e,n.__k=t.__k,n.__k.forEach(function(e){e&&(e.__=n)}),a.__h.length&&l.push(a);break e}null!=a.componentWillUpdate&&a.componentWillUpdate(k,a.__s,x),null!=a.componentDidUpdate&&a.__h.push(function(){a.componentDidUpdate(h,y,m)})}a.context=x,a.props=k,a.state=a.__s,(f=_.__r)&&f(n),a.__d=!1,a.__v=n,a.__P=e,f=a.render(a.props,a.state,a.context),a.state=a.__s,null!=a.getChildContext&&(o=s(s({},o),a.getChildContext())),p||null==a.getSnapshotBeforeUpdate||(m=a.getSnapshotBeforeUpdate(h,y)),H=null!=f&&f.type===d&&null==f.key?f.props.children:f,b(e,Array.isArray(H)?H:[H],n,t,o,r,u,l,i,c),a.base=n.__e,n.__h=null,a.__h.length&&l.push(a),g&&(a.__E=a.__=null),a.__e=!1}else null==u&&n.__v===t.__v?(n.__k=t.__k,n.__e=t.__e):n.__e=T(t.__e,n,t,o,r,u,l,c);(f=_.diffed)&&f(n)}catch(e){n.__v=null,(c||null!=u)&&(n.__e=i,n.__h=!!c,u[u.indexOf(i)]=null),_.__e(e,n,t)}}function w(e,n){_.__c&&_.__c(n,e),e.some(function(n){try{e=n.__h,n.__h=[],e.some(function(e){e.call(n)})}catch(e){_.__e(e,n.__v)}})}function T(e,_,t,o,r,u,l,c){var f,s,p,h=t.props,d=_.props,v=_.type,m=0;if("svg"===v&&(r=!0),null!=u)for(;m<u.length;m++)if((f=u[m])&&(f===e||(v?f.localName==v:3==f.nodeType))){e=f,u[m]=null;break}if(null==e){if(null===v)return document.createTextNode(d);e=r?document.createElementNS("http://www.w3.org/2000/svg",v):document.createElement(v,d.is&&d),u=null,c=!1}if(null===v)h===d||c&&e.data===d||(e.data=d);else{if(u=u&&n.call(e.childNodes),s=(h=t.props||i).dangerouslySetInnerHTML,p=d.dangerouslySetInnerHTML,!c){if(null!=u)for(h={},m=0;m<e.attributes.length;m++)h[e.attributes[m].name]=e.attributes[m].value;(p||s)&&(p&&(s&&p.__html==s.__html||p.__html===e.innerHTML)||(e.innerHTML=p&&p.__html||""))}if(function(e,n,_,t,o){var r;for(r in _)"children"===r||"key"===r||r in n||E(e,r,null,_[r],t);for(r in n)o&&"function"!=typeof n[r]||"children"===r||"key"===r||"value"===r||"checked"===r||_[r]===n[r]||E(e,r,n[r],_[r],t)}(e,d,h,r,c),p)_.__k=[];else if(m=_.props.children,b(e,Array.isArray(m)?m:[m],_,t,o,r&&"foreignObject"!==v,u,l,u?u[0]:t.__k&&y(t,0),c),null!=u)for(m=u.length;m--;)null!=u[m]&&a(u[m]);c||("value"in d&&void 0!==(m=d.value)&&(m!==e.value||"progress"===v&&!m)&&E(e,"value",m,h.value,!1),"checked"in d&&void 0!==(m=d.checked)&&m!==e.checked&&E(e,"checked",m,h.checked,!1))}return e}function U(e,n,t){try{"function"==typeof e?e(n):e.current=n}catch(e){_.__e(e,t)}}function A(e,n,t){var o,r;if(_.unmount&&_.unmount(e),(o=e.ref)&&(o.current&&o.current!==e.__e||U(o,null,n)),null!=(o=e.__c)){if(o.componentWillUnmount)try{o.componentWillUnmount()}catch(e){_.__e(e,n)}o.base=o.__P=null}if(o=e.__k)for(r=0;r<o.length;r++)o[r]&&A(o[r],n,"function"!=typeof e.type);t||null==e.__e||a(e.__e),e.__e=e.__d=void 0}function M(e,n,_){return this.constructor(e,_)}n=c.slice,_={__e:function(e,n){for(var _,t,o;n=n.__;)if((_=n.__c)&&!_.__)try{if((t=_.constructor)&&null!=t.getDerivedStateFromError&&(_.setState(t.getDerivedStateFromError(e)),o=_.__d),null!=_.componentDidCatch&&(_.componentDidCatch(e),o=_.__d),o)return _.__E=_}catch(n){e=n}throw e}},t=0,v.prototype.setState=function(e,n){var _;_=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=s({},this.state),"function"==typeof e&&(e=e(s({},_),this.props)),e&&s(_,e),null!=e&&this.__v&&(n&&this.__h.push(n),g(this))},v.prototype.forceUpdate=function(e){this.__v&&(this.__e=!0,e&&this.__h.push(e),g(this))},v.prototype.render=d,o=[],r="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,k.__r=0,l=0;var F,L,N,W=0,R=[],I=_.__b,O=_.__r,V=_.diffed,q=_.__c,B=_.unmount;function $(e,n){_.__h&&_.__h(L,e,W||n),W=0;var t=L.__H||(L.__H={__:[],__h:[]});return e>=t.__.length&&t.__.push({}),t.__[e]}function j(e){return W=1,G(ee,e)}function G(e,n,_){var t=$(F++,2);return t.t=e,t.__c||(t.__=[_?_(n):ee(void 0,n),function(e){var n=t.t(t.__[0],e);t.__[0]!==n&&(t.__=[n,t.__[1]],t.__c.setState({}))}],t.__c=L),t.__}function z(e,n){var t=$(F++,4);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__h.push(t))}function J(e,n){var _=$(F++,7);return Z(_.__H,n)&&(_.__=e(),_.__H=n,_.__h=e),_.__}function K(){R.forEach(function(e){if(e.__P)try{e.__H.__h.forEach(X),e.__H.__h.forEach(Y),e.__H.__h=[]}catch(n){e.__H.__h=[],_.__e(n,e.__v)}}),R=[]}_.__b=function(e){L=null,I&&I(e)},_.__r=function(e){O&&O(e),F=0;var n=(L=e.__c).__H;n&&(n.__h.forEach(X),n.__h.forEach(Y),n.__h=[])},_.diffed=function(e){V&&V(e);var n=e.__c;n&&n.__H&&n.__H.__h.length&&(1!==R.push(n)&&N===_.requestAnimationFrame||((N=_.requestAnimationFrame)||function(e){var n,_=function(){clearTimeout(t),Q&&cancelAnimationFrame(n),setTimeout(e)},t=setTimeout(_,100);Q&&(n=requestAnimationFrame(_))})(K)),L=void 0},_.__c=function(e,n){n.some(function(e){try{e.__h.forEach(X),e.__h=e.__h.filter(function(e){return!e.__||Y(e)})}catch(t){n.some(function(e){e.__h&&(e.__h=[])}),n=[],_.__e(t,e.__v)}}),q&&q(e,n)},_.unmount=function(e){B&&B(e);var n=e.__c;if(n&&n.__H)try{n.__H.__.forEach(X)}catch(e){_.__e(e,n.__v)}};var Q="function"==typeof requestAnimationFrame;function X(e){var n=L;"function"==typeof e.__c&&e.__c(),L=n}function Y(e){var n=L;e.__c=e.__(),L=n}function Z(e,n){return!e||e.length!==n.length||n.some(function(n,_){return n!==e[_]})}function ee(e,n){return"function"==typeof n?n(e):n}var ne=function(e,n,_,t){var o;n[0]=0;for(var r=1;r<n.length;r++){var u=n[r++],l=n[r]?(n[0]|=u?1:2,_[n[r++]]):n[++r];3===u?t[0]=l:4===u?t[1]=Object.assign(t[1]||{},l):5===u?(t[1]=t[1]||{})[n[++r]]=l:6===u?t[1][n[++r]]+=l+"":u?(o=e.apply(l,ne(e,l,_,["",null])),t.push(o),l[0]?n[0]|=2:(n[r-2]=0,n[r]=o)):t.push(l)}return t},_e=new Map,te=function(e){var n=_e.get(this);return n||(n=new Map,_e.set(this,n)),(n=ne(this,n.get(e)||(n.set(e,n=function(e){for(var n,_,t=1,o="",r="",u=[0],l=function(e){1===t&&(e||(o=o.replace(/^\s*\n\s*|\s*\n\s*$/g,"")))?u.push(0,e,o):3===t&&(e||o)?(u.push(3,e,o),t=2):2===t&&"..."===o&&e?u.push(4,e,0):2===t&&o&&!e?u.push(5,0,!0,o):t>=5&&((o||!e&&5===t)&&(u.push(t,0,o,_),t=6),e&&(u.push(t,e,0,_),t=6)),o=""},i=0;i<e.length;i++){i&&(1===t&&l(),l(i));for(var c=0;c<e[i].length;c++)n=e[i][c],1===t?"<"===n?(l(),u=[u],t=3):o+=n:4===t?"--"===o&&">"===n?(t=1,o=""):o=n+o[0]:r?n===r?r="":o+=n:'"'===n||"'"===n?r=n:">"===n?(l(),t=1):t&&("="===n?(t=5,_=o,o=""):"/"===n&&(t<5||">"===e[i][c+1])?(l(),3===t&&(u=u[0]),t=u,(u=u[0]).push(2,0,t),t=0):" "===n||"\t"===n||"\n"===n||"\r"===n?(l(),t=2):o+=n),3===t&&"!--"===o&&(t=4,u=u[0])}return l(),u}(e)),n),arguments,[])).length>1?n:n[0]}.bind(p);e.h=p,e.html=te,e.render=function(e,t,o){var r,u,l;_.__&&_.__(e,t),u=(r="function"==typeof o)?null:o&&o.__k||t.__k,l=[],D(t,e=(!r&&o||t).__k=p(d,null,[e]),u||i,i,void 0!==t.ownerSVGElement,!r&&o?[o]:u?null:t.firstChild?n.call(t.childNodes):null,l,!r&&o?o:u?u.__e:t.firstChild,r),w(l,e)},e.Component=v,e.createContext=function(e,n){var _={__c:n="__cC"+l++,__:e,Consumer:function(e,n){return e.children(n)},Provider:function(e){var _,t;return this.getChildContext||(_=[],(t={})[n]=this,this.getChildContext=function(){return t},this.shouldComponentUpdate=function(e){this.props.value!==e.value&&_.some(g)},this.sub=function(e){_.push(e);var n=e.componentWillUnmount;e.componentWillUnmount=function(){_.splice(_.indexOf(e),1),n&&n.call(e)}}),e.children}};return _.Provider.__=_.Consumer.contextType=_},e.useState=j,e.useReducer=G,e.useEffect=function(e,n){var t=$(F++,3);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__H.__h.push(t))},e.useLayoutEffect=z,e.useRef=function(e){return W=5,J(function(){return{current:e}},[])},e.useImperativeHandle=function(e,n,_){W=6,z(function(){"function"==typeof e?e(n()):e&&(e.current=n())},null==_?_:_.concat(e))},e.useMemo=J,e.useCallback=function(e,n){return W=8,J(function(){return e},n)},e.useContext=function(e){var n=L.context[e.__c],_=$(F++,9);return _.c=e,n?(null==_.__&&(_.__=!0,n.sub(L)),n.props.value):e.__},e.useDebugValue=function(e,n){_.useDebugValue&&_.useDebugValue(n?n(e):e)},e.useErrorBoundary=function(e){var n=$(F++,10),_=j();return n.__=e,L.componentDidCatch||(L.componentDidCatch=function(e){n.__&&n.__(e),_[1](e)}),[_[0],function(){_[1](void 0)}]}});
+
+</script>
+<script>
+
+// ============ CONSTANTS ============
+const FIELD_W = 100, FIELD_H = 122, CX = 50, CY = 61, RX = 49, RY = 60;
+const CSQ_HALF = 18.5, GOAL_RADIUS = 37, GS_HALF_W = 2.35, GS_DEPTH = 6.7;
+const GP_HALF = 2.35, BP_OFFSET = 7.05;
+const MARGIN = 4;
+
+const FIELD_POSITIONS = [
+  {id:"bp_l",  label:"BP-L",  name:"Back Pocket L",        x:32, y:8  },
+  {id:"fb",    label:"FB",    name:"Full Back",             x:50, y:6  },
+  {id:"bp_r",  label:"BP-R",  name:"Back Pocket R",        x:68, y:8  },
+  {id:"hb_l",  label:"HBF-L", name:"Half Back Flank L",    x:22, y:26 },
+  {id:"chb",   label:"CHB",   name:"Centre Half Back",     x:50, y:28 },
+  {id:"hb_r",  label:"HBF-R", name:"Half Back Flank R",    x:78, y:26 },
+  {id:"wing_l",label:"W-L",   name:"Wing L",               x:12, y:55 },
+  {id:"ruck",  label:"R",     name:"Ruck",                 x:50, y:55 },
+  {id:"c",     label:"C",     name:"Centre",               x:50, y:61 },
+  {id:"rover", label:"RR",    name:"Rover",                x:50, y:67 },
+  {id:"wing_r",label:"W-R",   name:"Wing R",               x:88, y:55 },
+  {id:"rrover",label:"R-R",   name:"Ruck Rover",           x:38, y:61 },
+  {id:"hf_l",  label:"HFF-L", name:"Half Forward Flank L", x:22, y:96 },
+  {id:"chf",   label:"CHF",   name:"Centre Half Forward",  x:50, y:94 },
+  {id:"hf_r",  label:"HFF-R", name:"Half Forward Flank R", x:78, y:96 },
+  {id:"fp_l",  label:"FP-L",  name:"Forward Pocket L",     x:32, y:114},
+  {id:"ff",    label:"FF",    name:"Full Forward",         x:50, y:116},
+  {id:"fp_r",  label:"FP-R",  name:"Forward Pocket R",     x:68, y:114},
+];
+const BENCH_SLOTS = ["B1","B2","B3","B4","B5","B6"];
+const QUARTERS = ["Q1","Q2","Q3","Q4"];
+const DEFAULT_STATS = ["Goals","Behinds","Kicks","Handballs","Marks","Tackles","Boost Runs","Blocks"];
+const DRAW_COLORS = ["#1E3A8A","#DC2626","#FFFFFF","#FFD400","#3DD68C","#0E1F14"];
+const UNK = "__unknown__";
+const STATUS = {ACTIVE:"active", UNAVAILABLE:"unavailable", INJURED:"injured"};
+const SK = {roster:"afl:roster",lineup:"afl:lineup",games:"afl:games",customStats:"afl:cs",currentGame:"afl:cg",teamName:"afl:tn"};
+
+// ============ STORAGE (localStorage - works offline) ============
+function lsGet(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch(e) { return fallback; }
+}
+function lsSave(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch(e) {}
+}
+
+// ============ PREACT + HTM SETUP ============
+const { html, render, useState, useEffect, useRef, useCallback } = window.htmPreact;
+
+// ============ ICON (inline SVG strokes) ============
+const ICONS = {
+  pencil:"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
+  eraser:"M20 20H7L3 16l9.5-9.5 7.5 7.5-3.5 3.5M6.5 17.5l-3-3",
+  trash:"M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6",
+  plus:"M12 5v14M5 12h14",minus:"M5 12h14",x:"M18 6L6 18M6 6l12 12",
+  download:"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3",
+  undo:"M3 7v6h6M3.51 15a9 9 0 1 0 .49-4.5",
+  palette:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zM7.5 13a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z",
+  users:"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75",
+  clipboard:"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 12h6M9 16h4M10 2h4a1 1 0 0 1 1 1v1H9V3a1 1 0 0 1 1-1z",
+  edit:"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
+  swap:"M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4",
+  alert:"M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01",
+  file:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8",
+  clock:"M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM12 6v6l4 2",
+  chart:"M18 20V10M12 20V4M6 20v-6",
+};
+function Icon({name, size=18, color="currentColor"}) {
+  return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" stroke=${color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d=${ICONS[name]||""}/></svg>`;
+}
+
+// ============ BUTTON HELPERS ============
+function Btn({onClick, cls="", children, disabled=false, style={}}) {
+  return html`<button onClick=${onClick} disabled=${disabled} style=${style}
+    class=${cls}>${children}</button>`;
+}
+
+// ============ AFL FIELD SVG ============
+function AFLField({half=false, svgRef, children}) {
+  const vb = half
+    ? `${-MARGIN} ${-MARGIN} ${FIELD_W+MARGIN*2} ${FIELD_H/2+MARGIN*2}`
+    : `${-MARGIN} ${-MARGIN} ${FIELD_W+MARGIN*2} ${FIELD_H+MARGIN*2}`;
+  return html`
+    <svg ref=${svgRef} viewBox=${vb} preserveAspectRatio="xMidYMid meet"
+      style="width:100%;height:100%;display:block;touch-action:none;user-select:none">
+      <defs>
+        <radialGradient id="fieldGrad" cx="50%" cy="50%" r="65%">
+          <stop offset="0%" stop-color="#3a9450"/>
+          <stop offset="100%" stop-color="#1f5a2c"/>
+        </radialGradient>
+        <pattern id="fieldStripes" width="3" height="3" patternUnits="userSpaceOnUse">
+          <rect width="3" height="3" fill="url(#fieldGrad)"/>
+          <rect width="3" height="1.5" fill="rgba(255,255,255,0.04)"/>
+        </pattern>
+        <clipPath id="ovalClip"><ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY}/></clipPath>
+        ${half ? html`<clipPath id="halfClip"><rect x=${-MARGIN} y=${-MARGIN} width=${FIELD_W+MARGIN*2} height=${FIELD_H/2+MARGIN}/></clipPath>` : null}
+      </defs>
+      <g clip-path=${half ? "url(#halfClip)" : ""}>
+        <ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY} fill="url(#fieldStripes)" stroke="#fff" stroke-width="0.5"/>
+        <rect x=${CX-CSQ_HALF} y=${CY-CSQ_HALF} width=${CSQ_HALF*2} height=${CSQ_HALF*2} fill="none" stroke="#fff" stroke-width="0.35"/>
+        ${!half ? html`
+          <circle cx=${CX} cy=${CY} r="3.7" fill="none" stroke="#fff" stroke-width="0.3"/>
+          <circle cx=${CX} cy=${CY} r="1.1" fill="none" stroke="#fff" stroke-width="0.3"/>
+          <line x1=${CX-CSQ_HALF} y1=${CY} x2=${CX+CSQ_HALF} y2=${CY} stroke="#fff" stroke-width="0.3"/>
+        ` : null}
+        <g clip-path="url(#ovalClip)">
+          <circle cx=${CX} cy="0" r=${GOAL_RADIUS} fill="none" stroke="#fff" stroke-width="0.5"/>
+          ${!half ? html`<circle cx=${CX} cy=${FIELD_H} r=${GOAL_RADIUS} fill="none" stroke="#fff" stroke-width="0.5"/>` : null}
+        </g>
+        <rect x=${CX-GS_HALF_W} y="0" width=${GS_HALF_W*2} height=${GS_DEPTH} fill="none" stroke="#fff" stroke-width="0.4"/>
+        <line x1=${CX-GP_HALF} y1="0" x2=${CX+GP_HALF} y2="0" stroke="#fff" stroke-width="0.6"/>
+        ${!half ? html`
+          <rect x=${CX-GS_HALF_W} y=${FIELD_H-GS_DEPTH} width=${GS_HALF_W*2} height=${GS_DEPTH} fill="none" stroke="#fff" stroke-width="0.4"/>
+          <line x1=${CX-GP_HALF} y1=${FIELD_H} x2=${CX+GP_HALF} y2=${FIELD_H} stroke="#fff" stroke-width="0.6"/>
+        ` : null}
+      </g>
+      <!-- Top posts -->
+      <line x1=${CX-GP_HALF} y1="0" x2=${CX-GP_HALF} y2="-3" stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
+      <line x1=${CX+GP_HALF} y1="0" x2=${CX+GP_HALF} y2="-3" stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
+      <line x1=${CX-BP_OFFSET} y1="0" x2=${CX-BP_OFFSET} y2="-2" stroke="#fff" stroke-width="0.5" stroke-linecap="round"/>
+      <line x1=${CX+BP_OFFSET} y1="0" x2=${CX+BP_OFFSET} y2="-2" stroke="#fff" stroke-width="0.5" stroke-linecap="round"/>
+      ${!half ? html`
+        <line x1=${CX-GP_HALF} y1=${FIELD_H} x2=${CX-GP_HALF} y2=${FIELD_H+3} stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
+        <line x1=${CX+GP_HALF} y1=${FIELD_H} x2=${CX+GP_HALF} y2=${FIELD_H+3} stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
+        <line x1=${CX-BP_OFFSET} y1=${FIELD_H} x2=${CX-BP_OFFSET} y2=${FIELD_H+2} stroke="#fff" stroke-width="0.5" stroke-linecap="round"/>
+        <line x1=${CX+BP_OFFSET} y1=${FIELD_H} x2=${CX+BP_OFFSET} y2=${FIELD_H+2} stroke="#fff" stroke-width="0.5" stroke-linecap="round"/>
+      ` : null}
+      ${children}
+    </svg>`;
+}
+
+// ============ WHITEBOARD ============
+function Whiteboard() {
+  const [half, setHalf] = useState(false);
+  const [tool, setTool] = useState("pen");
+  const [color, setColor] = useState("#1E3A8A");
+  const [size, setSize] = useState(0.7);
+  const [strokes, setStrokes] = useState([]);
+  const [drawing, setDrawing] = useState(false);
+  const [showColors, setShowColors] = useState(false);
+  const svgRef = useRef(null);
+  const curRef = useRef(null);
+
+  const getPoint = (e) => {
+    const svg = svgRef.current; if (!svg) return null;
+    const pt = svg.createSVGPoint();
+    const t = e.touches ? e.touches[0] : e;
+    pt.x = t.clientX; pt.y = t.clientY;
+    const ctm = svg.getScreenCTM(); if (!ctm) return null;
+    return pt.matrixTransform(ctm.inverse());
+  };
+  const startDraw = (e) => {
+    e.preventDefault();
+    const p = getPoint(e); if (!p) return;
+    const s = {color: tool==="eraser"?"ERASE":color, size: tool==="eraser"?size*3:size, points:[{x:p.x,y:p.y}]};
+    curRef.current = s;
+    setStrokes(prev => [...prev, s]);
+    setDrawing(true);
+  };
+  const moveDraw = (e) => {
+    if (!drawing) return; e.preventDefault();
+    const p = getPoint(e); if (!p) return;
+    const cur = curRef.current; if (!cur) return;
+    cur.points.push({x:p.x,y:p.y});
+    setStrokes(prev => [...prev.slice(0,-1), {...cur, points:[...cur.points]}]);
+  };
+  const endDraw = () => { setDrawing(false); curRef.current = null; };
+  const pathFrom = (pts) => {
+    if (!pts || !pts.length) return "";
+    if (pts.length === 1) return `M ${pts[0].x} ${pts[0].y} l 0.01 0.01`;
+    return pts.reduce((d,p,i) => d + (i===0 ? `M ${p.x} ${p.y}` : ` L ${p.x} ${p.y}`), "");
+  };
+
+  return html`
+    <div style="display:flex;flex-direction:column;height:100%">
+      <div style="display:flex;align-items:center;gap:8px;padding:12px;background:#1c1917;border-bottom:1px solid #292524;flex-wrap:wrap">
+        <div style="display:flex;background:#292524;border-radius:8px;padding:4px">
+          <button onClick=${()=>setHalf(false)} style=${{padding:"6px 12px",borderRadius:"6px",fontSize:"12px",fontWeight:"700",background:!half?"#2563eb":"transparent",color:!half?"#fff":"#d6d3d1",border:"none",cursor:"pointer"}}>FULL FIELD</button>
+          <button onClick=${()=>setHalf(true)} style=${{padding:"6px 12px",borderRadius:"6px",fontSize:"12px",fontWeight:"700",background:half?"#2563eb":"transparent",color:half?"#fff":"#d6d3d1",border:"none",cursor:"pointer"}}>HALF FIELD</button>
+        </div>
+        <div style="width:1px;height:32px;background:#44403c"/>
+        <button onClick=${()=>setTool("pen")} style=${{padding:"8px",borderRadius:"8px",background:tool==="pen"?"#2563eb":"#292524",color:tool==="pen"?"#fff":"#d6d3d1",border:"none",cursor:"pointer",display:"flex"}}><${Icon} name="pencil" size=${18}/></button>
+        <button onClick=${()=>setTool("eraser")} style=${{padding:"8px",borderRadius:"8px",background:tool==="eraser"?"#2563eb":"#292524",color:tool==="eraser"?"#fff":"#d6d3d1",border:"none",cursor:"pointer",display:"flex"}}><${Icon} name="eraser" size=${18}/></button>
+        <div style="position:relative">
+          <button onClick=${()=>setShowColors(s=>!s)} style="padding:8px;border-radius:8px;background:#292524;border:none;cursor:pointer;display:flex;align-items:center;gap:6px">
+            <span style=${{width:"20px",height:"20px",borderRadius:"50%",background:color,border:"2px solid #57534e",display:"inline-block"}}/>
+            <${Icon} name="palette" size=${14} color="#a8a29e"/>
+          </button>
+          ${showColors && html`
+            <div style="position:absolute;top:100%;left:0;margin-top:4px;background:#292524;border-radius:8px;padding:8px;display:flex;gap:6px;z-index:20;box-shadow:0 20px 25px rgba(0,0,0,.5);border:1px solid #44403c">
+              ${DRAW_COLORS.map(c => html`
+                <button key=${c} onClick=${()=>{setColor(c);setShowColors(false);setTool("pen");}}
+                  style=${{width:"28px",height:"28px",borderRadius:"50%",background:c,border:"2px solid #57534e",cursor:"pointer"}}/>
+              `)}
+            </div>`}
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;background:#292524;border-radius:8px;padding:6px 12px">
+          <span style="font-size:11px;color:#a8a29e;font-weight:700">SIZE</span>
+          <input type="range" min="0.2" max="2.5" step="0.1" value=${size}
+            onChange=${e=>setSize(parseFloat(e.target.value))} style="width:80px;accent-color:#3b82f6"/>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button onClick=${()=>setStrokes(s=>s.slice(0,-1))} style="padding:8px;border-radius:8px;background:#292524;color:#d6d3d1;border:none;cursor:pointer;display:flex"><${Icon} name="undo" size=${18}/></button>
+          <button onClick=${()=>setStrokes([])} style="padding:8px;border-radius:8px;background:#dc2626;color:#fff;border:none;cursor:pointer;display:flex"><${Icon} name="trash" size=${18}/></button>
+        </div>
+      </div>
+      <div style="flex:1;background:#0c0a09;padding:8px;overflow:hidden;display:flex;align-items:center;justify-content:center">
+        <div style="width:100%;height:100%;max-width:768px">
+          <${AFLField} half=${half} svgRef=${svgRef}>
+            <g onmousedown=${startDraw} onmousemove=${moveDraw} onmouseup=${endDraw} onmouseleave=${endDraw}
+               ontouchstart=${startDraw} ontouchmove=${moveDraw} ontouchend=${endDraw}>
+              <rect x="-10" y="-10" width=${FIELD_W+20} height=${(half?FIELD_H/2:FIELD_H)+20} fill="rgba(0,0,0,0.001)"/>
+              ${strokes.map((s,i) => html`
+                <path key=${i} d=${pathFrom(s.points)}
+                  stroke=${s.color==="ERASE"?"url(#fieldGrad)":s.color}
+                  stroke-width=${s.size} stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              `)}
+            </g>
+          </${AFLField}>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ============ LINEUP ============
+function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentGameId}) {
+  const [subView, setSubView] = useState("field");
+  const [editing, setEditing] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [swapSlot1, setSwapSlot1] = useState(null);
+
+  const cg = games.find(g=>g.id===currentGameId);
+  const icLog = cg ? (cg.interchangeLog||[]) : [];
+
+  const playerInSlot = id => roster.find(p=>p.id===lineup[id]);
+  const isAssigned = pid => Object.values(lineup).includes(pid);
+
+  const assign = (key, pid) => {
+    const next = {...lineup};
+    Object.keys(next).forEach(k=>{ if(next[k]===pid) delete next[k]; });
+    next[key] = pid;
+    setLineup(next); setSelectedSlot(null);
+  };
+  const clearSlot = k => { const n={...lineup}; delete n[k]; setLineup(n); setSelectedSlot(null); };
+
+  const addPlayer = () => {
+    if (!newName.trim()) return;
+    const p = {id:`p_${Date.now()}_${Math.random().toString(36).slice(2,6)}`,name:newName.trim(),number:newNumber.trim(),status:STATUS.ACTIVE};
+    setRoster(prev=>[...prev,p]);
+    setNewName(""); setNewNumber("");
+  };
+  const removePlayer = id => {
+    setRoster(prev=>prev.filter(p=>p.id!==id));
+    const n={...lineup}; Object.keys(n).forEach(k=>{if(n[k]===id)delete n[k];}); setLineup(n);
+  };
+  const setStatus = (id, status) => {
+    setRoster(prev=>prev.map(p=>p.id===id?{...p,status}:p));
+    if (status!==STATUS.ACTIVE) {
+      const n={...lineup}; Object.keys(n).forEach(k=>{if(n[k]===id)delete n[k];}); setLineup(n);
+    }
+  };
+
+  const handleSwap = (slotId) => {
+    if (!swapSlot1) { setSwapSlot1(slotId); return; }
+    if (swapSlot1===slotId) { setSwapSlot1(null); return; }
+    const p1=lineup[swapSlot1], p2=lineup[slotId];
+    const pl1=roster.find(p=>p.id===p1), pl2=roster.find(p=>p.id===p2);
+    const next={...lineup};
+    if(p1) next[slotId]=p1; else delete next[slotId];
+    if(p2) next[swapSlot1]=p2; else delete next[swapSlot1];
+    setLineup(next);
+    if (cg) {
+      const entry={
+        id:`ic_${Date.now()}`,
+        time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}),
+        slot1:swapSlot1, slot2:slotId,
+        player1Name:pl1?pl1.name:"Empty",
+        player2Name:pl2?pl2.name:"Empty"
+      };
+      setGames(prev=>prev.map(g=>g.id===currentGameId?{...g,interchangeLog:[...(g.interchangeLog||[]),entry]}:g));
+    }
+    setSwapSlot1(null);
+  };
+
+  const slotLabel = id => (FIELD_POSITIONS.find(p=>p.id===id)||{label:id}).label;
+  const stBg = s => s===STATUS.INJURED?"#b91c1c":s===STATUS.UNAVAILABLE?"#44403c":"#1d4ed8";
+
+  // ---- FIELD TAB ----
+  const FieldTab = () => html`
+    <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+      <div style="display:flex;flex:1;overflow:hidden;flex-direction:column" class="lg-row">
+        <div style="flex:1;background:#0c0a09;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch">
+          <div style="max-width:768px;margin:0 auto">
+            <div style="text-align:center;margin-bottom:8px;font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa">⬆ DEFENDING END</div>
+            <${AFLField}>
+              ${FIELD_POSITIONS.map(pos => {
+                const player=playerInSlot(pos.id), sel=selectedSlot&&selectedSlot.id===pos.id;
+                const w=12, h=6;
+                return html`
+                  <g key=${pos.id} transform=${`translate(${pos.x-w/2},${pos.y-h/2})`} style="cursor:pointer"
+                    onClick=${()=>setSelectedSlot({type:"field",id:pos.id})}>
+                    <rect width=${w} height=${h} rx="1.2"
+                      fill=${player?"#1E3A8A":"rgba(0,0,0,0.65)"}
+                      stroke=${sel?"#DC2626":"#fff"} stroke-width=${sel?"0.7":"0.35"}/>
+                    ${player ? html`
+                      <text x=${w/2} y="2.6" text-anchor="middle" font-size="2" font-weight="900" fill="#fff">${player.number?`#${player.number}`:pos.label}</text>
+                      <text x=${w/2} y="4.8" text-anchor="middle" font-size="1.5" font-weight="700" fill="#FFD400">${player.name.length>10?player.name.slice(0,9)+"…":player.name}</text>
+                    ` : html`<text x=${w/2} y="3.8" text-anchor="middle" font-size="2" font-weight="900" fill="#fff">${pos.label}</text>`}
+                  </g>`;
+              })}
+            </${AFLField}>
+            <div style="text-align:center;margin-top:8px;font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444">⬇ ATTACKING END</div>
+            <!-- BENCH -->
+            <div style="margin-top:12px;background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px">BENCH</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                ${BENCH_SLOTS.map(b=>{
+                  const player=playerInSlot(b), sel=selectedSlot&&selectedSlot.id===b;
+                  return html`
+                    <button key=${b} onClick=${()=>setSelectedSlot({type:"bench",id:b})}
+                      style=${{aspectRatio:"3/2",borderRadius:"8px",padding:"8px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:"700",background:player?"#1d4ed8":"#292524",color:player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":"2px solid transparent",cursor:"pointer"}}>
+                      <div style="font-size:10px;opacity:.7">${b}</div>
+                      ${player ? html`
+                        <div style="font-size:16px">#${player.number||"•"}</div>
+                        <div style="font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:#fde047">${player.name}</div>
+                      ` : html`<div style="font-size:10px;opacity:.5">empty</div>`}
+                    </button>`;
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ROSTER PANEL -->
+        <div style="width:100%;background:#1c1917;border-top:1px solid #292524;display:flex;flex-direction:column;max-height:45vh" class="lg-sidebar">
+          <div style="padding:12px;border-bottom:1px solid #292524;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;font-weight:700;letter-spacing:.1em;color:#d6d3d1">ROSTER</span>
+            <button onClick=${()=>setEditing(!editing)} style="font-size:12px;color:#60a5fa;font-weight:700;background:none;border:none;cursor:pointer">${editing?"DONE":"EDIT"}</button>
+          </div>
+          ${editing ? html`
+            <div style="padding:12px;border-bottom:1px solid #292524;background:#0c0a09">
+              <div style="display:flex;gap:8px">
+                <input type="text" placeholder="#" value=${newNumber} onInput=${e=>setNewNumber(e.target.value)}
+                  style="width:52px;background:#292524;color:#fff;padding:6px 8px;border-radius:6px;border:1px solid #44403c;font-size:13px;font-family:inherit"/>
+                <input type="text" placeholder="Player name" value=${newName} onInput=${e=>setNewName(e.target.value)}
+                  onKeyDown=${e=>e.key==="Enter"&&addPlayer()}
+                  style="flex:1;background:#292524;color:#fff;padding:6px 8px;border-radius:6px;border:1px solid #44403c;font-size:13px;font-family:inherit"/>
+                <button onClick=${addPlayer} style="background:#2563eb;color:#fff;padding:6px 12px;border-radius:6px;border:none;cursor:pointer;font-weight:700;display:flex;align-items:center">
+                  <${Icon} name="plus" size=${16}/>
+                </button>
+              </div>
+            </div>` : null}
+          ${selectedSlot && !editing ? html`
+            <div style="padding:12px;background:#2563eb;display:flex;align-items:center;gap:8px">
+              <div style="font-size:12px;font-weight:700;color:#fff;flex:1">
+                ${selectedSlot.type==="field" ? (FIELD_POSITIONS.find(p=>p.id===selectedSlot.id)||{name:selectedSlot.id}).name : `Bench ${selectedSlot.id}`}
+              </div>
+              ${lineup[selectedSlot.id] ? html`<button onClick=${()=>clearSlot(selectedSlot.id)} style="font-size:11px;background:#0c0a09;color:#fff;padding:2px 8px;border-radius:4px;border:none;cursor:pointer;font-weight:700">CLEAR</button>` : null}
+              <button onClick=${()=>setSelectedSlot(null)} style="background:none;border:none;cursor:pointer;color:#fff;display:flex"><${Icon} name="x" size=${16}/></button>
+            </div>` : null}
+          <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch">
+            ${roster.length===0 ? html`<div style="padding:24px;text-align:center;color:#78716c;font-size:13px">No players. Tap EDIT to add your squad.</div>` :
+              roster.map(p=>{
+                const a=isAssigned(p.id), st=p.status||STATUS.ACTIVE, unavail=st!==STATUS.ACTIVE;
+                return html`
+                  <div key=${p.id}
+                    onClick=${()=>{ if(editing)return; if(selectedSlot&&!unavail)assign(selectedSlot.id,p.id); }}
+                    style=${{display:"flex",alignItems:"center",gap:"12px",padding:"12px",borderBottom:"1px solid #292524",opacity:(a&&!selectedSlot)||unavail?".6":"1",cursor:selectedSlot&&!editing&&!unavail?"pointer":"default"}}>
+                    <div style=${{width:"36px",height:"36px",borderRadius:"8px",background:stBg(st),display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:"700",fontSize:"13px",flexShrink:"0",position:"relative"}}>
+                      ${p.number||p.name.slice(0,1).toUpperCase()}
+                      ${st===STATUS.INJURED?html`<span style="position:absolute;top:-4px;right:-4px;font-size:9px">🏥</span>`:null}
+                    </div>
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:13px;color:#fff;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div>
+                      ${st===STATUS.INJURED?html`<div style="font-size:10px;color:#f87171;font-weight:700">INJURED</div>`:
+                        st===STATUS.UNAVAILABLE?html`<div style="font-size:10px;color:#78716c">UNAVAILABLE</div>`:
+                        a?html`<div style="font-size:10px;color:#60a5fa">on field/bench</div>`:null}
+                    </div>
+                    ${editing?html`<button onClick=${()=>removePlayer(p.id)} style="background:none;border:none;cursor:pointer;color:#ef4444;display:flex"><${Icon} name="trash" size=${16}/></button>`:null}
+                  </div>`;
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  // ---- INTERCHANGE TAB ----
+  const SwapRows = [["bp_l","fb","bp_r"],["hb_l","chb","hb_r"],["wing_l","ruck","c","rover","wing_r"],["hf_l","chf","hf_r"],["fp_l","ff","fp_r"]];
+  const InterchangeTab = () => html`
+    <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+      <div style="display:flex;flex:1;overflow:hidden;flex-direction:column" class="lg-row">
+        <div style="flex:1;background:#0c0a09;padding:12px;overflow-y:auto;-webkit-overflow-scrolling:touch">
+          <div style="max-width:576px;margin:0 auto">
+            <div style=${{marginBottom:"12px",padding:"12px",borderRadius:"12px",border:"1px solid",borderColor:swapSlot1?"#2563eb":"#44403c",background:swapSlot1?"rgba(30,58,138,.4)":"#1c1917",fontSize:"13px",fontWeight:"700",color:swapSlot1?"#93c5fd":"#a8a29e"}}>
+              ${swapSlot1 ? `Selected: ${slotLabel(swapSlot1)} — ${(playerInSlot(swapSlot1)||{name:"Empty"}).name} · Now tap another to swap`
+                : "Tap any position or bench slot to start an interchange"}
+            </div>
+            <div style="background:#1c1917;border-radius:12px;border:1px solid #292524;padding:12px;margin-bottom:12px">
+              <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:8px">⬆ DEFENDING END</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                ${SwapRows.map((row,ri) => html`
+                  <div key=${ri} style="display:flex;gap:6px;justify-content:center">
+                    ${row.map(posId=>{
+                      const pos=FIELD_POSITIONS.find(p=>p.id===posId);
+                      const player=playerInSlot(posId), isSel=swapSlot1===posId;
+                      return html`
+                        <button key=${posId} onClick=${()=>handleSwap(posId)}
+                          style=${{flex:"1",maxWidth:"90px",padding:"8px 4px",borderRadius:"8px",border:"1px solid",borderColor:isSel?"#fde047":player?"#1d4ed8":"#44403c",background:isSel?"#facc15":player?"#1d4ed8":"#292524",color:isSel?"#1c1917":player?"#fff":"#a8a29e",cursor:"pointer",textAlign:"center"}}>
+                          <div style="font-size:10px;font-weight:900;letter-spacing:.05em">${pos&&pos.label}</div>
+                          ${player?html`<div style="font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:${isSel?'#1c1917':'#fde047'}">${player.number?`#${player.number}`:player.name.slice(0,6)}</div>`:null}
+                        </button>`;
+                    })}
+                  </div>`
+                )}
+              </div>
+              <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:8px;text-align:center">⬇ ATTACKING END</div>
+            </div>
+            <div style="background:#1c1917;border-radius:12px;border:1px solid #292524;padding:12px">
+              <div style="font-size:11px;font-weight:900;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px">BENCH</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                ${BENCH_SLOTS.map(b=>{
+                  const player=playerInSlot(b), isSel=swapSlot1===b;
+                  return html`
+                    <button key=${b} onClick=${()=>handleSwap(b)}
+                      style=${{aspectRatio:"3/2",borderRadius:"8px",padding:"6px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:"700",background:isSel?"#facc15":player?"#1d4ed8":"#292524",color:isSel?"#1c1917":player?"#fff":"#a8a29e",border:"1px solid",borderColor:isSel?"#fde047":player?"#1d4ed8":"#44403c",cursor:"pointer"}}>
+                      <div style="font-size:9px;opacity:.7">${b}</div>
+                      ${player?html`<div style="font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center">${player.name.slice(0,8)}</div>`:html`<div style="font-size:9px;opacity:.4">empty</div>`}
+                    </button>`;
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- LOG PANEL -->
+        <div style="width:100%;background:#1c1917;border-top:1px solid #292524;display:flex;flex-direction:column;max-height:40vh" class="lg-sidebar">
+          <div style="padding:12px;border-bottom:1px solid #292524;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:13px;font-weight:700;letter-spacing:.1em;color:#d6d3d1;display:flex;align-items:center;gap:8px">
+              <${Icon} name="clock" size=${14} color="#60a5fa"/> INTERCHANGE LOG
+            </div>
+            <span style="font-size:12px;color:#78716c">${icLog.length} moves</span>
+          </div>
+          ${!cg ? html`<div style="padding:16px;text-align:center;color:#78716c;font-size:12px">Start a game in Stats to log interchanges with timestamps.</div>` : null}
+          <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch">
+            ${icLog.length===0&&cg ? html`<div style="padding:16px;text-align:center;color:#78716c;font-size:12px">No interchanges yet.</div>` : null}
+            ${[...icLog].reverse().map(entry => html`
+              <div key=${entry.id} style="padding:12px;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid #292524">
+                <div style="font-size:10px;color:#78716c;font-weight:700;width:44px;flex-shrink:0;padding-top:2px">${entry.time}</div>
+                <div style="flex:1;font-size:12px;color:#fff">
+                  <span style="color:#facc15;font-weight:700">${entry.player1Name}</span>
+                  <span style="color:#a8a29e"> (${slotLabel(entry.slot1)}) ⇄ </span>
+                  <span style="color:#facc15;font-weight:700">${entry.player2Name}</span>
+                  <span style="color:#a8a29e"> (${slotLabel(entry.slot2)})</span>
+                </div>
+                <button onClick=${()=>setGames(prev=>prev.map(g=>g.id===currentGameId?{...g,interchangeLog:(g.interchangeLog||[]).filter(e=>e.id!==entry.id)}:g))}
+                  style="background:none;border:none;cursor:pointer;color:#57534e;display:flex;flex-shrink:0"><${Icon} name="x" size=${13}/></button>
+              </div>
+            `)}
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  // ---- AVAILABILITY TAB ----
+  const AvailTab = () => html`
+    <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px;background:#0c0a09">
+      <div style="max-width:576px;margin:0 auto">
+        <div style="font-size:12px;color:#78716c;margin-bottom:12px">Set each player's status. Unavailable or Injured players are removed from the lineup.</div>
+        <div style="display:flex;gap:12px;font-size:10px;font-weight:700;letter-spacing:.1em;margin-bottom:16px">
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:#1d4ed8;display:inline-block"/> ACTIVE</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:#44403c;display:inline-block"/> UNAVAIL</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:#b91c1c;display:inline-block"/> INJURED</span>
+        </div>
+        ${roster.length===0?html`<div style="text-align:center;color:#78716c;font-size:13px;padding:32px">No players yet — go to Field tab → EDIT to add your squad.</div>`:null}
+        <div style="display:flex;flex-direction:column;gap:8px">
+          ${roster.map(p => {
+            const st = p.status||STATUS.ACTIVE;
+            return html`
+              <div key=${p.id} style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;display:flex;align-items:center;gap:12px">
+                <div style=${{width:"40px",height:"40px",borderRadius:"8px",background:stBg(st),display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:"700",fontSize:"14px",flexShrink:"0"}}>
+                  ${p.number||p.name.slice(0,1).toUpperCase()}
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:13px;color:#fff;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div>
+                  ${p.number?html`<div style="font-size:10px;color:#78716c">#${p.number}</div>`:null}
+                </div>
+                <div style="display:flex;gap:4px;flex-shrink:0">
+                  ${[{s:STATUS.ACTIVE,label:"✓"},{s:STATUS.UNAVAILABLE,label:"✗"},{s:STATUS.INJURED,label:"🏥"}].map(({s,label})=>html`
+                    <button key=${s} onClick=${()=>setStatus(p.id,s)}
+                      style=${{width:"36px",height:"36px",borderRadius:"8px",fontSize:"14px",fontWeight:"900",cursor:"pointer",border:"1px solid",
+                        background:st===s?(s===STATUS.ACTIVE?"#2563eb":s===STATUS.UNAVAILABLE?"#57534e":"#dc2626"):"#292524",
+                        borderColor:st===s?(s===STATUS.ACTIVE?"#3b82f6":s===STATUS.UNAVAILABLE?"#78716c":"#ef4444"):"#44403c",
+                        color:st===s?"#fff":"#a8a29e"}}>
+                      ${label}
+                    </button>`)}
+                </div>
+              </div>`;
+          })}
+        </div>
+      </div>
+    </div>`;
+
+  const subTabs = [{id:"field",label:"FIELD",icon:"users"},{id:"interchange",label:"INTERCHANGE",icon:"swap"},{id:"availability",label:"AVAILABILITY",icon:"alert"}];
+
+  return html`
+    <div style="display:flex;flex-direction:column;height:100%">
+      <div style="display:flex;background:#1c1917;border-bottom:1px solid #292524;overflow-x:auto">
+        ${subTabs.map(t=>html`
+          <button key=${t.id} onClick=${()=>setSubView(t.id)}
+            style=${{display:"flex",alignItems:"center",gap:"6px",padding:"10px 12px",fontSize:"12px",fontWeight:"900",letterSpacing:".1em",background:"none",border:"none",borderBottom:subView===t.id?"2px solid #2563eb":"2px solid transparent",color:subView===t.id?"#60a5fa":"#78716c",cursor:"pointer",whiteSpace:"nowrap"}}>
+            <${Icon} name=${t.icon} size=${13} color=${subView===t.id?"#60a5fa":"#78716c"}/> ${t.label}
+          </button>`)}
+      </div>
+      ${subView==="field"?html`<${FieldTab}/>`
+        :subView==="interchange"?html`<${InterchangeTab}/>`
+        :html`<${AvailTab}/>`}
+    </div>`;
+}
+
+// ============ STATS ============
+function calcScore(game) {
+  if (!game) return {goals:0,behinds:0,points:0};
+  let goals=0, behinds=0;
+  QUARTERS.forEach(q=>{
+    goals += (game.stats.team[q]&&game.stats.team[q]["Goals"])||0;
+    behinds += (game.stats.team[q]&&game.stats.team[q]["Behinds"])||0;
+  });
+  return {goals, behinds, points:goals*6+behinds};
+}
+function calcQScore(game,q) {
+  if (!game) return {goals:0,behinds:0,points:0};
+  const g=(game.stats.team[q]&&game.stats.team[q]["Goals"])||0;
+  const b=(game.stats.team[q]&&game.stats.team[q]["Behinds"])||0;
+  return {goals:g,behinds:b,points:g*6+b};
+}
+
+function Stats({roster, games, setGames, customStats, setCustomStats, currentGameId, setCurrentGameId, teamName, setTeamName}) {
+  const [view, setView] = useState("track");
+  const [quarter, setQuarter] = useState(0);
+  const [scope, setScope] = useState("team");
+  const [selPlayer, setSelPlayer] = useState(null);
+  const [showNewStat, setShowNewStat] = useState(false);
+  const [newStatName, setNewStatName] = useState("");
+  const [showNewGame, setShowNewGame] = useState(false);
+  const [newOpp, setNewOpp] = useState("");
+  const [editOpp, setEditOpp] = useState(false);
+  const [goalPending, setGoalPending] = useState(false);
+  const [editNoteQ, setEditNoteQ] = useState(null);
+  const [noteText, setNoteText] = useState("");
+
+  const cg = games.find(g=>g.id===currentGameId);
+  const allStats = [...DEFAULT_STATS, ...customStats];
+
+  const startGame = () => {
+    if (!newOpp.trim()) return;
+    const game = {
+      id:`g_${Date.now()}`, opponent:newOpp.trim(), date:new Date().toISOString(),
+      opponentScore:{goals:0,behinds:0},
+      stats:{team:{Q1:{},Q2:{},Q3:{},Q4:{}},players:{}},
+      quarterNotes:{Q1:"",Q2:"",Q3:"",Q4:""},
+      interchangeLog:[]
+    };
+    setGames(prev=>[...prev,game]);
+    setCurrentGameId(game.id);
+    setNewOpp(""); setShowNewGame(false); setView("track");
+  };
+
+  const applyUpdate = (stat, delta, pid) => {
+    if (!cg) return;
+    const q = QUARTERS[quarter];
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const ng = JSON.parse(JSON.stringify(g));
+      ng.stats.team[q][stat] = Math.max(0,(ng.stats.team[q][stat]||0)+delta);
+      if (!ng.stats.players[pid]) ng.stats.players[pid]={Q1:{},Q2:{},Q3:{},Q4:{}};
+      ng.stats.players[pid][q][stat] = Math.max(0,(ng.stats.players[pid][q][stat]||0)+delta);
+      return ng;
+    }));
+  };
+
+  const updateStat = (stat, delta) => {
+    if (!cg) return;
+    if (scope==="player") { if(!selPlayer)return; applyUpdate(stat,delta,selPlayer); return; }
+    if (stat==="Goals" && delta>0 && roster.length>0) { setGoalPending(true); return; }
+    applyUpdate(stat,delta,UNK);
+  };
+
+  const confirmKicker = (pid) => { applyUpdate("Goals",1,pid); setGoalPending(false); };
+
+  const updateOpp = (k, delta) => {
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const os = {...(g.opponentScore||{goals:0,behinds:0})};
+      os[k] = Math.max(0,(os[k]||0)+delta);
+      return {...g, opponentScore:os};
+    }));
+  };
+
+  const saveNote = () => {
+    if (!cg||!editNoteQ) return;
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const qn = {...(g.quarterNotes||{})};
+      qn[editNoteQ] = noteText;
+      return {...g, quarterNotes:qn};
+    }));
+    setEditNoteQ(null); setNoteText("");
+  };
+
+  const addCustomStat = () => {
+    const n=newStatName.trim();
+    if (!n||allStats.includes(n)) return;
+    setCustomStats(prev=>[...prev,n]);
+    setNewStatName(""); setShowNewStat(false);
+  };
+
+  const getVal = (stat) => {
+    if (!cg) return 0;
+    const q=QUARTERS[quarter];
+    if (scope==="team") return (cg.stats.team[q]&&cg.stats.team[q][stat])||0;
+    if (selPlayer&&cg.stats.players[selPlayer]) return (cg.stats.players[selPlayer][q]&&cg.stats.players[selPlayer][q][stat])||0;
+    return 0;
+  };
+
+  const getTotal = (stat,gid,type,pid) => {
+    const g=games.find(x=>x.id===gid); if(!g)return 0;
+    let t=0;
+    QUARTERS.forEach(q=>{
+      if(type==="team") t+=(g.stats.team[q]&&g.stats.team[q][stat])||0;
+      else if(pid&&g.stats.players[pid]) t+=(g.stats.players[pid][q]&&g.stats.players[pid][q][stat])||0;
+    });
+    return t;
+  };
+
+  const deleteGame = (id) => {
+    if (!confirm("Delete this game and all its stats?")) return;
+    setGames(prev=>prev.filter(g=>g.id!==id));
+    if (currentGameId===id) setCurrentGameId(null);
+  };
+
+  const pName = (pid) => {
+    if(pid===UNK)return "Unattributed";
+    const p=roster.find(x=>x.id===pid);
+    return p?(p.number?`#${p.number} `:"")+(p.name):"Unknown";
+  };
+
+  const exportCSV = () => {
+    if (!games.length) return;
+    const rows=[["Game","Date","Opponent","Quarter","Scope","Player",...allStats]];
+    games.forEach(g=>{
+      const d=new Date(g.date).toLocaleDateString();
+      QUARTERS.forEach(q=>{
+        const tr=[`${teamName} vs ${g.opponent}`,d,g.opponent,q,"Team","—"];
+        allStats.forEach(s=>tr.push((g.stats.team[q]&&g.stats.team[q][s])||0));
+        rows.push(tr);
+        Object.keys(g.stats.players).forEach(pid=>{
+          const pr=[`${teamName} vs ${g.opponent}`,d,g.opponent,q,"Player",pName(pid)];
+          allStats.forEach(s=>pr.push((g.stats.players[pid][q]&&g.stats.players[pid][q][s])||0));
+          rows.push(pr);
+        });
+      });
+      QUARTERS.forEach(q=>{const note=(g.quarterNotes||{})[q];if(note)rows.push([`${teamName} vs ${g.opponent}`,d,g.opponent,q,"Note",note]);});
+      (g.interchangeLog||[]).forEach(ic=>rows.push([`${teamName} vs ${g.opponent}`,d,g.opponent,ic.time,"Interchange",`${ic.player1Name}(${ic.slot1})⇄${ic.player2Name}(${ic.slot2})`]));
+      const ts=calcScore(g), os=g.opponentScore||{goals:0,behinds:0};
+      rows.push([`${teamName} vs ${g.opponent}`,d,g.opponent,"FINAL","Score",`${teamName}: ${ts.goals}.${ts.behinds}(${ts.points}) vs ${g.opponent}: ${os.goals}.${os.behinds}(${os.goals*6+os.behinds})`]);
+    });
+    const csv=rows.map(r=>r.map(c=>{const s=String(c??"");return s.includes(",")||s.includes('"')||s.includes("\n")?`"${s.replace(/"/g,'""')}"`:`${s}`;}).join(",")).join("\n");
+    const url=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+    const a=document.createElement("a");
+    a.href=url; a.download=`${teamName.replace(/\s+/g,"_")}_stats_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  };
+
+  // ---- SCOREBOARD ----
+  const Scoreboard = () => {
+    if (!cg) return null;
+    const ts=calcScore(cg);
+    const os={goals:(cg.opponentScore&&cg.opponentScore.goals)||0, behinds:(cg.opponentScore&&cg.opponentScore.behinds)||0};
+    const op=os.goals*6+os.behinds;
+    return html`
+      <div style="background:linear-gradient(to right,#1e3a8a,#1c1917,rgba(127,29,29,.5));border-bottom:2px solid #facc15">
+        <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(250,204,21,.3)">
+          <div style="padding:12px;text-align:center;border-right:1px solid rgba(250,204,21,.3)">
+            <div style="font-size:9px;font-weight:900;letter-spacing:.25em;color:#93c5fd">HOME</div>
+            <div style="color:#fff;font-weight:900;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${teamName}</div>
+            <div style="font-size:32px;font-weight:900;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums">
+              ${ts.goals}<span style="color:#facc15">.</span>${ts.behinds}
+            </div>
+            <div style="color:#facc15;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums">${ts.points}</div>
+            <div style="font-size:9px;color:#93c5fd;margin-top:2px">Goals · Behinds · Points</div>
+          </div>
+          <div style="padding:12px;text-align:center">
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+              <div style="font-size:9px;font-weight:900;letter-spacing:.25em;color:#fca5a5">AWAY</div>
+              <button onClick=${()=>setEditOpp(!editOpp)} style="font-size:10px;color:#fca5a5;text-decoration:underline;background:none;border:none;cursor:pointer">${editOpp?"done":"edit"}</button>
+            </div>
+            <div style="color:#fff;font-weight:900;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cg.opponent}</div>
+            ${editOpp ? html`
+              <div style="display:flex;flex-direction:column;gap:6px;align-items:center;margin-top:4px">
+                ${["goals","behinds"].map(k=>html`
+                  <div key=${k} style="display:flex;align-items:center;gap:4px">
+                    <span style="font-size:10px;color:#fca5a5;width:44px;text-align:right;text-transform:capitalize">${k}</span>
+                    <button onClick=${()=>updateOpp(k,-1)} style="width:28px;height:28px;border-radius:6px;background:#292524;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:700">−</button>
+                    <span style="color:#fff;font-weight:900;font-size:18px;width:28px;text-align:center;font-variant-numeric:tabular-nums">${os[k]}</span>
+                    <button onClick=${()=>updateOpp(k,1)} style="width:28px;height:28px;border-radius:6px;background:#dc2626;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:700">+</button>
+                  </div>`)}
+              </div>` : html`
+              <div style="font-size:32px;font-weight:900;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums">
+                ${os.goals}<span style="color:#facc15">.</span>${os.behinds}
+              </div>
+              <div style="color:#facc15;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums">${op}</div>
+              <div style="font-size:9px;color:#fca5a5;margin-top:2px">Goals · Behinds · Points</div>`}
+          </div>
+        </div>
+        <div style="background:#0c0a09;display:grid;grid-template-columns:repeat(4,1fr)">
+          ${QUARTERS.map(q=>{
+            const qs=calcQScore(cg,q), note=(cg.quarterNotes||{})[q];
+            return html`
+              <div key=${q} style="padding:6px;text-align:center;border-right:1px solid #292524">
+                <div style="font-size:10px;color:#78716c;font-weight:700">${q}</div>
+                <div style="font-size:11px;color:#fff;font-weight:700;font-variant-numeric:tabular-nums">${qs.goals}.${qs.behinds} <span style="color:#facc15">(${qs.points})</span></div>
+                ${note?html`<div style="font-size:8px;color:#60a5fa">📝</div>`:null}
+              </div>`;
+          })}
+        </div>
+      </div>`;
+  };
+
+  // ---- QUARTER NOTES STRIP ----
+  const NoteStrip = () => {
+    if (!cg) return null;
+    const notes=cg.quarterNotes||{};
+    return html`
+      <div style="background:#1c1917;border-top:1px solid #292524;padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <${Icon} name="file" size=${13} color="#60a5fa"/>
+          <span style="font-size:11px;font-weight:900;letter-spacing:.1em;color:#a8a29e">QUARTER NOTES</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+          ${QUARTERS.map(q=>html`
+            <button key=${q} onClick=${()=>{setEditNoteQ(q);setNoteText(notes[q]||"");}}
+              style=${{padding:"8px",borderRadius:"8px",textAlign:"left",border:"1px solid",borderColor:notes[q]?"#1d4ed8":"#292524",background:notes[q]?"rgba(30,58,138,.3)":"#292524",cursor:"pointer"}}>
+              <div style="font-size:10px;font-weight:900;color:#60a5fa">${q}</div>
+              <div style="font-size:11px;color:${notes[q]?"#d6d3d1":"#57534e"};margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:${notes[q]?"normal":"italic"}">${notes[q]||"add note…"}</div>
+            </button>`)}
+        </div>
+      </div>`;
+  };
+
+  // ---- TRACK VIEW ----
+  const TrackView = () => {
+    if (!cg) return html`
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
+        <div style="text-align:center;max-width:384px">
+          <${Icon} name="chart" size=${48} color="#57534e"/>
+          <h3 style="color:#d6d3d1;font-size:18px;font-weight:700;margin:16px 0 8px">No active game</h3>
+          <p style="color:#78716c;font-size:14px;margin-bottom:16px">Start a new game to track stats and scores.</p>
+          <button onClick=${()=>setShowNewGame(true)} style="background:#2563eb;color:#fff;padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit">+ New Game</button>
+        </div>
+      </div>`;
+
+    const activePlayers = roster.filter(p=>!p.status||p.status===STATUS.ACTIVE);
+    return html`
+      <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+        <${Scoreboard}/>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);background:#0c0a09;border-bottom:1px solid #292524">
+          ${QUARTERS.map((q,i)=>html`
+            <button key=${q} onClick=${()=>setQuarter(i)}
+              style=${{padding:"10px",fontWeight:"900",fontSize:"14px",background:quarter===i?"#2563eb":"transparent",color:quarter===i?"#fff":"#a8a29e",border:"none",cursor:"pointer",fontFamily:"inherit"}}>
+              ${q}
+            </button>`)}
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#1c1917;border-bottom:1px solid #292524;flex-wrap:wrap">
+          <div style="display:flex;background:#292524;border-radius:8px;padding:3px">
+            <button onClick=${()=>{setScope("team");setSelPlayer(null);}}
+              style=${{padding:"6px 12px",borderRadius:"6px",fontSize:"12px",fontWeight:"700",background:scope==="team"?"#2563eb":"transparent",color:scope==="team"?"#fff":"#d6d3d1",border:"none",cursor:"pointer",fontFamily:"inherit"}}>TEAM</button>
+            <button onClick=${()=>setScope("player")}
+              style=${{padding:"6px 12px",borderRadius:"6px",fontSize:"12px",fontWeight:"700",background:scope==="player"?"#2563eb":"transparent",color:scope==="player"?"#fff":"#d6d3d1",border:"none",cursor:"pointer",fontFamily:"inherit"}}>PLAYER</button>
+          </div>
+          ${scope==="player" ? html`
+            <select value=${selPlayer||""} onChange=${e=>setSelPlayer(e.target.value||null)}
+              style="flex:1;min-width:140px;background:#292524;color:#fff;padding:6px 10px;border-radius:8px;border:1px solid #44403c;font-size:13px;font-family:inherit">
+              <option value="">Select player…</option>
+              ${activePlayers.map(p=>html`<option key=${p.id} value=${p.id}>${p.number?`#${p.number} `:""}${p.name}</option>`)}
+            </select>` :
+            html`<span style="margin-left:auto;font-size:10px;color:#78716c;font-style:italic">Goals will prompt for kicker</span>`}
+        </div>
+        <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 12px 0">
+          ${scope==="player"&&!selPlayer ? html`<div style="text-align:center;color:#78716c;padding:48px 0;font-size:13px">Select a player above to start tracking.</div>` :
+            html`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+              ${allStats.map(stat=>{
+                const isScore=stat==="Goals"||stat==="Behinds";
+                return html`
+                  <div key=${stat} style=${{background:"#1c1917",borderRadius:"12px",padding:"12px",border:"1px solid",borderColor:isScore?"rgba(250,204,21,.4)":"#292524"}}>
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+                      <div style=${{fontSize:"11px",fontWeight:"700",letterSpacing:".1em",textTransform:"uppercase",color:isScore?"#facc15":"#a8a29e"}}>${stat}</div>
+                      ${customStats.includes(stat)?html`<button onClick=${()=>setCustomStats(prev=>prev.filter(x=>x!==stat))} style="background:none;border:none;cursor:pointer;color:#57534e;display:flex"><${Icon} name="x" size=${12}/></button>`:null}
+                    </div>
+                    <div style="font-size:40px;font-weight:900;color:#fff;margin-bottom:12px;font-variant-numeric:tabular-nums;line-height:1">${getVal(stat)}</div>
+                    <div style="display:flex;gap:8px">
+                      <button onClick=${()=>updateStat(stat,-1)} style="flex:1;background:#292524;color:#d6d3d1;padding:10px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit">
+                        <${Icon} name="minus" size=${18}/>
+                      </button>
+                      <button onClick=${()=>updateStat(stat,1)} style=${{flex:"2",background:isScore?"#facc15":"#2563eb",color:isScore?"#1c1917":"#fff",padding:"10px",borderRadius:"8px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit"}}>
+                        <${Icon} name="plus" size=${22}/>
+                      </button>
+                    </div>
+                  </div>`;
+              })}
+              <button onClick=${()=>setShowNewStat(true)}
+                style="background:rgba(28,25,23,.5);border:2px dashed #44403c;border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;cursor:pointer">
+                <${Icon} name="plus" size=${24} color="#78716c"/>
+                <span style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#78716c;margin-top:4px">ADD STAT</span>
+              </button>
+            </div>`}
+        </div>
+        <${NoteStrip}/>
+      </div>`;
+  };
+
+  // ---- HISTORY VIEW ----
+  const HistoryView = () => html`
+    <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
+      ${games.length===0?html`<div style="text-align:center;color:#78716c;padding:48px 0;font-size:13px">No games yet.</div>`:
+        [...games].reverse().map(g=>{
+          const ts=calcScore(g), os={goals:(g.opponentScore&&g.opponentScore.goals)||0,behinds:(g.opponentScore&&g.opponentScore.behinds)||0};
+          const op=os.goals*6+os.behinds, won=ts.points>op, draw=ts.points===op;
+          const totals={};
+          allStats.forEach(s=>{totals[s]=QUARTERS.reduce((sum,q)=>sum+((g.stats.team[q]&&g.stats.team[q][s])||0),0);});
+          const notes=g.quarterNotes||{}, hasNotes=Object.values(notes).some(n=>n);
+          const icCount=(g.interchangeLog||[]).length;
+          return html`
+            <div key=${g.id} style="background:#1c1917;border-radius:12px;padding:16px;border:1px solid #292524;margin-bottom:12px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:8px;flex-wrap:wrap">
+                <div>
+                  <div style="color:#fff;font-weight:900;font-size:17px">${teamName} vs ${g.opponent}</div>
+                  <div style="font-size:11px;color:#78716c;display:flex;gap:12px;margin-top:2px">
+                    <span>${new Date(g.date).toLocaleDateString()}</span>
+                    ${icCount>0?html`<span style="color:#60a5fa">🔄 ${icCount} IC</span>`:null}
+                    ${hasNotes?html`<span style="color:#facc15">📝</span>`:null}
+                  </div>
+                </div>
+                <div style=${{padding:"4px 12px",borderRadius:"8px",fontSize:"13px",fontWeight:"900",background:won?"#16a34a":draw?"#eab308":"#b91c1c",color:won||!draw?"#fff":"#1c1917"}}>
+                  ${ts.goals}.${ts.behinds}(${ts.points}) — ${os.goals}.${os.behinds}(${op})
+                </div>
+                <div style="display:flex;gap:8px">
+                  <button onClick=${()=>{setCurrentGameId(g.id);setView("track");}} style="font-size:12px;background:#2563eb;color:#fff;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;font-weight:700;font-family:inherit">OPEN</button>
+                  <button onClick=${()=>deleteGame(g.id)} style="background:#292524;color:#f87171;padding:4px 8px;border-radius:6px;border:none;cursor:pointer;display:flex"><${Icon} name="trash" size=${14}/></button>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                ${Object.entries(totals).filter(([,v])=>v>0).map(([s,v])=>html`
+                  <div key=${s} style="background:#0c0a09;border-radius:8px;padding:8px">
+                    <div style="font-size:9px;color:#78716c;font-weight:700;letter-spacing:.1em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s}</div>
+                    <div style="font-size:20px;font-weight:900;color:#60a5fa;font-variant-numeric:tabular-nums">${v}</div>
+                  </div>`)}
+              </div>
+              ${hasNotes?html`
+                <div style="margin-top:10px;display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
+                  ${QUARTERS.map(q=>notes[q]?html`
+                    <div key=${q} style="background:#0c0a09;border-radius:8px;padding:8px">
+                      <div style="font-size:10px;font-weight:900;color:#60a5fa">${q}</div>
+                      <div style="font-size:12px;color:#d6d3d1;margin-top:2px">${notes[q]}</div>
+                    </div>`:null)}
+                </div>`:null}
+            </div>`;
+        })
+      }
+    </div>`;
+
+  // ---- COMPARE VIEW ----
+  const CompareView = () => {
+    if (!games.length) return html`<div style="text-align:center;color:#78716c;padding:48px 12px;font-size:13px">No games to compare yet.</div>`;
+    const sorted=[...games].sort((a,b)=>new Date(a.date)-new Date(b.date));
+    const kickerTotals={};
+    sorted.forEach(g=>Object.keys(g.stats.players).forEach(pid=>{
+      if(!kickerTotals[pid])kickerTotals[pid]=0;
+      QUARTERS.forEach(q=>{kickerTotals[pid]+=((g.stats.players[pid][q]&&g.stats.players[pid][q]["Goals"])||0);});
+    }));
+    const topKickers=Object.entries(kickerTotals).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a).slice(0,8);
+    const cell = (content, extra={}) => `<td style="padding:6px 8px;${extra.style||""}">${content}</td>`;
+
+    return html`
+      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
+        <!-- Team totals -->
+        <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">TEAM TOTALS BY GAME</div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <thead><tr style="border-bottom:1px solid #292524">
+                <th style="text-align:left;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">GAME</th>
+                <th style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px">RESULT</th>
+                ${allStats.map(s=>html`<th key=${s} style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">${s}</th>`)}
+              </tr></thead>
+              <tbody>
+                ${sorted.map(g=>{
+                  const ts=calcScore(g), os=g.opponentScore||{goals:0,behinds:0};
+                  const won=ts.points>(os.goals*6+os.behinds);
+                  return html`<tr key=${g.id} style="border-bottom:1px solid rgba(41,37,36,.5)">
+                    <td style="padding:6px 8px;color:#fff;font-weight:600;white-space:nowrap">vs ${g.opponent}</td>
+                    <td style=${{padding:"6px 8px",textAlign:"right",fontWeight:"700",fontSize:"12px",color:won?"#4ade80":"#f87171",whiteSpace:"nowrap"}}>${ts.points}–${os.goals*6+os.behinds}</td>
+                    ${allStats.map(s=>html`<td key=${s} style="padding:6px 8px;text-align:right;color:#60a5fa;font-weight:700;font-variant-numeric:tabular-nums">${getTotal(s,g.id,"team")}</td>`)}
+                  </tr>`;
+                })}
+                <tr style="background:rgba(41,37,36,.5)">
+                  <td style="padding:6px 8px;color:#d6d3d1;font-weight:700;font-size:11px">AVG</td>
+                  <td style="padding:6px 8px"/>
+                  ${allStats.map(s=>{
+                    const avg=sorted.reduce((sum,g)=>sum+getTotal(s,g.id,"team"),0)/sorted.length;
+                    return html`<td key=${s} style="padding:6px 8px;text-align:right;color:#d6d3d1;font-weight:700;font-variant-numeric:tabular-nums">${avg.toFixed(1)}</td>`;
+                  })}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Goal kickers -->
+        ${topKickers.length>0?html`
+          <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">⚽ GOAL KICKERS — SEASON</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              ${topKickers.map(([pid,goals],idx)=>html`
+                <div key=${pid} style="display:flex;align-items:center;gap:12px">
+                  <div style="font-size:12px;font-weight:900;color:#78716c;width:20px;text-align:center">${idx+1}</div>
+                  <div style="flex:1;font-size:13px;color:#fff;font-weight:600">${pName(pid)}</div>
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <div style=${{height:"8px",borderRadius:"4px",background:"#facc15",width:`${Math.max(8,(goals/topKickers[0][1])*120)}px`}}/>
+                    <span style="color:#facc15;font-weight:900;font-size:18px;width:32px;text-align:right;font-variant-numeric:tabular-nums">${goals}</span>
+                  </div>
+                </div>`)}
+            </div>
+          </div>`:null}
+
+        <!-- Player totals -->
+        <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">PLAYER TOTALS — ALL GAMES</div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <thead><tr style="border-bottom:1px solid #292524">
+                <th style="text-align:left;padding:6px 8px;color:#a8a29e;font-size:11px">PLAYER</th>
+                ${allStats.map(s=>html`<th key=${s} style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">${s}</th>`)}
+              </tr></thead>
+              <tbody>
+                ${[...roster,{id:UNK,name:"Unattributed",number:""}].map(p=>{
+                  const totals={};
+                  allStats.forEach(s=>{totals[s]=sorted.reduce((sum,g)=>sum+getTotal(s,g.id,"player",p.id),0);});
+                  if(!Object.values(totals).some(v=>v>0)) return null;
+                  return html`<tr key=${p.id} style="border-bottom:1px solid rgba(41,37,36,.5)">
+                    <td style="padding:6px 8px;color:#fff;font-weight:600;white-space:nowrap">
+                      ${p.id===UNK?html`<span style="color:#78716c;font-style:italic">Unattributed</span>`:
+                        html`${p.number?html`<span style="color:#60a5fa">#${p.number} </span>`:null}${p.name}`}
+                    </td>
+                    ${allStats.map(s=>html`<td key=${s} style="padding:6px 8px;text-align:right;color:#60a5fa;font-weight:700;font-variant-numeric:tabular-nums">${totals[s]||"—"}</td>`)}
+                  </tr>`;
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  // ---- MODAL: Goal kicker ----
+  const GoalModal = () => {
+    if (!goalPending) return null;
+    const active=roster.filter(p=>!p.status||p.status===STATUS.ACTIVE);
+    return html`
+      <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.8)">
+        <div style="background:#1c1917;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px;border:1px solid rgba(250,204,21,.3)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <h3 style="color:#fff;font-weight:900;font-size:18px;margin:0">⚽ GOAL — Who kicked it?</h3>
+            <button onClick=${()=>{applyUpdate("Goals",1,UNK);setGoalPending(false);}} style="background:none;border:none;cursor:pointer;color:#78716c;display:flex"><${Icon} name="x" size=${22}/></button>
+          </div>
+          <div style="font-size:12px;color:#a8a29e;margin-bottom:16px">Tap a player. Tap ✕ to skip.</div>
+          <div style="display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto;-webkit-overflow-scrolling:touch">
+            ${active.map(p=>html`
+              <button key=${p.id} onClick=${()=>confirmKicker(p.id)}
+                style="display:flex;align-items:center;gap:12px;padding:12px;background:#292524;border-radius:12px;border:none;cursor:pointer;text-align:left;font-family:inherit">
+                <div style="width:40px;height:40px;border-radius:8px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0">
+                  ${p.number||p.name.slice(0,1).toUpperCase()}
+                </div>
+                <div>
+                  <div style="color:#fff;font-weight:700;font-size:14px">${p.name}</div>
+                  ${p.number?html`<div style="color:#a8a29e;font-size:12px">#${p.number}</div>`:null}
+                </div>
+              </button>`)}
+            <button onClick=${()=>{applyUpdate("Goals",1,UNK);setGoalPending(false);}}
+              style="padding:12px;background:#292524;border-radius:12px;border:none;cursor:pointer;color:#a8a29e;font-size:13px;font-weight:700;text-align:left;font-family:inherit">
+              Unknown / Don't attribute
+            </button>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  // ---- MODAL: Quarter note ----
+  const NoteModal = () => {
+    if (!editNoteQ) return null;
+    return html`
+      <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.8)" onClick=${saveNote}>
+        <div style="background:#1c1917;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px;border:1px solid #1d4ed8" onClick=${e=>e.stopPropagation()}>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <h3 style="color:#fff;font-weight:900;font-size:18px;margin:0">📝 ${editNoteQ} Notes</h3>
+            <button onClick=${()=>setEditNoteQ(null)} style="background:none;border:none;cursor:pointer;color:#78716c;display:flex"><${Icon} name="x" size=${20}/></button>
+          </div>
+          <textarea value=${noteText} onInput=${e=>setNoteText(e.target.value)} autofocus
+            placeholder="e.g. Push wide on wings, watch their #7, hold the ball carrier…"
+            style="width:100%;height:140px;background:#292524;color:#fff;padding:10px;border-radius:10px;border:1px solid #44403c;font-size:13px;resize:none;font-family:inherit;box-sizing:border-box"/>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button onClick=${()=>setEditNoteQ(null)} style="flex:1;background:#292524;color:#d6d3d1;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Cancel</button>
+            <button onClick=${saveNote} style="flex:1;background:#2563eb;color:#fff;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Save Note</button>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  // ---- MODAL: New game ----
+  const NewGameModal = () => {
+    if (!showNewGame) return null;
+    return html`
+      <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.7)" onClick=${()=>setShowNewGame(false)}>
+        <div style="background:#1c1917;border-radius:12px;padding:20px;width:100%;max-width:384px;border:1px solid #44403c" onClick=${e=>e.stopPropagation()}>
+          <h3 style="color:#fff;font-weight:700;margin:0 0 16px">New Game</h3>
+          <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Your team</label>
+          <input type="text" value=${teamName} onInput=${e=>setTeamName(e.target.value)}
+            style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin:4px 0 12px;box-sizing:border-box;font-family:inherit"/>
+          <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Opponent</label>
+          <input type="text" value=${newOpp} onInput=${e=>setNewOpp(e.target.value)}
+            onKeyDown=${e=>e.key==="Enter"&&startGame()} placeholder="e.g. Prahran, Old Scotch…" autofocus
+            style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin:4px 0 16px;box-sizing:border-box;font-family:inherit"/>
+          <div style="display:flex;gap:8px">
+            <button onClick=${()=>setShowNewGame(false)} style="flex:1;background:#292524;color:#d6d3d1;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Cancel</button>
+            <button onClick=${startGame} style="flex:1;background:#2563eb;color:#fff;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Start</button>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  // ---- MODAL: New custom stat ----
+  const NewStatModal = () => {
+    if (!showNewStat) return null;
+    return html`
+      <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.7)" onClick=${()=>setShowNewStat(false)}>
+        <div style="background:#1c1917;border-radius:12px;padding:20px;width:100%;max-width:384px;border:1px solid #44403c" onClick=${e=>e.stopPropagation()}>
+          <h3 style="color:#fff;font-weight:700;margin:0 0 12px">New Custom Stat</h3>
+          <input type="text" value=${newStatName} onInput=${e=>setNewStatName(e.target.value)}
+            onKeyDown=${e=>e.key==="Enter"&&addCustomStat()} placeholder="e.g. Clearances, Hit Outs, Spoils" autofocus
+            style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin-bottom:16px;box-sizing:border-box;font-family:inherit"/>
+          <div style="display:flex;gap:8px">
+            <button onClick=${()=>setShowNewStat(false)} style="flex:1;background:#292524;color:#d6d3d1;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Cancel</button>
+            <button onClick=${addCustomStat} style="flex:1;background:#2563eb;color:#fff;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Add</button>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  return html`
+    <div style="display:flex;flex-direction:column;height:100%">
+      <div style="display:flex;align-items:center;background:#1c1917;border-bottom:1px solid #292524;flex-wrap:wrap">
+        ${["track","history","compare"].map(v=>html`
+          <button key=${v} onClick=${()=>setView(v)}
+            style=${{padding:"12px 16px",fontSize:"12px",fontWeight:"900",letterSpacing:".1em",textTransform:"uppercase",background:"none",border:"none",borderBottom:view===v?"2px solid #2563eb":"2px solid transparent",color:view===v?"#60a5fa":"#78716c",cursor:"pointer",fontFamily:"inherit"}}>
+            ${v}
+          </button>`)}
+        <div style="margin-left:auto;display:flex;gap:8px;margin-right:12px;padding:6px 0">
+          <button onClick=${exportCSV} disabled=${!games.length}
+            style=${{display:"flex",alignItems:"center",gap:"4px",background:"#292524",color:"#fff",padding:"6px 12px",borderRadius:"8px",border:"none",cursor:games.length?"pointer":"not-allowed",fontSize:"12px",fontWeight:"900",opacity:games.length?1:.4,fontFamily:"inherit"}}>
+            <${Icon} name="download" size=${12}/> CSV
+          </button>
+          <button onClick=${()=>setShowNewGame(true)}
+            style="background:#2563eb;color:#fff;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-size:12px;font-weight:900;font-family:inherit">
+            + NEW GAME
+          </button>
+        </div>
+      </div>
+      ${view==="track"?html`<${TrackView}/>`
+        :view==="history"?html`<${HistoryView}/>`
+        :html`<${CompareView}/>`}
+      <${GoalModal}/>
+      <${NoteModal}/>
+      <${NewGameModal}/>
+      <${NewStatModal}/>
+    </div>`;
+}
+
+// ============ APP ============
+function App() {
+  const [tab, setTab] = useState("whiteboard");
+  const [teamName, setTeamName] = useState(()=>lsGet(SK.teamName,"My Team"));
+  const [roster, setRoster] = useState(()=>lsGet(SK.roster,[]));
+  const [lineup, setLineup] = useState(()=>lsGet(SK.lineup,{}));
+  const [games, setGames] = useState(()=>lsGet(SK.games,[]));
+  const [customStats, setCustomStats] = useState(()=>lsGet(SK.customStats,[]));
+  const [currentGameId, setCurrentGameId] = useState(()=>lsGet(SK.currentGame,null));
+
+  useEffect(()=>lsSave(SK.teamName,teamName),[teamName]);
+  useEffect(()=>lsSave(SK.roster,roster),[roster]);
+  useEffect(()=>lsSave(SK.lineup,lineup),[lineup]);
+  useEffect(()=>lsSave(SK.games,games),[games]);
+  useEffect(()=>lsSave(SK.customStats,customStats),[customStats]);
+  useEffect(()=>lsSave(SK.currentGame,currentGameId),[currentGameId]);
+
+  const mainTabs=[{id:"whiteboard",label:"BOARD",icon:"edit"},{id:"lineup",label:"LINEUP",icon:"users"},{id:"stats",label:"STATS",icon:"clipboard"}];
+
+  return html`
+    <div style="height:100vh;width:100vw;display:flex;flex-direction:column;background:#0c0a09;color:#fff;overflow:hidden;font-family:ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',sans-serif">
+      <header style="background:linear-gradient(to right,#1e3a8a,#1c1917,#7f1d1d);border-bottom:2px solid #facc15;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;background:#facc15;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#1c1917;font-weight:900;font-size:18px;flex-shrink:0">⬢</div>
+          <div>
+            <input type="text" value=${teamName} onInput=${e=>setTeamName(e.target.value)}
+              style="background:transparent;color:#fff;font-weight:900;font-size:15px;letter-spacing:.05em;width:160px;border:none;outline:none;font-family:inherit"/>
+            <div style="font-size:9px;color:rgba(250,204,21,.8);letter-spacing:.25em;font-weight:700;padding-left:2px">VAFA · COACH BOARD</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:3px;background:rgba(12,10,9,.6);border-radius:8px;padding:3px">
+          ${mainTabs.map(t=>html`
+            <button key=${t.id} onClick=${()=>setTab(t.id)}
+              style=${{display:"flex",alignItems:"center",gap:"5px",padding:"6px 10px",borderRadius:"6px",fontSize:"11px",fontWeight:"900",letterSpacing:".1em",background:tab===t.id?"#2563eb":"transparent",color:tab===t.id?"#fff":"#a8a29e",border:"none",cursor:"pointer",fontFamily:"inherit"}}>
+              <${Icon} name=${t.icon} size=${14} color=${tab===t.id?"#fff":"#a8a29e"}/>
+              ${t.label}
+            </button>`)}
+        </div>
+      </header>
+      <main style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+        ${tab==="whiteboard"?html`<${Whiteboard}/>`
+          :tab==="lineup"?html`<${Lineup} roster=${roster} setRoster=${setRoster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId}/>`
+          :html`<${Stats} roster=${roster} games=${games} setGames=${setGames} customStats=${customStats} setCustomStats=${setCustomStats} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} setTeamName=${setTeamName}/>`}
+      </main>
+    </div>`;
+}
+
+render(html`<${App}/>`, document.getElementById("app"));
+
+</script>
+</body>
+</html>
