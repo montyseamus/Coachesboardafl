@@ -10,7 +10,18 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;width:100%;overflow:hidden;overscroll-behavior:none}
-#app{height:100vh;width:100vw;overflow:hidden;display:flex;flex-direction:column}
+#app{
+  height:100vh;
+  width:100vw;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  padding-top:env(safe-area-inset-top);
+  padding-right:env(safe-area-inset-right);
+  padding-bottom:env(safe-area-inset-bottom);
+  padding-left:env(safe-area-inset-left);
+  background:#0c0a09;
+}
 @supports(height:100dvh){#app{height:100dvh}}
 body{background:#0c0a09;color:#fff;font-family:ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',sans-serif}
 button{cursor:pointer;font-family:inherit;-webkit-appearance:none}
@@ -19,18 +30,15 @@ input:focus,textarea:focus,select:focus{outline:none}
 select{background-image:none}
 svg{touch-action:none;user-select:none;-webkit-user-select:none}
 
-/* Field tab responsive layout */
 .field-layout{flex-direction:column}
 .field-roster{width:100%;max-height:38vh;border-top:1px solid #292524}
 @media(min-width:720px){
   .field-layout{flex-direction:row !important}
-  .field-roster{width:300px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524}
+  .field-roster{width:240px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524}
 }
-
-/* Lineup tab generic side-by-side */
 @media(min-width:900px){
   .lg-row{flex-direction:row !important}
-  .lg-sidebar{width:320px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524 !important}
+  .lg-sidebar{width:260px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524 !important}
 }
 </style>
 </head>
@@ -175,7 +183,11 @@ function Whiteboard() {
   const [tool, setTool] = useState("pen");
   const [color, setColor] = useState("#1E3A8A");
   const [size, setSize] = useState(0.7);
-  const [strokes, setStrokes] = useState([]);
+  // Separate stroke lists per board so each whiteboard remembers its own drawing
+  const [fullStrokes, setFullStrokes] = useState([]);
+  const [halfStrokes, setHalfStrokes] = useState([]);
+  const strokes = half ? halfStrokes : fullStrokes;
+  const setStrokes = half ? setHalfStrokes : setFullStrokes;
   const [drawing, setDrawing] = useState(false);
   const [showColors, setShowColors] = useState(false);
   const svgRef = useRef(null);
@@ -189,10 +201,43 @@ function Whiteboard() {
     const ctm = svg.getScreenCTM(); if (!ctm) return null;
     return pt.matrixTransform(ctm.inverse());
   };
+
+  // Distance from point to line segment (a,b)
+  const distToSeg = (p, a, b) => {
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const len2 = dx*dx + dy*dy;
+    if (len2 === 0) { const ex = p.x-a.x, ey = p.y-a.y; return Math.sqrt(ex*ex+ey*ey); }
+    let t = ((p.x-a.x)*dx + (p.y-a.y)*dy) / len2;
+    t = Math.max(0, Math.min(1, t));
+    const ex = p.x - (a.x + t*dx), ey = p.y - (a.y + t*dy);
+    return Math.sqrt(ex*ex + ey*ey);
+  };
+
+  // Erase: remove any stroke that has a point within `radius` of `pt`
+  const eraseAt = (pt, radius) => {
+    setStrokes(prev => prev.filter(s => {
+      // single-point stroke
+      if (s.points.length < 2) {
+        const d = Math.hypot(s.points[0].x - pt.x, s.points[0].y - pt.y);
+        return d > radius;
+      }
+      // multi-point: check each segment
+      for (let i = 1; i < s.points.length; i++) {
+        if (distToSeg(pt, s.points[i-1], s.points[i]) <= radius) return false;
+      }
+      return true;
+    }));
+  };
+
   const startDraw = (e) => {
     e.preventDefault();
     const p = getPoint(e); if (!p) return;
-    const s = {color: tool==="eraser"?"ERASE":color, size: tool==="eraser"?size*3:size, points:[{x:p.x,y:p.y}]};
+    if (tool === "eraser") {
+      eraseAt(p, size * 2.5);
+      setDrawing(true);
+      return;
+    }
+    const s = {color, size, points:[{x:p.x,y:p.y}]};
     curRef.current = s;
     setStrokes(prev => [...prev, s]);
     setDrawing(true);
@@ -200,6 +245,10 @@ function Whiteboard() {
   const moveDraw = (e) => {
     if (!drawing) return; e.preventDefault();
     const p = getPoint(e); if (!p) return;
+    if (tool === "eraser") {
+      eraseAt(p, size * 2.5);
+      return;
+    }
     const cur = curRef.current; if (!cur) return;
     cur.points.push({x:p.x,y:p.y});
     setStrokes(prev => [...prev.slice(0,-1), {...cur, points:[...cur.points]}]);
@@ -234,9 +283,14 @@ function Whiteboard() {
               `)}
             </div>`}
         </div>
-        <div style="display:flex;align-items:center;gap:8px;background:#292524;border-radius:8px;padding:6px 12px">
+        <div style="display:flex;align-items:center;gap:8px;background:#292524;border-radius:8px;padding:6px 10px">
           <span style="font-size:11px;color:#a8a29e;font-weight:700">SIZE</span>
-          <input type="range" min="0.2" max="2.5" step="0.1" value=${size}
+          <!-- Live preview circle: scales with size, shows current color (or stone for eraser) -->
+          <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#0c0a09;border-radius:6px">
+            <div style=${{width:`${Math.max(2, size*8)}px`,height:`${Math.max(2, size*8)}px`,borderRadius:"50%",background:tool==="eraser"?"#a8a29e":color,boxShadow:tool==="eraser"?"0 0 0 1px #44403c":"none"}}/>
+          </div>
+          <input type="range" min="0.3" max="2.5" step="0.1" value=${size}
+            onInput=${e=>setSize(parseFloat(e.target.value))}
             onChange=${e=>setSize(parseFloat(e.target.value))} style="width:80px;accent-color:#3b82f6"/>
         </div>
         <div style="margin-left:auto;display:flex;gap:8px">
@@ -252,7 +306,7 @@ function Whiteboard() {
               <rect x="-10" y="-10" width=${FIELD_W+20} height=${(half?FIELD_H/2:FIELD_H)+20} fill="rgba(0,0,0,0.001)"/>
               ${strokes.map((s,i) => html`
                 <path key=${i} d=${pathFrom(s.points)}
-                  stroke=${s.color==="ERASE"?"url(#fieldGrad)":s.color}
+                  stroke=${s.color}
                   stroke-width=${s.size} stroke-linecap="round" stroke-linejoin="round" fill="none"/>
               `)}
             </g>
@@ -641,6 +695,105 @@ function calcQScore(game,q) {
   return {goals:g,behinds:b,points:g*6+b};
 }
 
+// ============ PLAYER STATS TABLE ============
+// Rows = players (sorted by jersey #), columns = stats with +/- buttons
+function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpdate, setCustomStats, setShowNewStat, NoteStrip}) {
+  // Sort active players by number (numeric), then by name
+  const activePlayers = roster.filter(p=>!p.status||p.status===STATUS.ACTIVE);
+  const sorted = [...activePlayers].sort((a,b) => {
+    const an = parseInt(a.number,10), bn = parseInt(b.number,10);
+    const aValid = !isNaN(an), bValid = !isNaN(bn);
+    if (aValid && bValid) return an - bn;
+    if (aValid) return -1;
+    if (bValid) return 1;
+    return a.name.localeCompare(b.name);
+  });
+  const q = QUARTERS[quarter];
+  const playerVal = (pid, stat) => (cg.stats.players[pid] && cg.stats.players[pid][q] && cg.stats.players[pid][q][stat]) || 0;
+
+  if (!sorted.length) {
+    return html`
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
+        <div style="text-align:center;max-width:300px">
+          <div style="color:#a8a29e;font-size:14px;margin-bottom:8px">No active players</div>
+          <div style="color:#78716c;font-size:12px">Add players in the LINEUP tab → ROSTER → EDIT.</div>
+        </div>
+      </div>`;
+  }
+
+  // Column width — keep stat columns reasonable for horizontal scrolling on iPad
+  const NAME_COL = 140; // px
+  const STAT_COL = 92;  // px (+/- buttons + count)
+
+  return html`
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+      <div style="flex:1;overflow:auto;-webkit-overflow-scrolling:touch">
+        <table style=${{borderCollapse:"separate",borderSpacing:"0",width:"max-content",minWidth:"100%"}}>
+          <thead>
+            <tr>
+              <th style=${{position:"sticky",top:"0",left:"0",zIndex:"3",background:"#0c0a09",borderBottom:"2px solid #292524",borderRight:"1px solid #292524",padding:"10px 12px",textAlign:"left",fontSize:"10px",fontWeight:"900",letterSpacing:".1em",color:"#a8a29e",width:NAME_COL+"px",minWidth:NAME_COL+"px"}}>PLAYER</th>
+              ${allStats.map(stat=>{
+                const isScore = stat==="Goals"||stat==="Behinds";
+                return html`
+                  <th key=${stat} style=${{position:"sticky",top:"0",zIndex:"2",background:"#0c0a09",borderBottom:"2px solid #292524",padding:"8px 4px",textAlign:"center",fontSize:"10px",fontWeight:"900",letterSpacing:".05em",color:isScore?"#facc15":"#a8a29e",width:STAT_COL+"px",minWidth:STAT_COL+"px",textTransform:"uppercase"}}>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:4px">
+                      <span>${stat}</span>
+                      ${customStats.includes(stat)?html`<button onClick=${()=>setCustomStats(prev=>prev.filter(x=>x!==stat))} style="background:none;border:none;cursor:pointer;color:#57534e;display:flex"><${Icon} name="x" size=${10}/></button>`:null}
+                    </div>
+                  </th>`;
+              })}
+              <th style=${{position:"sticky",top:"0",zIndex:"2",background:"#0c0a09",borderBottom:"2px solid #292524",padding:"4px",width:"56px",minWidth:"56px"}}>
+                <button onClick=${()=>setShowNewStat(true)}
+                  style="background:transparent;border:1.5px dashed #44403c;border-radius:6px;padding:6px 8px;color:#78716c;cursor:pointer;font-size:10px;font-weight:700;font-family:inherit;display:flex;align-items:center;gap:3px;margin:0 auto">
+                  <${Icon} name="plus" size=${10} color="#78716c"/> ADD
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sorted.map((p,idx)=>{
+              const rowBg = idx % 2 === 0 ? "#0c0a09" : "#161311";
+              return html`
+                <tr key=${p.id}>
+                  <!-- Player name (sticky left) -->
+                  <td style=${{position:"sticky",left:"0",zIndex:"1",background:rowBg,borderBottom:"1px solid #292524",borderRight:"1px solid #292524",padding:"6px 10px",width:NAME_COL+"px",minWidth:NAME_COL+"px"}}>
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <div style="width:30px;height:30px;border-radius:6px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;flex-shrink:0">
+                        ${p.number || p.name.slice(0,1).toUpperCase()}
+                      </div>
+                      <div style="min-width:0;flex:1">
+                        <div style="font-size:12px;color:#fff;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2">${p.name}</div>
+                        ${p.number?html`<div style="font-size:10px;color:#78716c">#${p.number}</div>`:null}
+                      </div>
+                    </div>
+                  </td>
+                  <!-- Stat cells -->
+                  ${allStats.map(stat=>{
+                    const isScore = stat==="Goals"||stat==="Behinds";
+                    const v = playerVal(p.id, stat);
+                    return html`
+                      <td key=${stat} style=${{background:rowBg,borderBottom:"1px solid #292524",padding:"4px",textAlign:"center",width:STAT_COL+"px",minWidth:STAT_COL+"px"}}>
+                        <div style="display:flex;align-items:center;justify-content:center;gap:3px">
+                          <button onClick=${()=>applyUpdate(stat,-1,p.id)}
+                            style="width:26px;height:30px;border-radius:5px;background:#292524;color:#d6d3d1;border:none;cursor:pointer;font-size:14px;font-weight:900;font-family:inherit;display:flex;align-items:center;justify-content:center">−</button>
+                          <span style=${{fontSize:"16px",fontWeight:"900",color:v>0?(isScore?"#facc15":"#fff"):"#57534e",fontVariantNumeric:"tabular-nums",minWidth:"18px",textAlign:"center"}}>${v}</span>
+                          <button onClick=${()=>applyUpdate(stat,1,p.id)}
+                            style=${{width:"26px",height:"30px",borderRadius:"5px",background:isScore?"#facc15":"#2563eb",color:isScore?"#1c1917":"#fff",border:"none",cursor:"pointer",fontSize:"14px",fontWeight:"900",fontFamily:"inherit",display:"flex",alignItems:"center",justifyContent:"center"}}>+</button>
+                        </div>
+                      </td>`;
+                  })}
+                  <td style=${{background:rowBg,borderBottom:"1px solid #292524",width:"56px",minWidth:"56px"}}/>
+                </tr>`;
+            })}
+          </tbody>
+        </table>
+      </div>
+      <div style="background:#1c1917;border-top:1px solid #292524">
+        <${NoteStrip}/>
+      </div>
+    </div>`;
+}
+
 function Stats({roster, games, setGames, customStats, setCustomStats, currentGameId, setCurrentGameId, teamName, setTeamName}) {
   const [view, setView] = useState("track");
   const [quarter, setQuarter] = useState(0);
@@ -650,7 +803,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
   const [newStatName, setNewStatName] = useState("");
   const [showNewGame, setShowNewGame] = useState(false);
   const [newOpp, setNewOpp] = useState("");
-  const [editOpp, setEditOpp] = useState(false);
   const [goalPending, setGoalPending] = useState(false);
   const [editNoteQ, setEditNoteQ] = useState(null);
   const [noteText, setNoteText] = useState("");
@@ -787,36 +939,36 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     return html`
       <div style="background:linear-gradient(to right,#1e3a8a,#1c1917,rgba(127,29,29,.5));border-bottom:2px solid #facc15">
         <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(250,204,21,.3)">
-          <div style="padding:12px;text-align:center;border-right:1px solid rgba(250,204,21,.3)">
+          <!-- HOME -->
+          <div style="padding:10px 8px;text-align:center;border-right:1px solid rgba(250,204,21,.3)">
             <div style="font-size:9px;font-weight:900;letter-spacing:.25em;color:#93c5fd">HOME</div>
             <div style="color:#fff;font-weight:900;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${teamName}</div>
-            <div style="font-size:32px;font-weight:900;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums">
+            <div style="font-size:30px;font-weight:900;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums;margin-top:4px">
               ${ts.goals}<span style="color:#facc15">.</span>${ts.behinds}
             </div>
             <div style="color:#facc15;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums">${ts.points}</div>
-            <div style="font-size:9px;color:#93c5fd;margin-top:2px">Goals · Behinds · Points</div>
+            <div style="font-size:9px;color:#93c5fd;margin-top:2px">G · B · pts</div>
           </div>
-          <div style="padding:12px;text-align:center">
-            <div style="display:flex;align-items:center;justify-content:center;gap:8px">
-              <div style="font-size:9px;font-weight:900;letter-spacing:.25em;color:#fca5a5">AWAY</div>
-              <button onClick=${()=>setEditOpp(!editOpp)} style="font-size:10px;color:#fca5a5;text-decoration:underline;background:none;border:none;cursor:pointer">${editOpp?"done":"edit"}</button>
-            </div>
+          <!-- AWAY: always-visible scoring buttons -->
+          <div style="padding:10px 8px;text-align:center">
+            <div style="font-size:9px;font-weight:900;letter-spacing:.25em;color:#fca5a5">AWAY</div>
             <div style="color:#fff;font-weight:900;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cg.opponent}</div>
-            ${editOpp ? html`
-              <div style="display:flex;flex-direction:column;gap:6px;align-items:center;margin-top:4px">
-                ${["goals","behinds"].map(k=>html`
-                  <div key=${k} style="display:flex;align-items:center;gap:4px">
-                    <span style="font-size:10px;color:#fca5a5;width:44px;text-align:right;text-transform:capitalize">${k}</span>
-                    <button onClick=${()=>updateOpp(k,-1)} style="width:28px;height:28px;border-radius:6px;background:#292524;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:700">−</button>
-                    <span style="color:#fff;font-weight:900;font-size:18px;width:28px;text-align:center;font-variant-numeric:tabular-nums">${os[k]}</span>
-                    <button onClick=${()=>updateOpp(k,1)} style="width:28px;height:28px;border-radius:6px;background:#dc2626;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:700">+</button>
-                  </div>`)}
-              </div>` : html`
-              <div style="font-size:32px;font-weight:900;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums">
-                ${os.goals}<span style="color:#facc15">.</span>${os.behinds}
+            <div style="font-size:30px;font-weight:900;color:#fff;line-height:1.1;font-variant-numeric:tabular-nums;margin-top:4px">
+              ${os.goals}<span style="color:#facc15">.</span>${os.behinds}
+            </div>
+            <div style="color:#facc15;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums">${op}</div>
+            <div style="display:flex;gap:6px;justify-content:center;margin-top:6px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:3px;background:rgba(0,0,0,0.35);padding:3px;border-radius:6px">
+                <button onClick=${()=>updateOpp("goals",-1)} aria-label="Away goal minus" style="width:28px;height:28px;border-radius:5px;background:#292524;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:900;font-family:inherit">−</button>
+                <span style="font-size:10px;color:#fca5a5;font-weight:700;min-width:14px;text-align:center">G</span>
+                <button onClick=${()=>updateOpp("goals",1)} aria-label="Away goal plus" style="width:28px;height:28px;border-radius:5px;background:#dc2626;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:900;font-family:inherit">+</button>
               </div>
-              <div style="color:#facc15;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums">${op}</div>
-              <div style="font-size:9px;color:#fca5a5;margin-top:2px">Goals · Behinds · Points</div>`}
+              <div style="display:flex;align-items:center;gap:3px;background:rgba(0,0,0,0.35);padding:3px;border-radius:6px">
+                <button onClick=${()=>updateOpp("behinds",-1)} aria-label="Away behind minus" style="width:28px;height:28px;border-radius:5px;background:#292524;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:900;font-family:inherit">−</button>
+                <span style="font-size:10px;color:#fca5a5;font-weight:700;min-width:14px;text-align:center">B</span>
+                <button onClick=${()=>updateOpp("behinds",1)} aria-label="Away behind plus" style="width:28px;height:28px;border-radius:5px;background:#dc2626;color:#fff;border:none;cursor:pointer;font-size:16px;font-weight:900;font-family:inherit">+</button>
+              </div>
+            </div>
           </div>
         </div>
         <div style="background:#0c0a09;display:grid;grid-template-columns:repeat(4,1fr)">
@@ -885,45 +1037,48 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
               style=${{padding:"6px 12px",borderRadius:"6px",fontSize:"12px",fontWeight:"700",background:scope==="player"?"#2563eb":"transparent",color:scope==="player"?"#fff":"#d6d3d1",border:"none",cursor:"pointer",fontFamily:"inherit"}}>PLAYER</button>
           </div>
           ${scope==="player" ? html`
-            <select value=${selPlayer||""} onChange=${e=>setSelPlayer(e.target.value||null)}
-              style="flex:1;min-width:140px;background:#292524;color:#fff;padding:6px 10px;border-radius:8px;border:1px solid #44403c;font-size:13px;font-family:inherit">
-              <option value="">Select player…</option>
-              ${activePlayers.map(p=>html`<option key=${p.id} value=${p.id}>${p.number?`#${p.number} `:""}${p.name}</option>`)}
-            </select>` :
+            <span style="margin-left:auto;font-size:10px;color:#78716c;font-style:italic">Tap +/− on any cell. Q-buttons set quarter.</span>
+          ` :
             html`<span style="margin-left:auto;font-size:10px;color:#78716c;font-style:italic">Goals will prompt for kicker</span>`}
         </div>
-        <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 12px 0">
-          ${scope==="player"&&!selPlayer ? html`<div style="text-align:center;color:#78716c;padding:48px 0;font-size:13px">Select a player above to start tracking.</div>` :
-            html`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+        ${scope==="team" ? html`
+          <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 10px 0">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px">
               ${allStats.map(stat=>{
                 const isScore=stat==="Goals"||stat==="Behinds";
                 return html`
-                  <div key=${stat} style=${{background:"#1c1917",borderRadius:"12px",padding:"12px",border:"1px solid",borderColor:isScore?"rgba(250,204,21,.4)":"#292524"}}>
-                    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
-                      <div style=${{fontSize:"11px",fontWeight:"700",letterSpacing:".1em",textTransform:"uppercase",color:isScore?"#facc15":"#a8a29e"}}>${stat}</div>
-                      ${customStats.includes(stat)?html`<button onClick=${()=>setCustomStats(prev=>prev.filter(x=>x!==stat))} style="background:none;border:none;cursor:pointer;color:#57534e;display:flex"><${Icon} name="x" size=${12}/></button>`:null}
+                  <div key=${stat} style=${{background:"#1c1917",borderRadius:"10px",padding:"8px",border:"1px solid",borderColor:isScore?"rgba(250,204,21,.4)":"#292524"}}>
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;min-height:14px">
+                      <div style=${{fontSize:"10px",fontWeight:"700",letterSpacing:".08em",textTransform:"uppercase",color:isScore?"#facc15":"#a8a29e",lineHeight:"1.2"}}>${stat}</div>
+                      ${customStats.includes(stat)?html`<button onClick=${()=>setCustomStats(prev=>prev.filter(x=>x!==stat))} style="background:none;border:none;cursor:pointer;color:#57534e;display:flex;padding:0"><${Icon} name="x" size=${10}/></button>`:null}
                     </div>
-                    <div style="font-size:40px;font-weight:900;color:#fff;margin-bottom:12px;font-variant-numeric:tabular-nums;line-height:1">${getVal(stat)}</div>
-                    <div style="display:flex;gap:8px">
-                      <button onClick=${()=>updateStat(stat,-1)} style="flex:1;background:#292524;color:#d6d3d1;padding:10px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit">
-                        <${Icon} name="minus" size=${18}/>
+                    <div style="font-size:26px;font-weight:900;color:#fff;margin-bottom:6px;font-variant-numeric:tabular-nums;line-height:1">${getVal(stat)}</div>
+                    <div style="display:flex;gap:4px">
+                      <button onClick=${()=>updateStat(stat,-1)} style="flex:1;background:#292524;color:#d6d3d1;padding:6px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;min-height:32px">
+                        <${Icon} name="minus" size=${14}/>
                       </button>
-                      <button onClick=${()=>updateStat(stat,1)} style=${{flex:"2",background:isScore?"#facc15":"#2563eb",color:isScore?"#1c1917":"#fff",padding:"10px",borderRadius:"8px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit"}}>
-                        <${Icon} name="plus" size=${22}/>
+                      <button onClick=${()=>updateStat(stat,1)} style=${{flex:"2",background:isScore?"#facc15":"#2563eb",color:isScore?"#1c1917":"#fff",padding:"6px",borderRadius:"6px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit",minHeight:"32px"}}>
+                        <${Icon} name="plus" size=${16}/>
                       </button>
                     </div>
                   </div>`;
               })}
               <button onClick=${()=>setShowNewStat(true)}
-                style="background:rgba(28,25,23,.5);border:2px dashed #44403c;border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:140px;cursor:pointer">
-                <${Icon} name="plus" size=${24} color="#78716c"/>
-                <span style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#78716c;margin-top:4px">ADD STAT</span>
+                style="background:rgba(28,25,23,.5);border:2px dashed #44403c;border-radius:10px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90px;cursor:pointer;font-family:inherit">
+                <${Icon} name="plus" size=${18} color="#78716c"/>
+                <span style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#78716c;margin-top:2px">ADD STAT</span>
               </button>
-            </div>`}
-          <div style="margin-top:12px;padding-bottom:24px">
-            <${NoteStrip}/>
+            </div>
+            <div style="margin-top:12px;padding-bottom:24px">
+              <${NoteStrip}/>
+            </div>
           </div>
-        </div>
+        ` : html`
+          <!-- PLAYER SCOPE: table - rows are players, columns are stats -->
+          <${PlayerStatsTable} cg=${cg} roster=${roster} allStats=${allStats} customStats=${customStats}
+            quarter=${quarter} applyUpdate=${applyUpdate} setCustomStats=${setCustomStats}
+            setShowNewStat=${setShowNewStat} NoteStrip=${NoteStrip}/>
+        `}
       </div>`;
   };
 
@@ -1214,7 +1369,7 @@ function App() {
 
   return html`
     <div style="height:100vh;width:100vw;display:flex;flex-direction:column;background:#0c0a09;color:#fff;overflow:hidden;font-family:ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',sans-serif">
-      <header style="background:linear-gradient(to right,#1e3a8a,#1c1917,#7f1d1d);border-bottom:2px solid #facc15;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;flex-shrink:0">
+      <header class="app-header" style="background:linear-gradient(to right,#1e3a8a,#1c1917,#7f1d1d);border-bottom:2px solid #facc15;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;flex-shrink:0">
         <div style="display:flex;align-items:center;gap:10px">
           <div style="width:32px;height:32px;background:#facc15;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#1c1917;font-weight:900;font-size:18px;flex-shrink:0">⬢</div>
           <div>
