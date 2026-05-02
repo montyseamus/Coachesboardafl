@@ -26,21 +26,17 @@ svg{touch-action:none;user-select:none;-webkit-user-select:none}
 
 .field-layout{flex-direction:column}
 .field-roster{width:100%;max-height:38vh;border-top:1px solid #292524}
+.field-roster-collapsed{width:100%;max-height:none;min-height:42px}
 @media(min-width:720px){
   .field-layout{flex-direction:row !important}
   .field-roster{width:240px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524}
+  .field-roster-collapsed{width:36px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524}
 }
 @media(min-width:900px){
   .lg-row{flex-direction:row !important}
   .lg-sidebar{width:260px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524 !important}
 }
 
-/* Whiteboard plays sidebar - hidden on small screens, drawer on tap */
-.wb-plays-sidebar{display:none}
-@media(min-width:820px){
-  .wb-plays-sidebar{display:flex !important}
-  .wb-plays-toggle{display:none !important}
-}
 </style>
 </head>
 <body>
@@ -59,9 +55,9 @@ const MARGIN = 4;
 // are vertically aligned at x=50 and stepped down the y-axis so they read top-to-bottom
 // the way you'd write a positional lineup. Wings stay on the flanks.
 const FIELD_POSITIONS = [
-  {id:"bp_l",  label:"BP-L",  name:"Back Pocket L",        x:32, y:8  },
-  {id:"fb",    label:"FB",    name:"Full Back",             x:50, y:6  },
-  {id:"bp_r",  label:"BP-R",  name:"Back Pocket R",        x:68, y:8  },
+  {id:"bp_l",  label:"BP-L",  name:"Back Pocket L",        x:32, y:14 },
+  {id:"fb",    label:"FB",    name:"Full Back",             x:50, y:3  },
+  {id:"bp_r",  label:"BP-R",  name:"Back Pocket R",        x:68, y:14 },
   {id:"hb_l",  label:"HBF-L", name:"Half Back Flank L",    x:22, y:26 },
   {id:"chb",   label:"CHB",   name:"Centre Half Back",     x:50, y:28 },
   {id:"hb_r",  label:"HBF-R", name:"Half Back Flank R",    x:78, y:26 },
@@ -74,9 +70,9 @@ const FIELD_POSITIONS = [
   {id:"hf_l",  label:"HFF-L", name:"Half Forward Flank L", x:22, y:96 },
   {id:"chf",   label:"CHF",   name:"Centre Half Forward",  x:50, y:94 },
   {id:"hf_r",  label:"HFF-R", name:"Half Forward Flank R", x:78, y:96 },
-  {id:"fp_l",  label:"FP-L",  name:"Forward Pocket L",     x:32, y:114},
-  {id:"ff",    label:"FF",    name:"Full Forward",         x:50, y:116},
-  {id:"fp_r",  label:"FP-R",  name:"Forward Pocket R",     x:68, y:114},
+  {id:"fp_l",  label:"FP-L",  name:"Forward Pocket L",     x:32, y:108},
+  {id:"ff",    label:"FF",    name:"Full Forward",         x:50, y:119},
+  {id:"fp_r",  label:"FP-R",  name:"Forward Pocket R",     x:68, y:108},
 ];
 const BENCH_SLOTS = ["B1","B2","B3","B4","B5","B6"];
 const QUARTERS = ["Q1","Q2","Q3","Q4"];
@@ -166,6 +162,19 @@ const ICONS = {
 };
 function Icon({name, size=18, color="currentColor"}) {
   return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" stroke=${color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d=${ICONS[name]||""}/></svg>`;
+}
+
+// AFL ball — red Sherrin shape with white lacing. Used in place of the ⚽ emoji
+// for goal-kicker indicators so the look is sport-correct.
+function AflBall({size=18}) {
+  return html`<svg width=${size} height=${Math.round(size*0.62)} viewBox="0 0 32 20" style="flex-shrink:0;display:inline-block;vertical-align:middle">
+    <ellipse cx="16" cy="10" rx="15" ry="9" fill="#a01515" stroke="#5e0a0a" stroke-width="0.8"/>
+    <line x1="9" y1="10" x2="23" y2="10" stroke="#fff" stroke-width="1"/>
+    <line x1="11" y1="8" x2="11" y2="12" stroke="#fff" stroke-width="1"/>
+    <line x1="14" y1="8" x2="14" y2="12" stroke="#fff" stroke-width="1"/>
+    <line x1="17" y1="8" x2="17" y2="12" stroke="#fff" stroke-width="1"/>
+    <line x1="20" y1="8" x2="20" y2="12" stroke="#fff" stroke-width="1"/>
+  </svg>`;
 }
 
 // ============ BUTTON HELPERS ============
@@ -484,10 +493,11 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
       </div>
     </div>`;
 
-  // Mobile drawer overlay
-  const mobileDrawer = !showPlaysDrawer ? null : html`
+  // Plays popup — single overlay, used on all screen sizes. Tap the PLAYS
+  // button in the toolbar to open; tap outside or any LOAD/Cancel to close.
+  const playsPopup = !showPlaysDrawer ? null : html`
     <div style="position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.6);display:flex" onClick=${()=>setShowPlaysDrawer(false)}>
-      <div style="margin-left:auto;width:min(320px,80vw);background:#1c1917;border-left:1px solid #292524" onClick=${e=>e.stopPropagation()}>
+      <div style="margin-left:auto;width:min(360px,90vw);background:#1c1917;border-left:1px solid #292524;height:100%;display:flex;flex-direction:column" onClick=${e=>e.stopPropagation()}>
         ${playsPanel}
       </div>
     </div>`;
@@ -527,7 +537,7 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
             onChange=${e=>setSize(parseFloat(e.target.value))} style="width:70px;accent-color:#3b82f6"/>
         </div>
         <div style="margin-left:auto;display:flex;gap:6px">
-          <button class="wb-plays-toggle" onClick=${()=>setShowPlaysDrawer(true)}
+          <button onClick=${()=>setShowPlaysDrawer(true)}
             style="padding:7px 10px;border-radius:7px;background:#292524;color:#d6d3d1;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:900;font-family:inherit">
             <${Icon} name="file" size=${14}/> PLAYS (${plays.length})
           </button>
@@ -603,12 +613,8 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
               </${AFLField}>`}
           </div>
         </div>
-        <div class="wb-plays-sidebar" style="width:240px;border-left:1px solid #292524;display:none;flex-direction:column;flex-shrink:0">
-          ${playsPanel}
-        </div>
-        </div>
       </div>
-      ${mobileDrawer}
+      ${playsPopup}
       ${saveDialog}
     </div>`;
 }
@@ -623,6 +629,11 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
   const [swapSlot1, setSwapSlot1] = useState(null);
   const [draggedPlayer, setDraggedPlayer] = useState(null);
   const [dragOverSlot, setDragOverSlot] = useState(null);
+  // Roster collapse — when true, the side panel shrinks to a thin strip with just
+  // a re-expand button, giving the field much more space. State is local to the
+  // session; not persisted because the use case is "expand to set lineup, collapse
+  // to focus on the field, expand again as needed".
+  const [rosterCollapsed, setRosterCollapsed] = useState(false);
 
   const cg = games.find(g=>g.id===currentGameId);
   const icLog = cg ? (cg.interchangeLog||[]) : [];
@@ -783,16 +794,30 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
         </div>
       </div>
 
-      <!-- RIGHT/BOTTOM: Roster panel (always visible) -->
+      <!-- RIGHT/BOTTOM: Roster panel — collapsible. When collapsed, shrinks to a
+           thin strip on iPad / a slim header bar on phone, with a single expand
+           button. Coach picks the lineup expanded, then collapses for max field
+           visibility during the game. -->
+      ${rosterCollapsed ? html`
+        <div class="field-roster field-roster-collapsed" style="background:#1c1917;border-top:1px solid #292524;display:flex;flex-shrink:0;align-items:center;justify-content:center;cursor:pointer" onClick=${()=>setRosterCollapsed(false)}>
+          <button onClick=${()=>setRosterCollapsed(false)}
+            style="background:transparent;border:none;cursor:pointer;color:#60a5fa;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900;letter-spacing:.1em;font-family:inherit;padding:10px;width:100%;justify-content:center">
+            <${Icon} name="users" size=${14} color="#60a5fa"/>
+            <span>SHOW ROSTER (${roster.filter(p=>!p.status||p.status===STATUS.ACTIVE).length})</span>
+          </button>
+        </div>
+      ` : html`
       <div class="field-roster" style="background:#1c1917;border-top:1px solid #292524;display:flex;flex-direction:column;flex-shrink:0">
         <div style="padding:10px 12px;border-bottom:1px solid #292524;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-          <div>
+          <div style="flex:1;min-width:0">
             <div style="font-size:13px;font-weight:700;letter-spacing:.1em;color:#d6d3d1">ROSTER (${roster.filter(p=>!p.status||p.status===STATUS.ACTIVE).length})</div>
             <div style="font-size:10px;color:#78716c;margin-top:2px">${pickedPlayer ? `Picked: ${pickedPlayer.name} — tap a position` : selectedSlot ? `Slot: ${slotLabel(selectedSlot.id)} — tap a player` : "Tap player then position, or drag"}</div>
           </div>
           <div style="display:flex;gap:6px;align-items:center">
             ${pickedPlayer ? html`<button onClick=${()=>setPickedPlayer(null)} style="font-size:11px;background:#dc2626;color:#fff;padding:4px 10px;border-radius:6px;border:none;cursor:pointer;font-weight:700">CANCEL</button>` : null}
             <button onClick=${()=>setEditing(!editing)} style="font-size:12px;color:#60a5fa;font-weight:700;background:none;border:none;cursor:pointer">${editing?"DONE":"EDIT"}</button>
+            <button onClick=${()=>setRosterCollapsed(true)} aria-label="Hide roster"
+              style="background:#292524;border:none;cursor:pointer;color:#a8a29e;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;font-weight:900;font-size:14px;font-family:inherit">›</button>
           </div>
         </div>
         ${editing ? html`
@@ -851,7 +876,7 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
             })
           }
         </div>
-      </div>
+      </div>`}
     </div>`;
 
   // ---- INTERCHANGE TAB ----
@@ -1078,6 +1103,14 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
   });
   const q = QUARTERS[quarter];
   const playerVal = (pid, stat) => (cg.stats.players[pid] && cg.stats.players[pid][q] && cg.stats.players[pid][q][stat]) || 0;
+  // Game total across all four quarters for a player. Shown in brackets when
+  // not on Q1 so the coach sees both the per-quarter and the running total.
+  const playerGameVal = (pid, stat) => {
+    if (!cg.stats.players[pid]) return 0;
+    let t = 0;
+    QUARTERS.forEach(qq => { t += (cg.stats.players[pid][qq] && cg.stats.players[pid][qq][stat]) || 0; });
+    return t;
+  };
 
   if (!sorted.length) {
     return html`
@@ -1144,7 +1177,10 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
                         <div style="display:flex;align-items:center;justify-content:center;gap:3px">
                           <button onClick=${()=>applyUpdate(stat,-1,p.id)}
                             style="width:26px;height:30px;border-radius:5px;background:#292524;color:#d6d3d1;border:none;cursor:pointer;font-size:14px;font-weight:900;font-family:inherit;display:flex;align-items:center;justify-content:center">−</button>
-                          <span style=${{fontSize:"16px",fontWeight:"900",color:v>0?(isScore?"#facc15":"#fff"):"#57534e",fontVariantNumeric:"tabular-nums",minWidth:"18px",textAlign:"center"}}>${v}</span>
+                          <div style="display:flex;flex-direction:column;align-items:center;min-width:24px">
+                            <span style=${{fontSize:"16px",fontWeight:"900",color:v>0?(isScore?"#facc15":"#fff"):"#57534e",fontVariantNumeric:"tabular-nums",lineHeight:"1"}}>${v}</span>
+                            ${quarter > 0 ? html`<span style=${{fontSize:"9px",fontWeight:"700",color:"#78716c",fontVariantNumeric:"tabular-nums",lineHeight:"1.2"}}>(${playerGameVal(p.id, stat)})</span>` : null}
+                          </div>
                           <button onClick=${()=>applyUpdate(stat,1,p.id)}
                             style=${{width:"26px",height:"30px",borderRadius:"5px",background:isScore?"#facc15":"#2563eb",color:isScore?"#1c1917":"#fff",border:"none",cursor:"pointer",fontSize:"14px",fontWeight:"900",fontFamily:"inherit",display:"flex",alignItems:"center",justifyContent:"center"}}>+</button>
                         </div>
@@ -1171,6 +1207,15 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
   const [newStatName, setNewStatName] = useState("");
   const [showNewGame, setShowNewGame] = useState(false);
   const [newOpp, setNewOpp] = useState("");
+  // COMPARE has three sub-tabs so the coach can show team comparisons to the
+  // whole squad without exposing individual ratings/notes. State is local to
+  // the session — not persisted.
+  const [compareSubView, setCompareSubView] = useState("team");
+  // Optional new-game fields. Round can be a number ("12") or label ("Final");
+  // time is HH:MM in 24h or whatever the user types; venue is one of home/away/neutral.
+  const [newRound, setNewRound] = useState("");
+  const [newTime, setNewTime] = useState("");
+  const [newVenue, setNewVenue] = useState("home");
   const [goalPending, setGoalPending] = useState(false);
   const [editNoteQ, setEditNoteQ] = useState(null);
   const [noteText, setNoteText] = useState("");
@@ -1203,14 +1248,48 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     if (!newOpp.trim()) return;
     const game = {
       id:`g_${Date.now()}`, opponent:newOpp.trim(), date:new Date().toISOString(),
+      // Optional fixture details — round number/label, kickoff time, and venue type.
+      // Stored as plain strings so older games (without these fields) still render.
+      round: newRound.trim() || "",
+      time: newTime.trim() || "",
+      venue: newVenue || "home",      // one of "home" | "away" | "neutral"
       opponentScore:{goals:0,behinds:0},
-      stats:{team:{Q1:{},Q2:{},Q3:{},Q4:{}},players:{}},
+      stats:{
+        team:{Q1:{},Q2:{},Q3:{},Q4:{}},
+        players:{},
+        opp:{Q1:{},Q2:{},Q3:{},Q4:{}}
+      },
       quarterNotes:{Q1:"",Q2:"",Q3:"",Q4:""},
+      ratings:{},
       interchangeLog:[]
     };
     setGames(prev=>[...prev,game]);
     setCurrentGameId(game.id);
-    setNewOpp(""); setShowNewGame(false); setView("track");
+    setNewOpp(""); setNewRound(""); setNewTime(""); setNewVenue("home");
+    setShowNewGame(false); setView("track");
+  };
+
+  // Update an opposition stat for the active quarter.
+  const updateOppStat = (stat, delta) => {
+    if (!cg) return;
+    const q = QUARTERS[quarter];
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const ng = JSON.parse(JSON.stringify(g));
+      if (!ng.stats.opp) ng.stats.opp = {Q1:{},Q2:{},Q3:{},Q4:{}};
+      if (!ng.stats.opp[q]) ng.stats.opp[q] = {};
+      ng.stats.opp[q][stat] = Math.max(0, (ng.stats.opp[q][stat]||0) + delta);
+      // Keep opponentScore mirrored when Goals/Behinds change so the scoreboard
+      // updates without a separate input. We sum across all quarters to derive it.
+      if (stat === "Goals" || stat === "Behinds") {
+        let total = 0;
+        QUARTERS.forEach(qq => { total += (ng.stats.opp[qq] && ng.stats.opp[qq][stat]) || 0; });
+        if (!ng.opponentScore) ng.opponentScore = {goals:0, behinds:0};
+        if (stat === "Goals") ng.opponentScore.goals = total;
+        else ng.opponentScore.behinds = total;
+      }
+      return ng;
+    }));
   };
 
   const applyUpdate = (stat, delta, pid) => {
@@ -1235,12 +1314,26 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
 
   const confirmKicker = (pid) => { applyUpdate("Goals",1,pid); setGoalPending(false); };
 
+  // Scoreboard +/- buttons update the away score directly. We also write into
+  // the per-quarter opp stats for the active quarter so the away-quarter-stats
+  // panel stays in sync. (Names in this app: opponentScore is the running total,
+  // stats.opp[Q].Goals/Behinds is the per-quarter record.)
   const updateOpp = (k, delta) => {
+    if (!cg) return;
+    const q = QUARTERS[quarter];
+    const stat = k === "goals" ? "Goals" : "Behinds";
     setGames(prev=>prev.map(g=>{
       if (g.id!==currentGameId) return g;
-      const os = {...(g.opponentScore||{goals:0,behinds:0})};
-      os[k] = Math.max(0,(os[k]||0)+delta);
-      return {...g, opponentScore:os};
+      const ng = JSON.parse(JSON.stringify(g));
+      if (!ng.stats.opp) ng.stats.opp = {Q1:{},Q2:{},Q3:{},Q4:{}};
+      if (!ng.stats.opp[q]) ng.stats.opp[q] = {};
+      ng.stats.opp[q][stat] = Math.max(0, (ng.stats.opp[q][stat]||0) + delta);
+      // Re-derive opponentScore from the sum across quarters
+      let total = 0;
+      QUARTERS.forEach(qq => { total += (ng.stats.opp[qq] && ng.stats.opp[qq][stat]) || 0; });
+      if (!ng.opponentScore) ng.opponentScore = {goals:0, behinds:0};
+      ng.opponentScore[k] = total;
+      return ng;
     }));
   };
 
@@ -1269,6 +1362,35 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     if (selPlayer&&cg.stats.players[selPlayer]) return (cg.stats.players[selPlayer][q]&&cg.stats.players[selPlayer][q][stat])||0;
     return 0;
   };
+  // Game-total helper: sum across all four quarters for the current game.
+  // Used to render "Q-value (game-total)" so coaches can see the running total
+  // alongside the per-quarter number when on Q2/Q3/Q4.
+  const getGameVal = (stat, pid) => {
+    if (!cg) return 0;
+    let t = 0;
+    QUARTERS.forEach(qq => {
+      if (pid) {
+        if (cg.stats.players[pid] && cg.stats.players[pid][qq]) t += cg.stats.players[pid][qq][stat] || 0;
+      } else {
+        if (cg.stats.team[qq]) t += cg.stats.team[qq][stat] || 0;
+      }
+    });
+    return t;
+  };
+  // Also: away-team quarter and game-total values
+  const getOppQVal = (stat) => {
+    if (!cg) return 0;
+    const q = QUARTERS[quarter];
+    return (cg.stats.opp && cg.stats.opp[q] && cg.stats.opp[q][stat]) || 0;
+  };
+  const getOppGameVal = (stat) => {
+    if (!cg) return 0;
+    let t = 0;
+    QUARTERS.forEach(qq => {
+      if (cg.stats.opp && cg.stats.opp[qq]) t += cg.stats.opp[qq][stat] || 0;
+    });
+    return t;
+  };
 
   const getTotal = (stat,gid,type,pid) => {
     const g=games.find(x=>x.id===gid); if(!g)return 0;
@@ -1286,6 +1408,31 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     if (currentGameId===id) setCurrentGameId(null);
   };
 
+  // Set a player's star rating (0–5) for the active game. 0 means "cleared".
+  const setRating = (pid, rating) => {
+    if (!cg) return;
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const ng = JSON.parse(JSON.stringify(g));
+      if (!ng.ratings) ng.ratings = {};
+      if (!ng.ratings[pid]) ng.ratings[pid] = {rating:0, notes:""};
+      ng.ratings[pid].rating = rating;
+      return ng;
+    }));
+  };
+  // Set a player's free-text notes for the active game.
+  const setRatingNotes = (pid, notes) => {
+    if (!cg) return;
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const ng = JSON.parse(JSON.stringify(g));
+      if (!ng.ratings) ng.ratings = {};
+      if (!ng.ratings[pid]) ng.ratings[pid] = {rating:0, notes:""};
+      ng.ratings[pid].notes = notes;
+      return ng;
+    }));
+  };
+
   const pName = (pid) => {
     if(pid===UNK)return "Unattributed";
     const p=roster.find(x=>x.id===pid);
@@ -1294,28 +1441,80 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
 
   const exportCSV = () => {
     if (!games.length) return;
-    const rows=[["Game","Date","Opponent","Quarter","Scope","Player",...allStats]];
+    const rows=[["Game","Date","Round","Time","Venue","Opponent","Quarter","Scope","Player",...allStats]];
     games.forEach(g=>{
       const d=new Date(g.date).toLocaleDateString();
+      const r = g.round || "", t = g.time || "", v = g.venue || "";
       QUARTERS.forEach(q=>{
-        const tr=[`${teamName} vs ${g.opponent}`,d,g.opponent,q,"Team","—"];
+        const tr=[`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,q,"Team","—"];
         allStats.forEach(s=>tr.push((g.stats.team[q]&&g.stats.team[q][s])||0));
         rows.push(tr);
         Object.keys(g.stats.players).forEach(pid=>{
-          const pr=[`${teamName} vs ${g.opponent}`,d,g.opponent,q,"Player",pName(pid)];
+          const pr=[`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,q,"Player",pName(pid)];
           allStats.forEach(s=>pr.push((g.stats.players[pid][q]&&g.stats.players[pid][q][s])||0));
           rows.push(pr);
         });
+        // Away (opposition) quarter stats — only include if any value recorded.
+        if (g.stats.opp && g.stats.opp[q]) {
+          const opp = g.stats.opp[q];
+          const hasAny = allStats.some(s => (opp[s]||0) > 0);
+          if (hasAny) {
+            const or=[`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,q,"Opponent","—"];
+            allStats.forEach(s=>or.push(opp[s]||0));
+            rows.push(or);
+          }
+        }
       });
-      QUARTERS.forEach(q=>{const note=(g.quarterNotes||{})[q];if(note)rows.push([`${teamName} vs ${g.opponent}`,d,g.opponent,q,"Note",note]);});
-      (g.interchangeLog||[]).forEach(ic=>rows.push([`${teamName} vs ${g.opponent}`,d,g.opponent,ic.time,"Interchange",`${ic.player1Name}(${ic.slot1})⇄${ic.player2Name}(${ic.slot2})`]));
+      QUARTERS.forEach(q=>{const note=(g.quarterNotes||{})[q];if(note)rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,q,"Note",note]);});
+      (g.interchangeLog||[]).forEach(ic=>rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,ic.time,"Interchange",`${ic.player1Name}(${ic.slot1})⇄${ic.player2Name}(${ic.slot2})`]));
+      // Ratings rows — one per rated player.
+      const ratings = g.ratings || {};
+      Object.keys(ratings).forEach(pid => {
+        const rt = ratings[pid];
+        if (!rt || (!rt.rating && !rt.notes)) return;
+        rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,"RATING",pName(pid),rt.rating||"",rt.notes||""]);
+      });
       const ts=calcScore(g), os=g.opponentScore||{goals:0,behinds:0};
-      rows.push([`${teamName} vs ${g.opponent}`,d,g.opponent,"FINAL","Score",`${teamName}: ${ts.goals}.${ts.behinds}(${ts.points}) vs ${g.opponent}: ${os.goals}.${os.behinds}(${os.goals*6+os.behinds})`]);
+      rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,"FINAL","Score",`${teamName}: ${ts.goals}.${ts.behinds}(${ts.points}) vs ${g.opponent}: ${os.goals}.${os.behinds}(${os.goals*6+os.behinds})`]);
     });
     const csv=rows.map(r=>r.map(c=>{const s=String(c??"");return s.includes(",")||s.includes('"')||s.includes("\n")?`"${s.replace(/"/g,'""')}"`:`${s}`;}).join(",")).join("\n");
     const url=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
     const a=document.createElement("a");
     a.href=url; a.download=`${teamName.replace(/\s+/g,"_")}_stats_${new Date().toISOString().slice(0,10)}.csv`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  };
+
+  // Dedicated CSV export of player ratings + notes across all games. The notes
+  // can be long and contain commas/quotes/newlines, so they get quoted properly.
+  const exportRatingsCSV = () => {
+    if (!games.length) return;
+    const rows = [["Game","Date","Round","Time","Venue","Opponent","Player","Number","Rating (1-5)","Notes"]];
+    games.forEach(g => {
+      const d = new Date(g.date).toLocaleDateString();
+      const ratings = g.ratings || {};
+      const r = g.round || "", t = g.time || "", v = g.venue || "";
+      // Include every player in the roster, even if no rating recorded yet, so
+      // the export shows a complete picture per game.
+      roster.forEach(p => {
+        const rt = ratings[p.id] || {rating:0, notes:""};
+        if (rt.rating === 0 && !rt.notes) return; // skip empty entries
+        rows.push([
+          `${teamName} vs ${g.opponent}`, d, r, t, v, g.opponent,
+          p.name, p.number || "",
+          rt.rating || "",
+          rt.notes || ""
+        ]);
+      });
+    });
+    const csv = rows.map(r => r.map(c => {
+      const s = String(c ?? "");
+      return s.includes(",") || s.includes('"') || s.includes("\n")
+        ? `"${s.replace(/"/g,'""')}"` : s;
+    }).join(",")).join("\n");
+    const url = URL.createObjectURL(new Blob([csv], {type:"text/csv"}));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${teamName.replace(/\s+/g,"_")}_ratings_${new Date().toISOString().slice(0,10)}.csv`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
   };
 
@@ -1327,6 +1526,14 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     const op=os.goals*6+os.behinds;
     return html`
       <div style="background:linear-gradient(to right,#1e3a8a,#1c1917,rgba(127,29,29,.5));border-bottom:2px solid #facc15">
+        ${(cg.round || cg.time || cg.venue) ? html`
+          <!-- Fixture details strip — appears only when at least one fixture detail is set -->
+          <div style="padding:4px 12px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:10px;font-weight:700;letter-spacing:.1em;color:#d6d3d1;background:rgba(0,0,0,0.35);border-bottom:1px solid rgba(250,204,21,.15);flex-wrap:wrap">
+            ${cg.round ? html`<span>ROUND <span style="color:#facc15">${cg.round}</span></span>` : null}
+            ${cg.time  ? html`<span>${cg.time}</span>` : null}
+            ${cg.venue ? html`<span style=${{padding:"1px 6px",borderRadius:"3px",background:cg.venue==="home"?"rgba(37,99,235,.4)":cg.venue==="away"?"rgba(220,38,38,.4)":"rgba(120,113,108,.4)"}}>${cg.venue.toUpperCase()}</span>` : null}
+          </div>
+        ` : null}
         <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(250,204,21,.3)">
           <!-- HOME -->
           <div style="padding:10px 8px;text-align:center;border-right:1px solid rgba(250,204,21,.3)">
@@ -1436,7 +1643,10 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
                       <div style=${{fontSize:"10px",fontWeight:"700",letterSpacing:".08em",textTransform:"uppercase",color:isScore?"#facc15":"#a8a29e",lineHeight:"1.2"}}>${stat}</div>
                       ${customStats.includes(stat)?html`<button onClick=${()=>setCustomStats(prev=>prev.filter(x=>x!==stat))} style="background:none;border:none;cursor:pointer;color:#57534e;display:flex;padding:0"><${Icon} name="x" size=${10}/></button>`:null}
                     </div>
-                    <div style="font-size:26px;font-weight:900;color:#fff;margin-bottom:6px;font-variant-numeric:tabular-nums;line-height:1">${getVal(stat)}</div>
+                    <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;line-height:1">
+                      <span style="font-size:26px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums">${getVal(stat)}</span>
+                      ${quarter > 0 ? html`<span style="font-size:13px;font-weight:700;color:#a8a29e;font-variant-numeric:tabular-nums">(${getGameVal(stat)})</span>` : null}
+                    </div>
                     <div style="display:flex;gap:4px">
                       <button onClick=${()=>updateStat(stat,-1)} style="flex:1;background:#292524;color:#d6d3d1;padding:6px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;min-height:32px">
                         <${Icon} name="minus" size=${14}/>
@@ -1453,6 +1663,39 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
                 <span style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#78716c;margin-top:2px">ADD STAT</span>
               </button>
             </div>
+            <!-- Away team stats — same layout as our team but tinted red. Optional;
+                 use as much or as little as you want. Keeps a per-quarter record so
+                 the differential view in COMPARE can show us-minus-them per game. -->
+            <details style="margin-top:14px;background:#1c1917;border:1px solid #292524;border-radius:10px" open=${false}>
+              <summary style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:.1em;color:#fca5a5;list-style:none">
+                <span style="width:8px;height:8px;background:#dc2626;border-radius:50%;display:inline-block"/>
+                AWAY TEAM STATS — ${cg.opponent} (optional)
+              </summary>
+              <div style="padding:10px;border-top:1px solid #292524">
+                <div style="font-size:10px;color:#78716c;margin-bottom:8px;font-style:italic">Track opposition stats for game-by-game differential. Goals/Behinds also update the away score.</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px">
+                  ${allStats.map(stat=>{
+                    const isScore=stat==="Goals"||stat==="Behinds";
+                    return html`
+                      <div key=${"opp_"+stat} style=${{background:"#0c0a09",borderRadius:"10px",padding:"8px",border:"1px solid",borderColor:isScore?"rgba(220,38,38,.4)":"rgba(127,29,29,.3)"}}>
+                        <div style=${{fontSize:"10px",fontWeight:"700",letterSpacing:".08em",textTransform:"uppercase",color:isScore?"#fca5a5":"#a8a29e",lineHeight:"1.2",marginBottom:"4px"}}>${stat}</div>
+                        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;line-height:1">
+                          <span style="font-size:24px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums">${getOppQVal(stat)}</span>
+                          ${quarter > 0 ? html`<span style="font-size:12px;font-weight:700;color:#a8a29e;font-variant-numeric:tabular-nums">(${getOppGameVal(stat)})</span>` : null}
+                        </div>
+                        <div style="display:flex;gap:4px">
+                          <button onClick=${()=>updateOppStat(stat,-1)} style="flex:1;background:#292524;color:#d6d3d1;padding:5px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;min-height:30px">
+                            <${Icon} name="minus" size=${13}/>
+                          </button>
+                          <button onClick=${()=>updateOppStat(stat,1)} style="flex:2;background:#dc2626;color:#fff;padding:5px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;min-height:30px">
+                            <${Icon} name="plus" size=${15}/>
+                          </button>
+                        </div>
+                      </div>`;
+                  })}
+                </div>
+              </div>
+            </details>
             <div style="margin-top:12px;padding-bottom:24px">
               ${noteStrip}
             </div>
@@ -1481,9 +1724,14 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
             <div key=${g.id} style="background:#1c1917;border-radius:12px;padding:16px;border:1px solid #292524;margin-bottom:12px">
               <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:8px;flex-wrap:wrap">
                 <div>
-                  <div style="color:#fff;font-weight:900;font-size:17px">${teamName} vs ${g.opponent}</div>
-                  <div style="font-size:11px;color:#78716c;display:flex;gap:12px;margin-top:2px">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                    <div style="color:#fff;font-weight:900;font-size:17px">${teamName} vs ${g.opponent}</div>
+                    ${g.venue ? html`<span style=${{fontSize:"10px",fontWeight:"900",letterSpacing:".1em",padding:"2px 8px",borderRadius:"4px",background:g.venue==="home"?"rgba(37,99,235,.25)":g.venue==="away"?"rgba(220,38,38,.25)":"rgba(120,113,108,.25)",color:g.venue==="home"?"#60a5fa":g.venue==="away"?"#fca5a5":"#a8a29e"}}>${g.venue.toUpperCase()}</span>` : null}
+                  </div>
+                  <div style="font-size:11px;color:#78716c;display:flex;gap:12px;margin-top:2px;flex-wrap:wrap">
                     <span>${new Date(g.date).toLocaleDateString()}</span>
+                    ${g.round ? html`<span>Round ${g.round}</span>` : null}
+                    ${g.time ? html`<span>${g.time}</span>` : null}
                     ${icCount>0?html`<span style="color:#60a5fa">🔄 ${icCount} IC</span>`:null}
                     ${hasNotes?html`<span style="color:#facc15">📝</span>`:null}
                   </div>
@@ -1516,21 +1764,98 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
       }
     </div>`;
 
-  // ---- COMPARE VIEW ----
+  // ---- RATINGS VIEW ----
+  // Per-game player ratings: 1–5 stars + free-text notes. Stars and notes are
+  // both edited in place. The textarea is keyed on player+game id so switching
+  // games doesn't carry stale focus or unsaved input. Inputs use onInput
+  // (controlled) to keep storage in sync as the coach types — the keyboard-
+  // focus refactor we did earlier means typing won't drop focus.
+  const ratingsView = !cg ? html`
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
+        <div style="text-align:center;max-width:384px">
+          <${Icon} name="chart" size=${48} color="#57534e"/>
+          <h3 style="color:#d6d3d1;font-size:18px;font-weight:700;margin:16px 0 8px">No active game</h3>
+          <p style="color:#78716c;font-size:14px;margin-bottom:16px">Start a new game to rate players and add notes.</p>
+        </div>
+      </div>` : (() => {
+    const activePlayers = roster.filter(p => !p.status || p.status === STATUS.ACTIVE);
+    const sorted = [...activePlayers].sort((a,b) => {
+      const an = parseInt(a.number,10), bn = parseInt(b.number,10);
+      const av = !isNaN(an), bv = !isNaN(bn);
+      if (av && bv) return an - bn;
+      if (av) return -1;
+      if (bv) return 1;
+      return a.name.localeCompare(b.name);
+    });
+    const ratings = cg.ratings || {};
+    return html`
+      <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+        ${scoreboard}
+        <div style="padding:10px 12px;background:#1c1917;border-bottom:1px solid #292524;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="font-size:11px;font-weight:900;letter-spacing:.1em;color:#facc15;display:flex;align-items:center;gap:6px">
+            ⭐ PLAYER RATINGS — ${cg.opponent}
+          </div>
+          <span style="font-size:10px;color:#78716c;font-style:italic">Tap stars to rate. Type notes for any player.</span>
+        </div>
+        ${sorted.length === 0 ? html`
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
+            <div style="color:#78716c;font-size:13px;text-align:center">No active players. Add players in the LINEUP tab.</div>
+          </div>
+        ` : html`
+          <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px;background:#0c0a09">
+            <div style="display:flex;flex-direction:column;gap:8px;max-width:760px;margin:0 auto">
+              ${sorted.map(p => {
+                const r = ratings[p.id] || {rating:0, notes:""};
+                return html`
+                  <div key=${p.id} style="background:#1c1917;border-radius:10px;border:1px solid #292524;padding:12px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                      <div style="width:36px;height:36px;border-radius:8px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px;flex-shrink:0">
+                        ${p.number || p.name.slice(0,1).toUpperCase()}
+                      </div>
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:14px;color:#fff;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div>
+                        ${p.number ? html`<div style="font-size:10px;color:#78716c">#${p.number}</div>` : null}
+                      </div>
+                      <!-- Star strip: tap a star to set rating, tap the same star again to clear -->
+                      <div style="display:flex;gap:2px">
+                        ${[1,2,3,4,5].map(n => html`
+                          <button key=${n}
+                            onClick=${()=>setRating(p.id, r.rating === n ? 0 : n)}
+                            aria-label=${`${n} star${n>1?'s':''}`}
+                            style=${{background:"transparent",border:"none",cursor:"pointer",padding:"4px",fontSize:"22px",lineHeight:"1",color:n <= r.rating ? "#facc15" : "#44403c",fontFamily:"inherit"}}>★</button>
+                        `)}
+                      </div>
+                    </div>
+                    <textarea
+                      value=${r.notes || ""}
+                      onInput=${e => setRatingNotes(p.id, e.target.value)}
+                      placeholder="Notes for this game — what worked, what to work on, set positions, etc."
+                      rows="2"
+                      style="width:100%;background:#0c0a09;color:#fff;padding:8px 10px;border-radius:6px;border:1px solid #292524;font-size:13px;font-family:inherit;resize:vertical;box-sizing:border-box;line-height:1.4"></textarea>
+                  </div>`;
+              })}
+            </div>
+          </div>
+        `}
+      </div>`;
+  })();
+
+
   const compareView = !games.length
     ? html`<div style="text-align:center;color:#78716c;padding:48px 12px;font-size:13px">No games to compare yet.</div>`
     : (() => {
     const sorted=[...games].sort((a,b)=>new Date(a.date)-new Date(b.date));
+    // Goal kickers tally — used in the team sub-view so we can show top scorers.
     const kickerTotals={};
     sorted.forEach(g=>Object.keys(g.stats.players).forEach(pid=>{
       if(!kickerTotals[pid])kickerTotals[pid]=0;
       QUARTERS.forEach(q=>{kickerTotals[pid]+=((g.stats.players[pid][q]&&g.stats.players[pid][q]["Goals"])||0);});
     }));
     const topKickers=Object.entries(kickerTotals).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a).slice(0,8);
-    const cell = (content, extra={}) => `<td style="padding:6px 8px;${extra.style||""}">${content}</td>`;
 
-    return html`
-      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
+    // ---- TEAM sub-view: totals by game, top scorers, us-vs-them differential ----
+    const teamSection = html`
+      <div>
         <!-- Team totals -->
         <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">TEAM TOTALS BY GAME</div>
@@ -1564,10 +1889,10 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
           </div>
         </div>
 
-        <!-- Goal kickers -->
+        <!-- Goal kickers — kept here in TEAM as it's an aggregate scoring view -->
         ${topKickers.length>0?html`
           <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
-            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">⚽ GOAL KICKERS — SEASON</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px;display:flex;align-items:center;gap:8px"><${AflBall} size=${16}/> GOAL KICKERS — SEASON</div>
             <div style="display:flex;flex-direction:column;gap:8px">
               ${topKickers.map(([pid,goals],idx)=>html`
                 <div key=${pid} style="display:flex;align-items:center;gap:12px">
@@ -1581,31 +1906,183 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
             </div>
           </div>`:null}
 
-        <!-- Player totals -->
+        <!-- US − THEM differential by game -->
         <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">PLAYER TOTALS — ALL GAMES</div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;gap:8px">
+            <span>⇄ US − THEM (DIFFERENTIAL BY GAME)</span>
+          </div>
+          <div style="font-size:10px;color:#78716c;margin-bottom:10px;font-style:italic">
+            Positive (green) = ${teamName} ahead. Negative (red) = opponent ahead. Only games with away-stats recorded show non-zero differentials.
+          </div>
           <div style="overflow-x:auto">
             <table style="width:100%;border-collapse:collapse;font-size:13px">
               <thead><tr style="border-bottom:1px solid #292524">
-                <th style="text-align:left;padding:6px 8px;color:#a8a29e;font-size:11px">PLAYER</th>
-                ${allStats.map(s=>html`<th key=${s} style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">${s}</th>`)}
+                <th style="text-align:left;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap;position:sticky;left:0;background:#1c1917">GAME</th>
+                ${allStats.map(s => html`<th key=${s} style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">${s}</th>`)}
               </tr></thead>
               <tbody>
-                ${[...roster,{id:UNK,name:"Unattributed",number:""}].map(p=>{
-                  const totals={};
-                  allStats.forEach(s=>{totals[s]=sorted.reduce((sum,g)=>sum+getTotal(s,g.id,"player",p.id),0);});
-                  if(!Object.values(totals).some(v=>v>0)) return null;
-                  return html`<tr key=${p.id} style="border-bottom:1px solid rgba(41,37,36,.5)">
-                    <td style="padding:6px 8px;color:#fff;font-weight:600;white-space:nowrap">
-                      ${p.id===UNK?html`<span style="color:#78716c;font-style:italic">Unattributed</span>`:
-                        html`${p.number?html`<span style="color:#60a5fa">#${p.number} </span>`:null}${p.name}`}
-                    </td>
-                    ${allStats.map(s=>html`<td key=${s} style="padding:6px 8px;text-align:right;color:#60a5fa;font-weight:700;font-variant-numeric:tabular-nums">${totals[s]||"—"}</td>`)}
-                  </tr>`;
+                ${sorted.map(g => {
+                  const oppQ = g.stats.opp || {};
+                  const oppTotal = (stat) => {
+                    let t = 0;
+                    QUARTERS.forEach(qq => { t += (oppQ[qq] && oppQ[qq][stat]) || 0; });
+                    return t;
+                  };
+                  return html`
+                    <tr key=${g.id} style="border-bottom:1px solid rgba(41,37,36,.5)">
+                      <td style="padding:6px 8px;color:#fff;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#1c1917">vs ${g.opponent}</td>
+                      ${allStats.map(s => {
+                        const ours = getTotal(s, g.id, "team");
+                        const theirs = oppTotal(s);
+                        const diff = ours - theirs;
+                        const color = diff > 0 ? "#4ade80" : diff < 0 ? "#f87171" : "#57534e";
+                        const label = diff === 0 ? (theirs===0 && ours===0 ? "—" : "0") : (diff > 0 ? `+${diff}` : `${diff}`);
+                        return html`<td key=${s} style=${{padding:"6px 8px",textAlign:"right",color,fontWeight:"700",fontVariantNumeric:"tabular-nums"}}>${label}</td>`;
+                      })}
+                    </tr>`;
                 })}
+                <tr style="background:rgba(41,37,36,.5)">
+                  <td style="padding:6px 8px;color:#d6d3d1;font-weight:700;font-size:11px;position:sticky;left:0;background:#2a2826">AVG</td>
+                  ${allStats.map(s => {
+                    let totalDiff = 0;
+                    sorted.forEach(g => {
+                      const ours = getTotal(s, g.id, "team");
+                      const oppQ = g.stats.opp || {};
+                      let theirs = 0;
+                      QUARTERS.forEach(qq => { theirs += (oppQ[qq] && oppQ[qq][s]) || 0; });
+                      totalDiff += ours - theirs;
+                    });
+                    const avg = totalDiff / sorted.length;
+                    const color = avg > 0.05 ? "#4ade80" : avg < -0.05 ? "#f87171" : "#a8a29e";
+                    const label = avg.toFixed(1);
+                    return html`<td key=${s} style=${{padding:"6px 8px",textAlign:"right",color,fontWeight:"700",fontVariantNumeric:"tabular-nums"}}>${avg > 0 ? "+" + label : label}</td>`;
+                  })}
+                </tr>
               </tbody>
             </table>
           </div>
+        </div>
+      </div>`;
+
+    // ---- PLAYER sub-view: per-player totals across all games ----
+    const playerSection = html`
+      <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">PLAYER TOTALS — ALL GAMES</div>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="border-bottom:1px solid #292524">
+              <th style="text-align:left;padding:6px 8px;color:#a8a29e;font-size:11px">PLAYER</th>
+              ${allStats.map(s=>html`<th key=${s} style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">${s}</th>`)}
+            </tr></thead>
+            <tbody>
+              ${[...roster,{id:UNK,name:"Unattributed",number:""}].map(p=>{
+                const totals={};
+                allStats.forEach(s=>{totals[s]=sorted.reduce((sum,g)=>sum+getTotal(s,g.id,"player",p.id),0);});
+                if(!Object.values(totals).some(v=>v>0)) return null;
+                return html`<tr key=${p.id} style="border-bottom:1px solid rgba(41,37,36,.5)">
+                  <td style="padding:6px 8px;color:#fff;font-weight:600;white-space:nowrap">
+                    ${p.id===UNK?html`<span style="color:#78716c;font-style:italic">Unattributed</span>`:
+                      html`${p.number?html`<span style="color:#60a5fa">#${p.number} </span>`:null}${p.name}`}
+                  </td>
+                  ${allStats.map(s=>html`<td key=${s} style="padding:6px 8px;text-align:right;color:#60a5fa;font-weight:700;font-variant-numeric:tabular-nums">${totals[s]||"—"}</td>`)}
+                </tr>`;
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+
+    // ---- RATINGS sub-view: average rating per player + notes ----
+    const ratingTotals = {};
+    sorted.forEach(g => {
+      const r = g.ratings || {};
+      Object.keys(r).forEach(pid => {
+        const entry = r[pid];
+        if (!entry || !entry.rating) return;
+        if (!ratingTotals[pid]) ratingTotals[pid] = {sum:0, count:0, notes:[]};
+        ratingTotals[pid].sum += entry.rating;
+        ratingTotals[pid].count += 1;
+        if (entry.notes) {
+          ratingTotals[pid].notes.push({
+            date: new Date(g.date).toLocaleDateString(),
+            opp: g.opponent,
+            rating: entry.rating,
+            text: entry.notes
+          });
+        }
+      });
+    });
+    const ratedPlayers = Object.entries(ratingTotals)
+      .map(([pid, t]) => {
+        const p = roster.find(x => x.id === pid);
+        return p ? {p, avg: t.sum/t.count, count: t.count, notes: t.notes} : null;
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.avg - a.avg);
+    const ratingsSection = ratedPlayers.length === 0 ? html`
+      <div style="background:#1c1917;border-radius:12px;padding:24px;border:1px solid #292524;text-align:center">
+        <div style="color:#78716c;font-size:13px">No ratings recorded yet.</div>
+        <div style="color:#57534e;font-size:11px;margin-top:6px;font-style:italic">Use the RATINGS tab during a game to score players 1–5 stars.</div>
+      </div>
+    ` : html`
+      <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">⭐ AVERAGE PLAYER RATINGS — SEASON</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          ${ratedPlayers.map(({p, avg, count, notes}) => html`
+            <div key=${p.id} style="background:#0c0a09;border-radius:8px;padding:10px">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:${notes.length?6:0}">
+                <div style="font-size:14px;color:#fff;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+                  ${p.number?html`<span style="color:#60a5fa">#${p.number} </span>`:null}${p.name}
+                </div>
+                <div style="font-size:18px;color:#facc15;letter-spacing:1px;line-height:1">
+                  ${[1,2,3,4,5].map(n => {
+                    if (avg >= n - 0.25) return "★";
+                    if (avg >= n - 0.75) return "⯨";
+                    return html`<span style="color:#44403c">★</span>`;
+                  })}
+                </div>
+                <div style="font-size:13px;color:#facc15;font-weight:900;font-variant-numeric:tabular-nums;min-width:32px;text-align:right">${avg.toFixed(1)}</div>
+                <div style="font-size:10px;color:#78716c;font-weight:700">×${count}</div>
+              </div>
+              ${notes.length ? html`
+                <details style="margin-top:4px">
+                  <summary style="cursor:pointer;font-size:11px;color:#60a5fa;font-weight:700;list-style:none;padding:2px 0">${notes.length} note${notes.length>1?'s':''} ▾</summary>
+                  <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px;padding-left:8px;border-left:2px solid #292524">
+                    ${notes.map((n,i) => html`
+                      <div key=${i} style="font-size:11px;color:#d6d3d1">
+                        <div style="color:#78716c;font-weight:700;letter-spacing:.05em">${n.date} vs ${n.opp} · ${"★".repeat(n.rating)}</div>
+                        <div style="margin-top:2px;line-height:1.4">${n.text}</div>
+                      </div>
+                    `)}
+                  </div>
+                </details>
+              ` : null}
+            </div>
+          `)}
+        </div>
+      </div>`;
+
+    return html`
+      <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+        <!-- Sub-tab bar: TEAM | PLAYER | RATINGS. Default is TEAM. The
+             coach can show TEAM to the squad without exposing individual
+             ratings or per-player totals. -->
+        <div style="display:flex;background:#0c0a09;border-bottom:1px solid #292524">
+          ${[
+            {id:"team",   label:"TEAM"},
+            {id:"player", label:"PLAYER"},
+            {id:"ratings",label:"RATINGS"}
+          ].map(t => html`
+            <button key=${t.id} onClick=${()=>setCompareSubView(t.id)}
+              style=${{padding:"10px 14px",fontSize:"11px",fontWeight:"900",letterSpacing:".1em",background:"none",border:"none",borderBottom:compareSubView===t.id?"2px solid #2563eb":"2px solid transparent",color:compareSubView===t.id?"#60a5fa":"#78716c",cursor:"pointer",fontFamily:"inherit"}}>
+              ${t.label}
+            </button>
+          `)}
+        </div>
+        <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
+          ${compareSubView==="team"    ? teamSection
+            :compareSubView==="player" ? playerSection
+            :ratingsSection}
         </div>
       </div>`;
   })();
@@ -1621,7 +2098,7 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
       <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.8)">
         <div style="background:#1c1917;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px;border:1px solid rgba(250,204,21,.3)">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-            <h3 style="color:#fff;font-weight:900;font-size:18px;margin:0">⚽ GOAL — Who kicked it?</h3>
+            <h3 style="color:#fff;font-weight:900;font-size:18px;margin:0;display:flex;align-items:center;gap:8px"><${AflBall} size=${20}/> GOAL — Who kicked it?</h3>
             <button onClick=${()=>{applyUpdate("Goals",1,UNK);setGoalPending(false);}} style="background:none;border:none;cursor:pointer;color:#78716c;display:flex"><${Icon} name="x" size=${22}/></button>
           </div>
           <div style="font-size:12px;color:#a8a29e;margin-bottom:16px">Tap a player. Tap ✕ to skip.</div>
@@ -1665,9 +2142,12 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     </div>`;
 
   // ---- MODAL: New game ----
+  // Round / time / venue are optional — left blank or default they don't change
+  // any existing behaviour. Venue is one of home / away / neutral, chosen via a
+  // 3-way pill so it's tap-friendly on iPad.
   const newGameModal = !showNewGame ? null : html`
     <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.7)" onClick=${()=>setShowNewGame(false)}>
-      <div style="background:#1c1917;border-radius:12px;padding:20px;width:100%;max-width:384px;border:1px solid #44403c" onClick=${e=>e.stopPropagation()}>
+      <div style="background:#1c1917;border-radius:12px;padding:20px;width:100%;max-width:420px;border:1px solid #44403c;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch" onClick=${e=>e.stopPropagation()}>
         <h3 style="color:#fff;font-weight:700;margin:0 0 16px">New Game</h3>
         <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Your team</label>
         <input type="text" value=${teamName} onInput=${e=>setTeamName(e.target.value)}
@@ -1675,7 +2155,35 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
         <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Opponent</label>
         <input type="text" value=${newOpp} onInput=${e=>setNewOpp(e.target.value)}
           onKeyDown=${e=>e.key==="Enter"&&startGame()} placeholder="e.g. Prahran, Old Scotch…" autofocus
-          style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin:4px 0 16px;box-sizing:border-box;font-family:inherit"/>
+          style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin:4px 0 12px;box-sizing:border-box;font-family:inherit"/>
+        <!-- Round + time on one row to save vertical space -->
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <div style="flex:1">
+            <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Round</label>
+            <input type="text" value=${newRound} onInput=${e=>setNewRound(e.target.value)}
+              placeholder="e.g. 5, Final, GF"
+              style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin-top:4px;box-sizing:border-box;font-family:inherit"/>
+          </div>
+          <div style="flex:1">
+            <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Time</label>
+            <input type="text" value=${newTime} onInput=${e=>setNewTime(e.target.value)}
+              placeholder="e.g. 2:00 PM"
+              style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin-top:4px;box-sizing:border-box;font-family:inherit"/>
+          </div>
+        </div>
+        <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Venue</label>
+        <div style="display:flex;background:#292524;border-radius:8px;padding:3px;margin:6px 0 16px">
+          ${[
+            {id:"home",   label:"HOME",    color:"#2563eb"},
+            {id:"away",   label:"AWAY",    color:"#dc2626"},
+            {id:"neutral",label:"NEUTRAL", color:"#78716c"}
+          ].map(v => html`
+            <button key=${v.id} onClick=${()=>setNewVenue(v.id)}
+              style=${{flex:1,padding:"8px",borderRadius:"6px",fontSize:"12px",fontWeight:"700",letterSpacing:".05em",background:newVenue===v.id?v.color:"transparent",color:newVenue===v.id?"#fff":"#a8a29e",border:"none",cursor:"pointer",fontFamily:"inherit"}}>
+              ${v.label}
+            </button>
+          `)}
+        </div>
         <div style="display:flex;gap:8px">
           <button onClick=${()=>setShowNewGame(false)} style="flex:1;background:#292524;color:#d6d3d1;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Cancel</button>
           <button onClick=${startGame} style="flex:1;background:#2563eb;color:#fff;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-family:inherit">Start</button>
@@ -1701,15 +2209,16 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
   return html`
     <div style="display:flex;flex-direction:column;height:100%">
       <div style="display:flex;align-items:center;background:#1c1917;border-bottom:1px solid #292524;flex-wrap:wrap">
-        ${["track","history","compare"].map(v=>html`
+        ${["track","ratings","history","compare"].map(v=>html`
           <button key=${v} onClick=${()=>setView(v)}
-            style=${{padding:"12px 16px",fontSize:"12px",fontWeight:"900",letterSpacing:".1em",textTransform:"uppercase",background:"none",border:"none",borderBottom:view===v?"2px solid #2563eb":"2px solid transparent",color:view===v?"#60a5fa":"#78716c",cursor:"pointer",fontFamily:"inherit"}}>
+            style=${{padding:"12px 14px",fontSize:"12px",fontWeight:"900",letterSpacing:".1em",textTransform:"uppercase",background:"none",border:"none",borderBottom:view===v?"2px solid #2563eb":"2px solid transparent",color:view===v?"#60a5fa":"#78716c",cursor:"pointer",fontFamily:"inherit"}}>
             ${v}
           </button>`)}
         <div style="margin-left:auto;display:flex;gap:8px;margin-right:12px;padding:6px 0">
-          <button onClick=${exportCSV} disabled=${!games.length}
-            style=${{display:"flex",alignItems:"center",gap:"4px",background:"#292524",color:"#fff",padding:"6px 12px",borderRadius:"8px",border:"none",cursor:games.length?"pointer":"not-allowed",fontSize:"12px",fontWeight:"900",opacity:games.length?1:.4,fontFamily:"inherit"}}>
-            <${Icon} name="download" size=${12}/> CSV
+          <button onClick=${view==="ratings" ? exportRatingsCSV : exportCSV} disabled=${!games.length}
+            style=${{display:"flex",alignItems:"center",gap:"4px",background:"#292524",color:"#fff",padding:"6px 12px",borderRadius:"8px",border:"none",cursor:games.length?"pointer":"not-allowed",fontSize:"12px",fontWeight:"900",opacity:games.length?1:.4,fontFamily:"inherit"}}
+            title=${view==="ratings" ? "Export ratings + notes as CSV" : "Export all stats as CSV"}>
+            <${Icon} name="download" size=${12}/> ${view==="ratings" ? "RATINGS CSV" : "CSV"}
           </button>
           <button onClick=${()=>setShowNewGame(true)}
             style="background:#2563eb;color:#fff;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;font-size:12px;font-weight:900;font-family:inherit">
@@ -1718,6 +2227,7 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
         </div>
       </div>
       ${view==="track"?trackView
+        :view==="ratings"?ratingsView
         :view==="history"?historyView
         :compareView}
       ${goalModal}
