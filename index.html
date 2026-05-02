@@ -36,15 +36,17 @@ svg{touch-action:none;user-select:none;-webkit-user-select:none}
   .lg-row{flex-direction:row !important}
   .lg-sidebar{width:260px !important;max-height:none !important;border-top:none !important;border-left:1px solid #292524 !important}
 }
-
 </style>
 </head>
 <body>
 <div id="app"><div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#a8a29e;font-size:14px">Loading…</div></div>
 <script>
+
 !function(e,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports):"function"==typeof define&&define.amd?define(["exports"],n):n(e.htmPreact={})}(this,function(e){var n,_,t,o,r,u,l,i={},c=[],f=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function s(e,n){for(var _ in n)e[_]=n[_];return e}function a(e){var n=e.parentNode;n&&n.removeChild(e)}function p(e,_,t){var o,r,u,l={};for(u in _)"key"==u?o=_[u]:"ref"==u?r=_[u]:l[u]=_[u];if(arguments.length>2&&(l.children=arguments.length>3?n.call(arguments,2):t),"function"==typeof e&&null!=e.defaultProps)for(u in e.defaultProps)void 0===l[u]&&(l[u]=e.defaultProps[u]);return h(e,l,o,r,null)}function h(e,n,o,r,u){var l={type:e,props:n,key:o,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==u?++t:u};return null!=_.vnode&&_.vnode(l),l}function d(e){return e.children}function v(e,n){this.props=e,this.context=n}function y(e,n){if(null==n)return e.__?y(e.__,e.__.__k.indexOf(e)+1):null;for(var _;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e)return _.__e;return"function"==typeof e.type?y(e):null}function m(e){var n,_;if(null!=(e=e.__)&&null!=e.__c){for(e.__e=e.__c.base=null,n=0;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e){e.__e=e.__c.base=_.__e;break}return m(e)}}function g(e){(!e.__d&&(e.__d=!0)&&o.push(e)&&!k.__r++||u!==_.debounceRendering)&&((u=_.debounceRendering)||r)(k)}function k(){for(var e;k.__r=o.length;)e=o.sort(function(e,n){return e.__v.__b-n.__v.__b}),o=[],e.some(function(e){var n,_,t,o,r,u;e.__d&&(r=(o=(n=e).__v).__e,(u=n.__P)&&(_=[],(t=s({},o)).__v=o.__v+1,D(u,o,t,n.__n,void 0!==u.ownerSVGElement,null!=o.__h?[r]:null,_,null==r?y(o):r,o.__h),w(_,o),o.__e!=r&&m(o)))})}function b(e,n,_,t,o,r,u,l,f,s){var a,p,v,m,g,k,b,H=t&&t.__k||c,E=H.length;for(_.__k=[],a=0;a<n.length;a++)if(null!=(m=_.__k[a]=null==(m=n[a])||"boolean"==typeof m?null:"string"==typeof m||"number"==typeof m||"bigint"==typeof m?h(null,m,null,null,m):Array.isArray(m)?h(d,{children:m},null,null,null):m.__b>0?h(m.type,m.props,m.key,null,m.__v):m)){if(m.__=_,m.__b=_.__b+1,null===(v=H[a])||v&&m.key==v.key&&m.type===v.type)H[a]=void 0;else for(p=0;p<E;p++){if((v=H[p])&&m.key==v.key&&m.type===v.type){H[p]=void 0;break}v=null}D(e,m,v=v||i,o,r,u,l,f,s),g=m.__e,(p=m.ref)&&v.ref!=p&&(b||(b=[]),v.ref&&b.push(v.ref,null,m),b.push(p,m.__c||g,m)),null!=g?(null==k&&(k=g),"function"==typeof m.type&&null!=m.__k&&m.__k===v.__k?m.__d=f=C(m,f,e):f=x(e,m,v,H,g,f),s||"option"!==_.type?"function"==typeof _.type&&(_.__d=f):e.value=""):f&&v.__e==f&&f.parentNode!=e&&(f=y(v))}for(_.__e=k,a=E;a--;)null!=H[a]&&("function"==typeof _.type&&null!=H[a].__e&&H[a].__e==_.__d&&(_.__d=y(t,a+1)),A(H[a],H[a]));if(b)for(a=0;a<b.length;a++)U(b[a],b[++a],b[++a])}function C(e,n,_){var t,o;for(t=0;t<e.__k.length;t++)(o=e.__k[t])&&(o.__=e,n="function"==typeof o.type?C(o,n,_):x(_,o,o,e.__k,o.__e,n));return n}function x(e,n,_,t,o,r){var u,l,i;if(void 0!==n.__d)u=n.__d,n.__d=void 0;else if(null==_||o!=r||null==o.parentNode)e:if(null==r||r.parentNode!==e)e.appendChild(o),u=null;else{for(l=r,i=0;(l=l.nextSibling)&&i<t.length;i+=2)if(l==o)break e;e.insertBefore(o,r),u=r}return void 0!==u?u:o.nextSibling}function H(e,n,_){"-"===n[0]?e.setProperty(n,_):e[n]=null==_?"":"number"!=typeof _||f.test(n)?_:_+"px"}function E(e,n,_,t,o){var r;e:if("style"===n)if("string"==typeof _)e.style.cssText=_;else{if("string"==typeof t&&(e.style.cssText=t=""),t)for(n in t)_&&n in _||H(e.style,n,"");if(_)for(n in _)t&&_[n]===t[n]||H(e.style,n,_[n])}else if("o"===n[0]&&"n"===n[1])r=n!==(n=n.replace(/Capture$/,"")),n=n.toLowerCase()in e?n.toLowerCase().slice(2):n.slice(2),e.l||(e.l={}),e.l[n+r]=_,_?t||e.addEventListener(n,r?S:P,r):e.removeEventListener(n,r?S:P,r);else if("dangerouslySetInnerHTML"!==n){if(o)n=n.replace(/xlink[H:h]/,"h").replace(/sName$/,"s");else if("href"!==n&&"list"!==n&&"form"!==n&&"tabIndex"!==n&&"download"!==n&&n in e)try{e[n]=null==_?"":_;break e}catch(e){}"function"==typeof _||(null!=_&&(!1!==_||"a"===n[0]&&"r"===n[1])?e.setAttribute(n,_):e.removeAttribute(n))}}function P(e){this.l[e.type+!1](_.event?_.event(e):e)}function S(e){this.l[e.type+!0](_.event?_.event(e):e)}function D(e,n,t,o,r,u,l,i,c){var f,a,p,h,y,m,g,k,C,x,H,E=n.type;if(void 0!==n.constructor)return null;null!=t.__h&&(c=t.__h,i=n.__e=t.__e,n.__h=null,u=[i]),(f=_.__b)&&f(n);try{e:if("function"==typeof E){if(k=n.props,C=(f=E.contextType)&&o[f.__c],x=f?C?C.props.value:f.__:o,t.__c?g=(a=n.__c=t.__c).__=a.__E:("prototype"in E&&E.prototype.render?n.__c=a=new E(k,x):(n.__c=a=new v(k,x),a.constructor=E,a.render=M),C&&C.sub(a),a.props=k,a.state||(a.state={}),a.context=x,a.__n=o,p=a.__d=!0,a.__h=[]),null==a.__s&&(a.__s=a.state),null!=E.getDerivedStateFromProps&&(a.__s==a.state&&(a.__s=s({},a.__s)),s(a.__s,E.getDerivedStateFromProps(k,a.__s))),h=a.props,y=a.state,p)null==E.getDerivedStateFromProps&&null!=a.componentWillMount&&a.componentWillMount(),null!=a.componentDidMount&&a.__h.push(a.componentDidMount);else{if(null==E.getDerivedStateFromProps&&k!==h&&null!=a.componentWillReceiveProps&&a.componentWillReceiveProps(k,x),!a.__e&&null!=a.shouldComponentUpdate&&!1===a.shouldComponentUpdate(k,a.__s,x)||n.__v===t.__v){a.props=k,a.state=a.__s,n.__v!==t.__v&&(a.__d=!1),a.__v=n,n.__e=t.__e,n.__k=t.__k,n.__k.forEach(function(e){e&&(e.__=n)}),a.__h.length&&l.push(a);break e}null!=a.componentWillUpdate&&a.componentWillUpdate(k,a.__s,x),null!=a.componentDidUpdate&&a.__h.push(function(){a.componentDidUpdate(h,y,m)})}a.context=x,a.props=k,a.state=a.__s,(f=_.__r)&&f(n),a.__d=!1,a.__v=n,a.__P=e,f=a.render(a.props,a.state,a.context),a.state=a.__s,null!=a.getChildContext&&(o=s(s({},o),a.getChildContext())),p||null==a.getSnapshotBeforeUpdate||(m=a.getSnapshotBeforeUpdate(h,y)),H=null!=f&&f.type===d&&null==f.key?f.props.children:f,b(e,Array.isArray(H)?H:[H],n,t,o,r,u,l,i,c),a.base=n.__e,n.__h=null,a.__h.length&&l.push(a),g&&(a.__E=a.__=null),a.__e=!1}else null==u&&n.__v===t.__v?(n.__k=t.__k,n.__e=t.__e):n.__e=T(t.__e,n,t,o,r,u,l,c);(f=_.diffed)&&f(n)}catch(e){n.__v=null,(c||null!=u)&&(n.__e=i,n.__h=!!c,u[u.indexOf(i)]=null),_.__e(e,n,t)}}function w(e,n){_.__c&&_.__c(n,e),e.some(function(n){try{e=n.__h,n.__h=[],e.some(function(e){e.call(n)})}catch(e){_.__e(e,n.__v)}})}function T(e,_,t,o,r,u,l,c){var f,s,p,h=t.props,d=_.props,v=_.type,m=0;if("svg"===v&&(r=!0),null!=u)for(;m<u.length;m++)if((f=u[m])&&(f===e||(v?f.localName==v:3==f.nodeType))){e=f,u[m]=null;break}if(null==e){if(null===v)return document.createTextNode(d);e=r?document.createElementNS("http://www.w3.org/2000/svg",v):document.createElement(v,d.is&&d),u=null,c=!1}if(null===v)h===d||c&&e.data===d||(e.data=d);else{if(u=u&&n.call(e.childNodes),s=(h=t.props||i).dangerouslySetInnerHTML,p=d.dangerouslySetInnerHTML,!c){if(null!=u)for(h={},m=0;m<e.attributes.length;m++)h[e.attributes[m].name]=e.attributes[m].value;(p||s)&&(p&&(s&&p.__html==s.__html||p.__html===e.innerHTML)||(e.innerHTML=p&&p.__html||""))}if(function(e,n,_,t,o){var r;for(r in _)"children"===r||"key"===r||r in n||E(e,r,null,_[r],t);for(r in n)o&&"function"!=typeof n[r]||"children"===r||"key"===r||"value"===r||"checked"===r||_[r]===n[r]||E(e,r,n[r],_[r],t)}(e,d,h,r,c),p)_.__k=[];else if(m=_.props.children,b(e,Array.isArray(m)?m:[m],_,t,o,r&&"foreignObject"!==v,u,l,u?u[0]:t.__k&&y(t,0),c),null!=u)for(m=u.length;m--;)null!=u[m]&&a(u[m]);c||("value"in d&&void 0!==(m=d.value)&&(m!==e.value||"progress"===v&&!m)&&E(e,"value",m,h.value,!1),"checked"in d&&void 0!==(m=d.checked)&&m!==e.checked&&E(e,"checked",m,h.checked,!1))}return e}function U(e,n,t){try{"function"==typeof e?e(n):e.current=n}catch(e){_.__e(e,t)}}function A(e,n,t){var o,r;if(_.unmount&&_.unmount(e),(o=e.ref)&&(o.current&&o.current!==e.__e||U(o,null,n)),null!=(o=e.__c)){if(o.componentWillUnmount)try{o.componentWillUnmount()}catch(e){_.__e(e,n)}o.base=o.__P=null}if(o=e.__k)for(r=0;r<o.length;r++)o[r]&&A(o[r],n,"function"!=typeof e.type);t||null==e.__e||a(e.__e),e.__e=e.__d=void 0}function M(e,n,_){return this.constructor(e,_)}n=c.slice,_={__e:function(e,n){for(var _,t,o;n=n.__;)if((_=n.__c)&&!_.__)try{if((t=_.constructor)&&null!=t.getDerivedStateFromError&&(_.setState(t.getDerivedStateFromError(e)),o=_.__d),null!=_.componentDidCatch&&(_.componentDidCatch(e),o=_.__d),o)return _.__E=_}catch(n){e=n}throw e}},t=0,v.prototype.setState=function(e,n){var _;_=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=s({},this.state),"function"==typeof e&&(e=e(s({},_),this.props)),e&&s(_,e),null!=e&&this.__v&&(n&&this.__h.push(n),g(this))},v.prototype.forceUpdate=function(e){this.__v&&(this.__e=!0,e&&this.__h.push(e),g(this))},v.prototype.render=d,o=[],r="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,k.__r=0,l=0;var F,L,N,W=0,R=[],I=_.__b,O=_.__r,V=_.diffed,q=_.__c,B=_.unmount;function $(e,n){_.__h&&_.__h(L,e,W||n),W=0;var t=L.__H||(L.__H={__:[],__h:[]});return e>=t.__.length&&t.__.push({}),t.__[e]}function j(e){return W=1,G(ee,e)}function G(e,n,_){var t=$(F++,2);return t.t=e,t.__c||(t.__=[_?_(n):ee(void 0,n),function(e){var n=t.t(t.__[0],e);t.__[0]!==n&&(t.__=[n,t.__[1]],t.__c.setState({}))}],t.__c=L),t.__}function z(e,n){var t=$(F++,4);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__h.push(t))}function J(e,n){var _=$(F++,7);return Z(_.__H,n)&&(_.__=e(),_.__H=n,_.__h=e),_.__}function K(){R.forEach(function(e){if(e.__P)try{e.__H.__h.forEach(X),e.__H.__h.forEach(Y),e.__H.__h=[]}catch(n){e.__H.__h=[],_.__e(n,e.__v)}}),R=[]}_.__b=function(e){L=null,I&&I(e)},_.__r=function(e){O&&O(e),F=0;var n=(L=e.__c).__H;n&&(n.__h.forEach(X),n.__h.forEach(Y),n.__h=[])},_.diffed=function(e){V&&V(e);var n=e.__c;n&&n.__H&&n.__H.__h.length&&(1!==R.push(n)&&N===_.requestAnimationFrame||((N=_.requestAnimationFrame)||function(e){var n,_=function(){clearTimeout(t),Q&&cancelAnimationFrame(n),setTimeout(e)},t=setTimeout(_,100);Q&&(n=requestAnimationFrame(_))})(K)),L=void 0},_.__c=function(e,n){n.some(function(e){try{e.__h.forEach(X),e.__h=e.__h.filter(function(e){return!e.__||Y(e)})}catch(t){n.some(function(e){e.__h&&(e.__h=[])}),n=[],_.__e(t,e.__v)}}),q&&q(e,n)},_.unmount=function(e){B&&B(e);var n=e.__c;if(n&&n.__H)try{n.__H.__.forEach(X)}catch(e){_.__e(e,n.__v)}};var Q="function"==typeof requestAnimationFrame;function X(e){var n=L;"function"==typeof e.__c&&e.__c(),L=n}function Y(e){var n=L;e.__c=e.__(),L=n}function Z(e,n){return!e||e.length!==n.length||n.some(function(n,_){return n!==e[_]})}function ee(e,n){return"function"==typeof n?n(e):n}var ne=function(e,n,_,t){var o;n[0]=0;for(var r=1;r<n.length;r++){var u=n[r++],l=n[r]?(n[0]|=u?1:2,_[n[r++]]):n[++r];3===u?t[0]=l:4===u?t[1]=Object.assign(t[1]||{},l):5===u?(t[1]=t[1]||{})[n[++r]]=l:6===u?t[1][n[++r]]+=l+"":u?(o=e.apply(l,ne(e,l,_,["",null])),t.push(o),l[0]?n[0]|=2:(n[r-2]=0,n[r]=o)):t.push(l)}return t},_e=new Map,te=function(e){var n=_e.get(this);return n||(n=new Map,_e.set(this,n)),(n=ne(this,n.get(e)||(n.set(e,n=function(e){for(var n,_,t=1,o="",r="",u=[0],l=function(e){1===t&&(e||(o=o.replace(/^\s*\n\s*|\s*\n\s*$/g,"")))?u.push(0,e,o):3===t&&(e||o)?(u.push(3,e,o),t=2):2===t&&"..."===o&&e?u.push(4,e,0):2===t&&o&&!e?u.push(5,0,!0,o):t>=5&&((o||!e&&5===t)&&(u.push(t,0,o,_),t=6),e&&(u.push(t,e,0,_),t=6)),o=""},i=0;i<e.length;i++){i&&(1===t&&l(),l(i));for(var c=0;c<e[i].length;c++)n=e[i][c],1===t?"<"===n?(l(),u=[u],t=3):o+=n:4===t?"--"===o&&">"===n?(t=1,o=""):o=n+o[0]:r?n===r?r="":o+=n:'"'===n||"'"===n?r=n:">"===n?(l(),t=1):t&&("="===n?(t=5,_=o,o=""):"/"===n&&(t<5||">"===e[i][c+1])?(l(),3===t&&(u=u[0]),t=u,(u=u[0]).push(2,0,t),t=0):" "===n||"\t"===n||"\n"===n||"\r"===n?(l(),t=2):o+=n),3===t&&"!--"===o&&(t=4,u=u[0])}return l(),u}(e)),n),arguments,[])).length>1?n:n[0]}.bind(p);e.h=p,e.html=te,e.render=function(e,t,o){var r,u,l;_.__&&_.__(e,t),u=(r="function"==typeof o)?null:o&&o.__k||t.__k,l=[],D(t,e=(!r&&o||t).__k=p(d,null,[e]),u||i,i,void 0!==t.ownerSVGElement,!r&&o?[o]:u?null:t.firstChild?n.call(t.childNodes):null,l,!r&&o?o:u?u.__e:t.firstChild,r),w(l,e)},e.Component=v,e.createContext=function(e,n){var _={__c:n="__cC"+l++,__:e,Consumer:function(e,n){return e.children(n)},Provider:function(e){var _,t;return this.getChildContext||(_=[],(t={})[n]=this,this.getChildContext=function(){return t},this.shouldComponentUpdate=function(e){this.props.value!==e.value&&_.some(g)},this.sub=function(e){_.push(e);var n=e.componentWillUnmount;e.componentWillUnmount=function(){_.splice(_.indexOf(e),1),n&&n.call(e)}}),e.children}};return _.Provider.__=_.Consumer.contextType=_},e.useState=j,e.useReducer=G,e.useEffect=function(e,n){var t=$(F++,3);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__H.__h.push(t))},e.useLayoutEffect=z,e.useRef=function(e){return W=5,J(function(){return{current:e}},[])},e.useImperativeHandle=function(e,n,_){W=6,z(function(){"function"==typeof e?e(n()):e&&(e.current=n())},null==_?_:_.concat(e))},e.useMemo=J,e.useCallback=function(e,n){return W=8,J(function(){return e},n)},e.useContext=function(e){var n=L.context[e.__c],_=$(F++,9);return _.c=e,n?(null==_.__&&(_.__=!0,n.sub(L)),n.props.value):e.__},e.useDebugValue=function(e,n){_.useDebugValue&&_.useDebugValue(n?n(e):e)},e.useErrorBoundary=function(e){var n=$(F++,10),_=j();return n.__=e,L.componentDidCatch||(L.componentDidCatch=function(e){n.__&&n.__(e),_[1](e)}),[_[0],function(){_[1](void 0)}]}});
+
 </script>
 <script>
+
 // ============ CONSTANTS ============
 const FIELD_W = 100, FIELD_H = 122, CX = 50, CY = 61, RX = 49, RY = 60;
 const CSQ_HALF = 18.5, GOAL_RADIUS = 37, GS_HALF_W = 2.35, GS_DEPTH = 6.7;
@@ -85,12 +87,26 @@ const STATUS = {ACTIVE:"active", UNAVAILABLE:"unavailable", INJURED:"injured"};
 // Per-profile: roster, lineup, games, customStats, currentGame, teamName, plays (saved whiteboards),
 //   wbFull/wbHalf/wbBlank (current strokes for the three whiteboard modes).
 //   Per-profile keys are namespaced as `afl:<profileId>:<field>`.
-const SK_PROFILES = "afl:profiles";        // [{id, name}]
+const SK_PROFILES = "afl:profiles";        // [{id, name, color}]
 const SK_ACTIVE   = "afl:activeProfile";   // profileId
-const PER_PROFILE_FIELDS = ["roster","lineup","games","customStats","currentGame","teamName","plays","wbFull","wbHalf","wbBlank","wbLineup"];
+const PER_PROFILE_FIELDS = ["roster","lineup","games","customStats","currentGame","teamName","plays","wbFull","wbHalf","wbBlank","wbLineup","tutorialDone"];
 const MAX_PROFILES = 4;
 
 const profileKey = (pid, field) => `afl:${pid}:${field}`;
+
+// Common team colour palette shown on the main menu when creating a team.
+// Hex values chosen to look correct on the dark app background.
+const TEAM_COLORS = [
+  {name:"Blue",   value:"#2563eb"},
+  {name:"Navy",   value:"#1e3a8a"},
+  {name:"Red",    value:"#dc2626"},
+  {name:"Green",  value:"#16a34a"},
+  {name:"Yellow", value:"#facc15"},
+  {name:"Orange", value:"#ea580c"},
+  {name:"Black",  value:"#0c0a09"},
+  {name:"White",  value:"#f5f5f4"},
+];
+const DEFAULT_TEAM_COLOR = "#1e3a8a"; // navy
 
 // Legacy (pre-profile) keys used by older versions. We migrate these on first run.
 const LEGACY_SK = {roster:"afl:roster",lineup:"afl:lineup",games:"afl:games",customStats:"afl:cs",currentGame:"afl:cg",teamName:"afl:tn"};
@@ -110,24 +126,49 @@ function lsRemove(key) {
 // One-time migration: if user has data under legacy keys but no profiles yet,
 // create a default profile and move the data to its namespace. Existing rosters,
 // games, lineups, etc. all carry over into the new profile.
+//
+// Also: backfill `color` on profiles created before team-colour was a thing,
+// and mark any existing profile as `tutorialDone` so updating users don't get
+// pushed through the tutorial. Only brand-new teams created via the main menu
+// after this update will see the tutorial.
 function migrateLegacyIfNeeded() {
   const profiles = lsGet(SK_PROFILES, null);
-  if (profiles && profiles.length) return; // already on the profile system
-  const hasLegacy = Object.values(LEGACY_SK).some(k => localStorage.getItem(k) !== null);
-  const teamName = lsGet(LEGACY_SK.teamName, hasLegacy ? "My Team" : "Team 1");
-  const id = `prof_${Date.now()}`;
-  const profileList = [{id, name: teamName}];
-  if (hasLegacy) {
-    lsSave(profileKey(id,"roster"),     lsGet(LEGACY_SK.roster, []));
-    lsSave(profileKey(id,"lineup"),     lsGet(LEGACY_SK.lineup, {}));
-    lsSave(profileKey(id,"games"),      lsGet(LEGACY_SK.games, []));
-    lsSave(profileKey(id,"customStats"),lsGet(LEGACY_SK.customStats, []));
-    lsSave(profileKey(id,"currentGame"),lsGet(LEGACY_SK.currentGame, null));
-    lsSave(profileKey(id,"teamName"),   teamName);
-    Object.values(LEGACY_SK).forEach(lsRemove);
-  } else {
-    lsSave(profileKey(id,"teamName"), teamName);
+  if (profiles && profiles.length) {
+    // Already on the profile system — backfill new fields if missing.
+    let changed = false;
+    const updated = profiles.map(p => {
+      let np = p;
+      if (!p.color) { np = {...np, color: DEFAULT_TEAM_COLOR}; changed = true; }
+      return np;
+    });
+    if (changed) lsSave(SK_PROFILES, updated);
+    // Existing profiles never saw the tutorial; mark done so they don't get
+    // forced through it on update.
+    updated.forEach(p => {
+      if (lsGet(profileKey(p.id, "tutorialDone"), null) === null) {
+        pSave(p.id, "tutorialDone", true);
+      }
+    });
+    return;
   }
+  const hasLegacy = Object.values(LEGACY_SK).some(k => localStorage.getItem(k) !== null);
+  if (!hasLegacy) {
+    // Truly fresh install — leave profile list empty so the main menu shows
+    // its first-run "Create your first team" state.
+    lsSave(SK_PROFILES, []);
+    return;
+  }
+  const teamName = lsGet(LEGACY_SK.teamName, "My Team");
+  const id = `prof_${Date.now()}`;
+  const profileList = [{id, name: teamName, color: DEFAULT_TEAM_COLOR}];
+  lsSave(profileKey(id,"roster"),     lsGet(LEGACY_SK.roster, []));
+  lsSave(profileKey(id,"lineup"),     lsGet(LEGACY_SK.lineup, {}));
+  lsSave(profileKey(id,"games"),      lsGet(LEGACY_SK.games, []));
+  lsSave(profileKey(id,"customStats"),lsGet(LEGACY_SK.customStats, []));
+  lsSave(profileKey(id,"currentGame"),lsGet(LEGACY_SK.currentGame, null));
+  lsSave(profileKey(id,"teamName"),   teamName);
+  lsSave(profileKey(id,"tutorialDone"), true); // existing data — skip tutorial
+  Object.values(LEGACY_SK).forEach(lsRemove);
   lsSave(SK_PROFILES, profileList);
   lsSave(SK_ACTIVE, id);
 }
@@ -137,6 +178,74 @@ function pSave(profileId, field, value)   { lsSave(profileKey(profileId, field),
 
 function deleteProfileData(profileId) {
   PER_PROFILE_FIELDS.forEach(f => lsRemove(profileKey(profileId, f)));
+}
+
+// ============ BACKUP / RESTORE ============
+// iOS occasionally evicts localStorage for home-screen webapps (when storage
+// is reclaimed, on "Clear History and Website Data", or unpredictably across
+// some iOS updates). Backup is the only reliable defence — exporting a JSON
+// file the coach can save to Files.app and restore from later.
+
+function buildBackup() {
+  // Snapshot every afl:* key in localStorage. This includes the profile list,
+  // active profile, and all per-profile data (roster, lineup, games, plays,
+  // whiteboards, etc.). Tutorial-done flags and team colours come along too.
+  const data = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith("afl:")) {
+      data[k] = localStorage.getItem(k);
+    }
+  }
+  return {
+    format: "afl-coach-board",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    data
+  };
+}
+
+function downloadBackup() {
+  try {
+    const backup = buildBackup();
+    const blob = new Blob([JSON.stringify(backup, null, 2)], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const stamp = new Date().toISOString().slice(0,10);
+    a.download = `afl-coaching-backup-${stamp}.json`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
+    return true;
+  } catch(e) {
+    alert("Couldn't export backup: " + (e && e.message ? e.message : e));
+    return false;
+  }
+}
+
+// Restore from a backup file. Replaces ALL afl:* keys so the user comes back
+// to exactly the state at export. Returns true on success.
+function restoreBackup(jsonText) {
+  let parsed;
+  try { parsed = JSON.parse(jsonText); }
+  catch(e) { alert("That doesn't look like a backup file (couldn't read JSON)."); return false; }
+  if (!parsed || parsed.format !== "afl-coach-board" || !parsed.data || typeof parsed.data !== "object") {
+    alert("That doesn't look like a backup from this app.");
+    return false;
+  }
+  // Clear current afl:* keys first so removed teams don't linger.
+  const toRemove = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith("afl:")) toRemove.push(k);
+  }
+  toRemove.forEach(k => localStorage.removeItem(k));
+  // Write everything from the backup back in.
+  Object.entries(parsed.data).forEach(([k, v]) => {
+    try { localStorage.setItem(k, v); } catch(e) {}
+  });
+  return true;
 }
 
 // ============ PREACT + HTM SETUP ============
@@ -209,9 +318,7 @@ function AFLField({half=false, svgRef, children, extraSpace=0, showNotepad=false
         ${half ? html`<clipPath id="halfClip"><rect x=${-MARGIN} y=${-MARGIN} width=${FIELD_W+MARGIN*2} height=${FIELD_H/2+MARGIN}/></clipPath>` : null}
       </defs>
       ${showNotepad ? html`
-        <!-- Notepad background - dark bluish for writing space -->
         <rect x=${-M} y=${-M} width=${totalW} height=${totalH} fill="url(#notepadGrad)"/>
-        <!-- Subtle horizontal ruled lines, only outside the field area -->
         ${Array.from({length: Math.floor(totalH / 6)}, (_, i) => {
           const y = -M + 4 + i * 6;
           // Only draw lines that don't intersect the field oval area
@@ -239,7 +346,6 @@ function AFLField({half=false, svgRef, children, extraSpace=0, showNotepad=false
           <line x1=${CX-GP_HALF} y1=${FIELD_H} x2=${CX+GP_HALF} y2=${FIELD_H} stroke="#fff" stroke-width="0.6"/>
         ` : null}
       </g>
-      <!-- Top posts -->
       <line x1=${CX-GP_HALF} y1="0" x2=${CX-GP_HALF} y2="-3" stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
       <line x1=${CX+GP_HALF} y1="0" x2=${CX+GP_HALF} y2="-3" stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
       <line x1=${CX-BP_OFFSET} y1="0" x2=${CX-BP_OFFSET} y2="-2" stroke="#fff" stroke-width="0.5" stroke-linecap="round"/>
@@ -547,10 +653,6 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
       </div>
       <div style="display:flex;flex:1;overflow:hidden;flex-direction:column">
         ${lineupMode ? html`
-          <!-- Live vs snapshot indicator. After loading a saved play, the
-               displayed lineup is frozen so the play looks exactly as it did
-               when saved, even if the live lineup has since changed. The
-               coach can switch back to the live lineup with one tap. -->
           <div style="background:#1c1917;border-bottom:1px solid #292524;padding:6px 12px;display:flex;align-items:center;gap:8px;font-size:11px">
             ${frozenLineup ? html`
               <span style="color:#facc15;font-weight:900;letter-spacing:.05em">📌 SNAPSHOT</span>
@@ -565,10 +667,6 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
         <div style="display:flex;flex:1;overflow:hidden">
         <div style="flex:1;background:#0c0a09;padding:6px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start">
           ${lineupMode ? html`
-            <!-- Status banner: shows whether the displayed lineup is live (reflects
-                 changes made on the LINEUP tab) or a frozen snapshot from a saved
-                 play. The "back to live" link clears the snapshot so the field
-                 mirrors the current lineup again. -->
             <div style="width:100%;max-width:900px;padding:6px 10px;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:${frozenLineup?"#facc15":"#60a5fa"};background:${frozenLineup?"rgba(250,204,21,.08)":"rgba(96,165,250,.08)"};border:1px solid ${frozenLineup?"rgba(250,204,21,.25)":"rgba(96,165,250,.25)"};border-radius:6px;margin-bottom:4px">
               <span style=${{width:"8px",height:"8px",borderRadius:"50%",background:frozenLineup?"#facc15":"#60a5fa",flexShrink:0}}/>
               <span style="flex:1">${frozenLineup ? "Showing a saved-play snapshot" : "Showing your live lineup — edits in LINEUP tab appear here"}</span>
@@ -579,10 +677,6 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
             ${blank ? blankView : html`
               <${AFLField} half=${half && !lineupMode} svgRef=${svgRef} extraSpace=${10} showNotepad=${!lineupMode}>
                 ${lineupMode ? html`
-                  <!-- Player tokens at their lineup positions. They sit visually
-                       beneath the drawing strokes so annotations land on top. The
-                       <g> is non-interactive (pointer-events:none) so all touches
-                       fall through to the drawing surface. -->
                   <g style="pointer-events:none">
                     ${FIELD_POSITIONS.map(pos => {
                       const playerId = activeLineup ? activeLineup[pos.id] : null;
@@ -612,6 +706,7 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
                 </g>
               </${AFLField}>`}
           </div>
+        </div>
         </div>
       </div>
       ${playsPopup}
@@ -736,7 +831,6 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
   // the iPad keyboard after one letter.
   const fieldTab = html`
     <div style="display:flex;flex:1;overflow:hidden;flex-direction:column" class="field-layout">
-      <!-- LEFT/TOP: Field + bench -->
       <div style="flex:1;background:#0c0a09;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;min-height:0">
         <div style="padding:8px 12px;display:flex;flex-direction:column;align-items:center">
           <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:4px">⬆ DEFENDING END</div>
@@ -767,7 +861,6 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
           </div>
           <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:4px">⬇ ATTACKING END</div>
         </div>
-        <!-- BENCH -->
         <div style="padding:0 12px 12px">
           <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px">BENCH</div>
@@ -794,10 +887,6 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
         </div>
       </div>
 
-      <!-- RIGHT/BOTTOM: Roster panel — collapsible. When collapsed, shrinks to a
-           thin strip on iPad / a slim header bar on phone, with a single expand
-           button. Coach picks the lineup expanded, then collapses for max field
-           visibility during the game. -->
       ${rosterCollapsed ? html`
         <div class="field-roster field-roster-collapsed" style="background:#1c1917;border-top:1px solid #292524;display:flex;flex-shrink:0;align-items:center;justify-content:center;cursor:pointer" onClick=${()=>setRosterCollapsed(false)}>
           <button onClick=${()=>setRosterCollapsed(false)}
@@ -966,7 +1055,6 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
             </div>
           </div>
         </div>
-        <!-- LOG PANEL -->
         <div style="width:100%;background:#1c1917;border-top:1px solid #292524;display:flex;flex-direction:column;max-height:55vh" class="lg-sidebar">
           <div style="padding:12px;border-bottom:1px solid #292524;display:flex;align-items:center;justify-content:space-between">
             <div style="font-size:13px;font-weight:700;letter-spacing:.1em;color:#d6d3d1;display:flex;align-items:center;gap:8px">
@@ -975,9 +1063,6 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
             <span style="font-size:12px;color:#78716c">${icLog.length} moves</span>
           </div>
           ${!cg ? html`<div style="padding:16px;text-align:center;color:#78716c;font-size:12px">Start a game in Stats to log interchanges with timestamps.</div>` : null}
-          <!-- Off-count leaderboard: how many times each player has come off the
-               field this game. Helps ensure fair game time, especially for junior
-               teams. Hidden when there's no active game or no roster. -->
           ${cg && offBoard.length ? html`
             <div style="border-bottom:1px solid #292524;padding:10px 12px">
               <div style="font-size:10px;font-weight:900;letter-spacing:.1em;color:#facc15;margin-bottom:8px;display:flex;align-items:center;gap:6px">
@@ -1156,7 +1241,6 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
               const rowBg = idx % 2 === 0 ? "#0c0a09" : "#161311";
               return html`
                 <tr key=${p.id}>
-                  <!-- Player name (sticky left) -->
                   <td style=${{position:"sticky",left:"0",zIndex:"1",background:rowBg,borderBottom:"1px solid #292524",borderRight:"1px solid #292524",padding:"6px 10px",width:NAME_COL+"px",minWidth:NAME_COL+"px"}}>
                     <div style="display:flex;align-items:center;gap:8px">
                       <div style="width:30px;height:30px;border-radius:6px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;flex-shrink:0">
@@ -1168,7 +1252,6 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
                       </div>
                     </div>
                   </td>
-                  <!-- Stat cells -->
                   ${allStats.map(stat=>{
                     const isScore = stat==="Goals"||stat==="Behinds";
                     const v = playerVal(p.id, stat);
@@ -1527,7 +1610,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     return html`
       <div style="background:linear-gradient(to right,#1e3a8a,#1c1917,rgba(127,29,29,.5));border-bottom:2px solid #facc15">
         ${(cg.round || cg.time || cg.venue) ? html`
-          <!-- Fixture details strip — appears only when at least one fixture detail is set -->
           <div style="padding:4px 12px;display:flex;align-items:center;justify-content:center;gap:12px;font-size:10px;font-weight:700;letter-spacing:.1em;color:#d6d3d1;background:rgba(0,0,0,0.35);border-bottom:1px solid rgba(250,204,21,.15);flex-wrap:wrap">
             ${cg.round ? html`<span>ROUND <span style="color:#facc15">${cg.round}</span></span>` : null}
             ${cg.time  ? html`<span>${cg.time}</span>` : null}
@@ -1535,7 +1617,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
           </div>
         ` : null}
         <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(250,204,21,.3)">
-          <!-- HOME -->
           <div style="padding:10px 8px;text-align:center;border-right:1px solid rgba(250,204,21,.3)">
             <div style="font-size:9px;font-weight:900;letter-spacing:.25em;color:#93c5fd">HOME</div>
             <div style="color:#fff;font-weight:900;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${teamName}</div>
@@ -1545,7 +1626,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
             <div style="color:#facc15;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums">${ts.points}</div>
             <div style="font-size:9px;color:#93c5fd;margin-top:2px">G · B · pts</div>
           </div>
-          <!-- AWAY: always-visible scoring buttons -->
           <div style="padding:10px 8px;text-align:center">
             <div style="font-size:9px;font-weight:900;letter-spacing:.25em;color:#fca5a5">AWAY</div>
             <div style="color:#fff;font-weight:900;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cg.opponent}</div>
@@ -1663,9 +1743,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
                 <span style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#78716c;margin-top:2px">ADD STAT</span>
               </button>
             </div>
-            <!-- Away team stats — same layout as our team but tinted red. Optional;
-                 use as much or as little as you want. Keeps a per-quarter record so
-                 the differential view in COMPARE can show us-minus-them per game. -->
             <details style="margin-top:14px;background:#1c1917;border:1px solid #292524;border-radius:10px" open=${false}>
               <summary style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:.1em;color:#fca5a5;list-style:none">
                 <span style="width:8px;height:8px;background:#dc2626;border-radius:50%;display:inline-block"/>
@@ -1701,7 +1778,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
             </div>
           </div>
         ` : html`
-          <!-- PLAYER SCOPE: table - rows are players, columns are stats -->
           <${PlayerStatsTable} cg=${cg} roster=${roster} allStats=${allStats} customStats=${customStats}
             quarter=${quarter} applyUpdate=${applyUpdate} setCustomStats=${setCustomStats}
             setShowNewStat=${setShowNewStat} noteStrip=${noteStrip}
@@ -1816,7 +1892,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
                         <div style="font-size:14px;color:#fff;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</div>
                         ${p.number ? html`<div style="font-size:10px;color:#78716c">#${p.number}</div>` : null}
                       </div>
-                      <!-- Star strip: tap a star to set rating, tap the same star again to clear -->
                       <div style="display:flex;gap:2px">
                         ${[1,2,3,4,5].map(n => html`
                           <button key=${n}
@@ -1856,7 +1931,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     // ---- TEAM sub-view: totals by game, top scorers, us-vs-them differential ----
     const teamSection = html`
       <div>
-        <!-- Team totals -->
         <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
           <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">TEAM TOTALS BY GAME</div>
           <div style="overflow-x:auto">
@@ -1889,7 +1963,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
           </div>
         </div>
 
-        <!-- Goal kickers — kept here in TEAM as it's an aggregate scoring view -->
         ${topKickers.length>0?html`
           <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px;display:flex;align-items:center;gap:8px"><${AflBall} size=${16}/> GOAL KICKERS — SEASON</div>
@@ -1906,7 +1979,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
             </div>
           </div>`:null}
 
-        <!-- US − THEM differential by game -->
         <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
           <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;gap:8px">
             <span>⇄ US − THEM (DIFFERENTIAL BY GAME)</span>
@@ -2064,9 +2136,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
 
     return html`
       <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-        <!-- Sub-tab bar: TEAM | PLAYER | RATINGS. Default is TEAM. The
-             coach can show TEAM to the squad without exposing individual
-             ratings or per-player totals. -->
         <div style="display:flex;background:#0c0a09;border-bottom:1px solid #292524">
           ${[
             {id:"team",   label:"TEAM"},
@@ -2156,7 +2225,6 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
         <input type="text" value=${newOpp} onInput=${e=>setNewOpp(e.target.value)}
           onKeyDown=${e=>e.key==="Enter"&&startGame()} placeholder="e.g. Prahran, Old Scotch…" autofocus
           style="width:100%;background:#292524;color:#fff;padding:8px 10px;border-radius:8px;border:1px solid #44403c;font-size:14px;margin:4px 0 12px;box-sizing:border-box;font-family:inherit"/>
-        <!-- Round + time on one row to save vertical space -->
         <div style="display:flex;gap:8px;margin-bottom:12px">
           <div style="flex:1">
             <label style="font-size:11px;color:#a8a29e;font-weight:700;letter-spacing:.05em">Round</label>
@@ -2255,6 +2323,20 @@ function App() {
   });
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  // Main menu (home screen). Shown automatically when no profiles exist yet
+  // (first launch). Otherwise the user opens it via the team-name pill in the
+  // header to switch teams or create a new one.
+  const [showHome, setShowHome] = useState(()=>{
+    const list = lsGet(SK_PROFILES, []);
+    return list.length === 0;
+  });
+  // Tutorial overlay. Shown when a brand-new team is created; can be replayed
+  // from the main menu.
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialStep, setTutorialStep] = useState(0);
+  // New-team form state on the main menu.
+  const [newTeamName, setNewTeamName] = useState("");
+  const [newTeamColor, setNewTeamColor] = useState(DEFAULT_TEAM_COLOR);
 
   useEffect(()=>lsSave(SK_PROFILES, profiles), [profiles]);
   useEffect(()=>{ if (activeId) lsSave(SK_ACTIVE, activeId); }, [activeId]);
@@ -2277,6 +2359,27 @@ function App() {
   // When activeId changes, reload everything from that profile's storage.
   // We use a ref to skip the very first run (initial state already came from storage).
   const prevActive = useRef(activeId);
+  // Hidden file input for restoring backups from the main menu.
+  const restoreInputRef = useRef(null);
+
+  // Read a chosen backup file and apply it. Reloads the page on success so
+  // every piece of state re-initialises from the freshly-restored localStorage.
+  const handleRestoreFile = (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = ""; // allow re-picking the same file later
+    if (!file) return;
+    if (!confirm("Restore from this backup? It will replace any data currently on this iPad.")) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const ok = restoreBackup(reader.result);
+      if (ok) {
+        alert("Backup restored. The app will now reload.");
+        try { window.location.reload(); } catch(err) {}
+      }
+    };
+    reader.onerror = () => alert("Couldn't read that file.");
+    reader.readAsText(file);
+  };
   useEffect(() => {
     if (prevActive.current === activeId) return;
     prevActive.current = activeId;
@@ -2313,24 +2416,72 @@ function App() {
     setProfiles(prev => prev.map(p => p.id===activeId ? {...p, name: teamName} : p));
   }, [teamName]);
 
+  // Create a brand-new team from the main menu. Takes name + colour.
+  // Triggers the tutorial for this new profile and switches to it.
+  const createTeam = (name, color) => {
+    if (profiles.length >= MAX_PROFILES) return;
+    const id = `prof_${Date.now()}_${Math.random().toString(36).slice(2,5)}`;
+    const finalName = (name||"").trim() || `Team ${profiles.length+1}`;
+    pSave(id, "teamName", finalName);
+    pSave(id, "tutorialDone", false);
+    setProfiles(prev => [...prev, {id, name: finalName, color: color || DEFAULT_TEAM_COLOR}]);
+    setActiveId(id);
+    setShowHome(false);
+    setTutorialStep(0);
+    setShowTutorial(true);
+  };
+  // Legacy "quick add" used by the manage-teams modal. Kept so the modal still
+  // works; it creates a team with a default colour and skips the tutorial.
   const addProfile = () => {
     if (profiles.length >= MAX_PROFILES) return;
     const id = `prof_${Date.now()}_${Math.random().toString(36).slice(2,5)}`;
     const name = `Team ${profiles.length+1}`;
     pSave(id, "teamName", name);
-    setProfiles(prev => [...prev, {id, name}]);
+    pSave(id, "tutorialDone", true);
+    setProfiles(prev => [...prev, {id, name, color: DEFAULT_TEAM_COLOR}]);
     setActiveId(id);
   };
   const removeProfile = (id) => {
-    if (profiles.length <= 1) {
-      alert("You need at least one team profile.");
-      return;
-    }
     if (!confirm("Delete this team and all its data (roster, games, stats, plays)? This cannot be undone.")) return;
     deleteProfileData(id);
+    lsRemove(profileKey(id, "tutorialDone"));
     const remaining = profiles.filter(p=>p.id!==id);
     setProfiles(remaining);
-    if (activeId === id) setActiveId(remaining[0].id);
+    if (activeId === id) {
+      if (remaining.length) {
+        setActiveId(remaining[0].id);
+      } else {
+        // No teams left — drop the user back to the main menu so they can
+        // create a new one.
+        setActiveId(null);
+        setShowHome(true);
+      }
+    }
+  };
+
+  // Open the main menu and replay the tutorial for the active team.
+  const replayTutorial = () => {
+    setProfileMenuOpen(false);
+    setShowProfileModal(false);
+    setShowHome(false);
+    setTutorialStep(0);
+    setShowTutorial(true);
+  };
+
+  // Pick a team from the main menu. If that team has never seen the tutorial
+  // (e.g. it was just created in another session), show it now.
+  const selectTeam = (id) => {
+    setActiveId(id);
+    setShowHome(false);
+    if (!pGet(id, "tutorialDone", true)) {
+      setTutorialStep(0);
+      setShowTutorial(true);
+    }
+  };
+
+  const finishTutorial = () => {
+    setShowTutorial(false);
+    if (activeId) pSave(activeId, "tutorialDone", true);
   };
 
   const mainTabs=[{id:"whiteboard",label:"BOARD",icon:"edit"},{id:"lineup",label:"LINEUP",icon:"users"},{id:"stats",label:"STATS",icon:"clipboard"}];
@@ -2351,18 +2502,30 @@ function App() {
         <div style="font-size:11px;color:#a8a29e;margin-bottom:12px">Each team has its own roster, lineup, games, stats, plays and whiteboards. Up to ${MAX_PROFILES} teams.</div>
         <div style="display:flex;flex-direction:column;gap:8px;max-height:320px;overflow-y:auto;-webkit-overflow-scrolling:touch">
           ${profiles.map(p => html`
-            <div key=${p.id} style=${{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",borderRadius:10,background:p.id===activeId?"rgba(30,58,138,.4)":"#292524",border:"1px solid",borderColor:p.id===activeId?"#2563eb":"#44403c"}}>
-              <input type="text" value=${p.name}
-                onInput=${e => {
-                  const newName = e.target.value;
-                  setProfiles(prev => prev.map(x => x.id===p.id ? {...x, name: newName} : x));
-                  if (p.id===activeId) setTeamName(newName);
-                  else pSave(p.id, "teamName", newName);
-                }}
-                style="flex:1;min-width:0;background:#0c0a09;color:#fff;padding:8px;border-radius:6px;border:1px solid #44403c;font-size:14px;font-weight:700;font-family:inherit"/>
-              ${p.id===activeId ? html`<span style="font-size:10px;color:#60a5fa;font-weight:900;letter-spacing:.1em">ACTIVE</span>` :
-                html`<button onClick=${()=>{setActiveId(p.id);setShowProfileModal(false);}} style="font-size:11px;background:#2563eb;color:#fff;padding:6px 10px;border-radius:6px;border:none;cursor:pointer;font-weight:700;font-family:inherit">USE</button>`}
-              <button onClick=${()=>removeProfile(p.id)} style="background:none;border:none;cursor:pointer;color:#f87171;display:flex;padding:4px"><${Icon} name="trash" size=${15}/></button>
+            <div key=${p.id} style=${{display:"flex",flexDirection:"column",gap:8,padding:"10px 12px",borderRadius:10,background:p.id===activeId?"rgba(30,58,138,.4)":"#292524",border:"1px solid",borderColor:p.id===activeId?"#2563eb":"#44403c"}}>
+              <div style="display:flex;align-items:center;gap:8">
+                <span style=${{width:18,height:18,borderRadius:"50%",background:p.color||DEFAULT_TEAM_COLOR,border:"2px solid rgba(255,255,255,.3)",flexShrink:0}}/>
+                <input type="text" value=${p.name}
+                  onInput=${e => {
+                    const newName = e.target.value;
+                    setProfiles(prev => prev.map(x => x.id===p.id ? {...x, name: newName} : x));
+                    if (p.id===activeId) setTeamName(newName);
+                    else pSave(p.id, "teamName", newName);
+                  }}
+                  style="flex:1;min-width:0;background:#0c0a09;color:#fff;padding:8px;border-radius:6px;border:1px solid #44403c;font-size:14px;font-weight:700;font-family:inherit"/>
+                ${p.id===activeId ? html`<span style="font-size:10px;color:#60a5fa;font-weight:900;letter-spacing:.1em">ACTIVE</span>` :
+                  html`<button onClick=${()=>{setActiveId(p.id);setShowProfileModal(false);}} style="font-size:11px;background:#2563eb;color:#fff;padding:6px 10px;border-radius:6px;border:none;cursor:pointer;font-weight:700;font-family:inherit">USE</button>`}
+                <button onClick=${()=>removeProfile(p.id)} style="background:none;border:none;cursor:pointer;color:#f87171;display:flex;padding:4px"><${Icon} name="trash" size=${15}/></button>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px">
+                ${TEAM_COLORS.map(c => html`
+                  <button key=${c.value} onClick=${()=>{
+                      setProfiles(prev => prev.map(x => x.id===p.id ? {...x, color: c.value} : x));
+                    }}
+                    title=${c.name}
+                    style=${{width:22,height:22,borderRadius:"50%",background:c.value,border:(p.color||DEFAULT_TEAM_COLOR)===c.value?"2px solid #facc15":"2px solid rgba(255,255,255,.15)",cursor:"pointer",padding:0,flexShrink:0}}/>
+                `)}
+              </div>
             </div>
           `)}
         </div>
@@ -2377,30 +2540,271 @@ function App() {
   // Profile dropdown menu (compact, attached to the team-name pill)
   const profileMenu = !profileMenuOpen ? null : html`
     <div style="position:fixed;inset:0;z-index:55" onClick=${()=>setProfileMenuOpen(false)}>
-      <div style="position:absolute;top:60px;left:8px;background:#1c1917;border:1px solid #44403c;border-radius:10px;padding:6px;min-width:200px;box-shadow:0 12px 30px rgba(0,0,0,.5)" onClick=${e=>e.stopPropagation()}>
+      <div style="position:absolute;top:60px;left:8px;background:#1c1917;border:1px solid #44403c;border-radius:10px;padding:6px;min-width:220px;box-shadow:0 12px 30px rgba(0,0,0,.5)" onClick=${e=>e.stopPropagation()}>
         ${profiles.map(p => html`
           <button key=${p.id} onClick=${()=>{setActiveId(p.id);setProfileMenuOpen(false);}}
             style=${{display:"flex",alignItems:"center",gap:8,width:"100%",padding:"10px 12px",borderRadius:6,background:p.id===activeId?"rgba(30,58,138,.5)":"transparent",border:"none",cursor:"pointer",color:"#fff",fontSize:13,fontWeight:700,fontFamily:"inherit",textAlign:"left"}}>
-            <span style=${{width:8,height:8,borderRadius:"50%",background:p.id===activeId?"#facc15":"#57534e",flexShrink:0}}/>
+            <span style=${{width:10,height:10,borderRadius:"50%",background:p.color||DEFAULT_TEAM_COLOR,border:"1px solid rgba(255,255,255,.3)",flexShrink:0}}/>
             <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</span>
+            ${p.id===activeId?html`<span style="font-size:9px;color:#facc15;font-weight:900;letter-spacing:.1em">ACTIVE</span>`:null}
           </button>
         `)}
         <div style="height:1px;background:#44403c;margin:4px 0"/>
+        <button onClick=${()=>{setProfileMenuOpen(false);setShowHome(true);}}
+          style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 12px;border-radius:6px;background:transparent;border:none;cursor:pointer;color:#facc15;font-size:13px;font-weight:700;font-family:inherit;text-align:left">
+          <${AflBall} size=${14}/> Main menu
+        </button>
         <button onClick=${()=>{setProfileMenuOpen(false);setShowProfileModal(true);}}
           style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 12px;border-radius:6px;background:transparent;border:none;cursor:pointer;color:#60a5fa;font-size:13px;font-weight:700;font-family:inherit;text-align:left">
           <${Icon} name="edit" size=${13}/> Manage teams…
         </button>
+        <button onClick=${replayTutorial}
+          style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 12px;border-radius:6px;background:transparent;border:none;cursor:pointer;color:#a8a29e;font-size:13px;font-weight:700;font-family:inherit;text-align:left">
+          <${Icon} name="alert" size=${13}/> Replay tutorial
+        </button>
       </div>
     </div>`;
+
+  // ---------- MAIN MENU (home screen) ----------
+  // Shown automatically on first launch and any time the user taps the team
+  // pill or "Main menu" in the dropdown. Lists existing teams + creates new
+  // ones (with name + colour). New teams trigger the tutorial.
+  const canAddTeam = profiles.length < MAX_PROFILES;
+  const homeScreen = !showHome ? null : html`
+    <div style="position:fixed;inset:0;z-index:80;background:linear-gradient(180deg,#0c0a09 0%,#1c1917 60%,#1e3a8a 100%);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)">
+      <div style="max-width:520px;margin:0 auto;padding:28px 20px 40px">
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:24px">
+          <div style="margin-bottom:14px"><${AflBall} size=${96}/></div>
+          <h1 style="font-size:26px;font-weight:900;color:#fff;letter-spacing:.04em;margin:0;line-height:1.1">AFL Coaching Game Day</h1>
+          <div style="font-size:11px;color:rgba(250,204,21,.85);letter-spacing:.3em;font-weight:700;margin-top:8px">COACH'S TOOLKIT</div>
+        </div>
+
+        ${profiles.length > 0 ? html`
+          <div style="margin-bottom:22px">
+            <div style="font-size:10px;font-weight:900;color:#a8a29e;letter-spacing:.2em;margin-bottom:8px">YOUR TEAMS</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              ${profiles.map(p => html`
+                <button key=${p.id} onClick=${()=>selectTeam(p.id)}
+                  style=${{display:"flex",alignItems:"center",gap:12,width:"100%",padding:"14px 14px",borderRadius:12,background:"#1c1917",border:"1px solid #44403c",cursor:"pointer",fontFamily:"inherit",textAlign:"left"}}>
+                  <span style=${{width:28,height:28,borderRadius:"50%",background:p.color||DEFAULT_TEAM_COLOR,border:"2px solid rgba(255,255,255,.25)",flexShrink:0}}/>
+                  <span style="flex:1;color:#fff;font-weight:900;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</span>
+                  ${p.id===activeId?html`<span style="font-size:9px;color:#facc15;font-weight:900;letter-spacing:.15em">CURRENT</span>`:null}
+                  <span style="color:#facc15;font-size:18px;font-weight:900">›</span>
+                </button>
+              `)}
+            </div>
+          </div>
+        ` : html`
+          <div style="text-align:center;color:#a8a29e;font-size:13px;margin-bottom:18px;padding:14px;background:rgba(255,255,255,.04);border-radius:10px;border:1px dashed #44403c">
+            Welcome! Create your first team below to get started.
+          </div>
+        `}
+
+        ${canAddTeam ? html`
+          <div style="background:#1c1917;border:1px solid #44403c;border-radius:14px;padding:18px">
+            <div style="font-size:10px;font-weight:900;color:#a8a29e;letter-spacing:.2em;margin-bottom:10px">CREATE NEW TEAM</div>
+            <input type="text" value=${newTeamName} placeholder="Team name (e.g. Power FC)"
+              onInput=${e=>setNewTeamName(e.target.value)}
+              style="width:100%;background:#0c0a09;color:#fff;padding:12px 14px;border-radius:10px;border:1px solid #44403c;font-size:15px;font-weight:700;font-family:inherit;margin-bottom:14px"/>
+            <div style="font-size:11px;color:#a8a29e;font-weight:700;margin-bottom:8px">Team colour</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">
+              ${TEAM_COLORS.map(c => html`
+                <button key=${c.value} onClick=${()=>setNewTeamColor(c.value)}
+                  style=${{display:"flex",flexDirection:"column",alignItems:"center",gap:4,padding:"10px 4px",borderRadius:10,background:newTeamColor===c.value?"rgba(250,204,21,.12)":"#0c0a09",border:newTeamColor===c.value?"2px solid #facc15":"1px solid #44403c",cursor:"pointer",fontFamily:"inherit"}}>
+                  <span style=${{width:26,height:26,borderRadius:"50%",background:c.value,border:"2px solid rgba(255,255,255,.25)"}}/>
+                  <span style="font-size:10px;color:#fff;font-weight:700">${c.name}</span>
+                </button>
+              `)}
+            </div>
+            <button onClick=${()=>{
+                if (!newTeamName.trim()) { alert("Please enter a team name."); return; }
+                createTeam(newTeamName, newTeamColor);
+                setNewTeamName("");
+                setNewTeamColor(DEFAULT_TEAM_COLOR);
+              }}
+              style="width:100%;background:linear-gradient(to right,#dc2626,#b91c1c);color:#fff;padding:14px;border-radius:10px;border:none;cursor:pointer;font-weight:900;font-family:inherit;font-size:14px;letter-spacing:.1em;display:flex;align-items:center;justify-content:center;gap:8px">
+              <${Icon} name="plus" size=${16}/> CREATE TEAM
+            </button>
+          </div>
+        ` : html`
+          <div style="text-align:center;color:#78716c;font-size:12px;font-style:italic;padding:14px;border:1px dashed #44403c;border-radius:10px">
+            Maximum of ${MAX_PROFILES} teams reached. Delete one from "Manage teams" to add another.
+          </div>
+        `}
+
+        ${profiles.length > 0 ? html`
+          <div style="margin-top:22px;background:#1c1917;border:1px solid #44403c;border-radius:14px;padding:14px">
+            <div style="font-size:10px;font-weight:900;color:#a8a29e;letter-spacing:.2em;margin-bottom:8px">BACKUP & RESTORE</div>
+            <div style="font-size:11px;color:#a8a29e;line-height:1.5;margin-bottom:10px">
+              All data is saved on this iPad only. Export a backup file every now and then so nothing is lost if iOS clears storage or the iPad is replaced.
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button onClick=${downloadBackup}
+                style="flex:1;min-width:130px;background:#2563eb;color:#fff;padding:10px;border-radius:8px;border:none;cursor:pointer;font-weight:900;font-family:inherit;font-size:12px;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:6px">
+                <${Icon} name="download" size=${14}/> EXPORT BACKUP
+              </button>
+              <button onClick=${()=>restoreInputRef.current && restoreInputRef.current.click()}
+                style="flex:1;min-width:130px;background:#292524;color:#d6d3d1;padding:10px;border-radius:8px;border:1px solid #44403c;cursor:pointer;font-weight:900;font-family:inherit;font-size:12px;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:6px">
+                <${Icon} name="undo" size=${14}/> RESTORE
+              </button>
+              <input ref=${restoreInputRef} type="file" accept="application/json,.json" onChange=${handleRestoreFile} style="display:none"/>
+            </div>
+          </div>
+        ` : null}
+
+        ${activeId ? html`
+          <div style="text-align:center;margin-top:18px">
+            <button onClick=${()=>setShowHome(false)}
+              style="background:transparent;border:1px solid #44403c;color:#a8a29e;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit;font-size:12px;letter-spacing:.1em">
+              ← BACK TO ${(activeName||"TEAM").toUpperCase()}
+            </button>
+          </div>
+        ` : null}
+      </div>
+    </div>`;
+
+  // ---------- TUTORIAL OVERLAY ----------
+  // Shown the first time a team is created. Walks through the four main
+  // areas (BOARD, LINEUP, STATS, COMPARE) and the CSV export, and explains
+  // that everything is saved on this iPad only.
+  const tutorialSteps = [
+    {
+      title: "Welcome to AFL Coaching Game Day",
+      icon: html`<${AflBall} size=${48}/>`,
+      body: html`
+        <p style="margin:0 0 12px">G'day, coach! This quick tour shows you what's in the app and how to use it on game day.</p>
+        <div style="background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.4);border-radius:10px;padding:12px;margin-top:8px">
+          <div style="font-size:11px;font-weight:900;color:#facc15;letter-spacing:.15em;margin-bottom:6px">⚠ IMPORTANT — DATA IS LOCAL</div>
+          <div style="font-size:13px;line-height:1.5;color:#fde68a">Everything you enter — roster, lineups, stats, plays, drawings — is saved <strong>only on this iPad</strong>. It will not appear on another device, and it won't sync to the cloud.</div>
+          <div style="font-size:13px;line-height:1.5;color:#fde68a;margin-top:8px">Use <strong>Export Backup</strong> on the main menu now and then so you have a saved copy if iOS ever clears storage or the iPad is replaced.</div>
+        </div>`
+    },
+    {
+      title: "BOARD — the whiteboard",
+      icon: html`<${Icon} name="edit" size=${42} color="#60a5fa"/>`,
+      body: html`
+        <p style="margin:0 0 10px">Sketch tactics with the Apple Pencil or your finger. Pick a mode at the top: <strong>Full field</strong>, <strong>Half field</strong>, <strong>Blank</strong> or <strong>Lineup</strong> (your current lineup with positions).</p>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:#d6d3d1">
+          <li>Six pen colours, size slider, eraser tool (taps a stroke to remove it).</li>
+          <li>Each mode keeps its own drawing — switching tabs doesn't wipe it.</li>
+          <li>Tap <strong>PLAYS</strong> to save the current board to your plays library, or load a saved play.</li>
+        </ul>`
+    },
+    {
+      title: "LINEUP — set your team",
+      icon: html`<${Icon} name="users" size=${42} color="#3DD68C"/>`,
+      body: html`
+        <p style="margin:0 0 10px">Three sub-tabs:</p>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:#d6d3d1">
+          <li><strong>Field</strong> — add players to the roster, then tap or drag them onto the 18 field positions and 6 bench spots.</li>
+          <li><strong>Interchange</strong> — tap two slots to swap players. Swaps are timestamped and counted, so you can see who's been off the most.</li>
+          <li><strong>Availability</strong> — mark players as <em>active</em>, <em>unavailable</em> or <em>injured</em>. Inactive players are removed from the field automatically.</li>
+        </ul>`
+    },
+    {
+      title: "STATS — track the game",
+      icon: html`<${Icon} name="clipboard" size=${42} color="#facc15"/>`,
+      body: html`
+        <p style="margin:0 0 10px">Live game-day tracking, quarter by quarter:</p>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:#d6d3d1">
+          <li><strong>Track</strong> — scoreboard plus +/- tiles for team and per-player stats. Tapping a Goal asks who kicked it. There's a separate section for the opposition's stats too.</li>
+          <li><strong>Ratings</strong> — give each player 1–5 stars and notes after the game.</li>
+          <li><strong>History</strong> — every game you've recorded, with results and quarter notes.</li>
+          <li>Add custom stats (e.g. <em>Clearances</em>) when you start a new game.</li>
+        </ul>`
+    },
+    {
+      title: "COMPARE — see the season",
+      icon: html`<${Icon} name="chart" size=${42} color="#f472b6"/>`,
+      body: html`
+        <p style="margin:0 0 10px">In the STATS tab, tap <strong>Compare</strong> to see across all your games. Three sub-tabs:</p>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:#d6d3d1">
+          <li><strong>Team</strong> — totals per game, top goal kickers, US − THEM differential.</li>
+          <li><strong>Player</strong> — each player's totals across all games.</li>
+          <li><strong>Ratings</strong> — average star rating per player + notes.</li>
+        </ul>
+        <p style="margin:10px 0 0;font-size:12px;color:#a8a29e;font-style:italic">Tip: Team is safe to show the squad. Player and Ratings are more private.</p>`
+    },
+    {
+      title: "CSV — export your data",
+      icon: html`<${Icon} name="download" size=${42} color="#60a5fa"/>`,
+      body: html`
+        <p style="margin:0 0 10px">Tap the <strong>CSV</strong> button (top-right of STATS) to download your data as a spreadsheet you can open in Numbers or Excel.</p>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:#d6d3d1">
+          <li>From the <strong>Track</strong>, <strong>History</strong> or <strong>Compare</strong> tabs: full stats CSV with team totals, player stats, opposition, notes, interchange log and ratings.</li>
+          <li>From the <strong>Ratings</strong> tab: a separate ratings-only CSV.</li>
+        </ul>
+        <p style="margin:10px 0 0;font-size:12px;color:#a8a29e;font-style:italic">Because data lives on this iPad, exporting CSVs every now and then is a good way to keep a backup.</p>`
+    },
+    {
+      title: "You're set",
+      icon: html`<${AflBall} size=${48}/>`,
+      body: html`
+        <p style="margin:0 0 10px">That's the lot. A few last things:</p>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;color:#d6d3d1">
+          <li>The app works <strong>offline</strong> once it's loaded — no signal needed during games.</li>
+          <li>Add it to your iPad Home Screen for full-screen mode.</li>
+          <li>You can replay this tutorial any time from the team menu (tap your team name → Replay tutorial).</li>
+        </ul>
+        <p style="margin:14px 0 0;font-size:13px;color:#facc15;font-weight:700;text-align:center">Good luck this season! 🏉</p>`
+    }
+  ];
+  const tStep = tutorialSteps[Math.min(tutorialStep, tutorialSteps.length-1)] || tutorialSteps[0];
+  const isLastStep = tutorialStep >= tutorialSteps.length - 1;
+  const tutorialOverlay = !showTutorial ? null : html`
+    <div style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.85)">
+      <div style="background:#1c1917;border:1px solid #44403c;border-radius:16px;width:100%;max-width:480px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 50px rgba(0,0,0,.6)">
+        <div style="padding:16px 18px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #292524">
+          <div style="font-size:10px;font-weight:900;color:#facc15;letter-spacing:.2em">STEP ${tutorialStep+1} OF ${tutorialSteps.length}</div>
+          <button onClick=${finishTutorial} style="background:none;border:none;cursor:pointer;color:#78716c;display:flex"><${Icon} name="x" size=${20}/></button>
+        </div>
+        <div style="padding:20px 22px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+            <div style="flex-shrink:0">${tStep.icon}</div>
+            <h2 style="margin:0;color:#fff;font-size:20px;font-weight:900;line-height:1.2">${tStep.title}</h2>
+          </div>
+          <div style="color:#d6d3d1;font-size:14px;line-height:1.55">${tStep.body}</div>
+        </div>
+        <div style="padding:14px 18px;border-top:1px solid #292524;display:flex;align-items:center;gap:10px">
+          ${tutorialStep > 0 ? html`
+            <button onClick=${()=>setTutorialStep(s=>Math.max(0,s-1))}
+              style="background:transparent;border:1px solid #44403c;color:#a8a29e;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit;font-size:12px;letter-spacing:.1em">
+              ← BACK
+            </button>` : html`
+            <button onClick=${finishTutorial}
+              style="background:transparent;border:1px solid #44403c;color:#78716c;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit;font-size:12px;letter-spacing:.1em">
+              SKIP
+            </button>`}
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px">
+            ${tutorialSteps.map((_,i) => html`<span key=${i} style=${{width:i===tutorialStep?16:6,height:6,borderRadius:3,background:i===tutorialStep?"#facc15":"#44403c",transition:"width .2s"}}/>`)}
+          </div>
+          <button onClick=${()=>{ if (isLastStep) finishTutorial(); else setTutorialStep(s=>s+1); }}
+            style="background:#2563eb;border:none;color:#fff;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:900;font-family:inherit;font-size:12px;letter-spacing:.1em">
+            ${isLastStep ? "GET STARTED" : "NEXT →"}
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+  // If there's no active team yet (very first launch, before they create one),
+  // render only the home screen.
+  if (!activeId) {
+    return html`<div style="height:100vh;width:100vw;background:#0c0a09;color:#fff;font-family:ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',sans-serif">${homeScreen}${tutorialOverlay}</div>`;
+  }
 
   return html`
     <div style="height:100vh;width:100vw;display:flex;flex-direction:column;background:#0c0a09;color:#fff;overflow:hidden;font-family:ui-sans-serif,system-ui,-apple-system,'Helvetica Neue',sans-serif">
       <header class="app-header" style="background:linear-gradient(to right,#1e3a8a,#1c1917,#7f1d1d);border-bottom:2px solid #facc15;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;flex-shrink:0;padding:6px 10px">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:32px;height:32px;background:#facc15;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#1c1917;font-weight:900;font-size:18px;flex-shrink:0">⬢</div>
+          <button onClick=${()=>setShowHome(true)} title="Main menu"
+            style="width:34px;height:34px;background:#facc15;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:none;cursor:pointer;padding:0;font-family:inherit"
+            aria-label="Main menu">
+            <${AflBall} size=${22}/>
+          </button>
           <div style="display:flex;flex-direction:column">
             <button onClick=${()=>setProfileMenuOpen(o=>!o)}
               style="background:rgba(0,0,0,.3);border:1px solid rgba(250,204,21,.3);color:#fff;font-weight:900;font-size:14px;letter-spacing:.05em;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;max-width:220px">
+              <span style=${{width:10,height:10,borderRadius:"50%",background:(activeProf&&activeProf.color)||DEFAULT_TEAM_COLOR,border:"1px solid rgba(255,255,255,.4)",flexShrink:0}}/>
               <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:left">${activeName||"Team 1"}</span>
               <span style="font-size:10px;color:#facc15">▼</span>
             </button>
@@ -2423,10 +2827,13 @@ function App() {
       </main>
       ${profileMenu}
       ${profileModal}
+      ${homeScreen}
+      ${tutorialOverlay}
     </div>`;
 }
 
 render(html`<${App}/>`, document.getElementById("app"));
+
 </script>
 </body>
 </html>
