@@ -59,45 +59,109 @@ const CSQ_HALF = 18.5, GOAL_RADIUS = 37, GS_HALF_W = 2.35, GS_DEPTH = 6.7;
 const GP_HALF = 2.35, BP_OFFSET = 7.05;
 const MARGIN = 4;
 
-// Forward-50 heatmap zones. The forward 50 is divided into a 4-row × 3-column
-// grid (12 zones), numbered row-major starting at the top-left next to the
-// goals. Column boundaries land on the behind-post line (x = CX±BP_OFFSET) so
-// the middle column captures shots roughly between the behind posts. Rows
-// step from goals (y=0) outward toward the 50m arc and just beyond (y≈47).
-// The picker visually clips these to the oval; coords here describe the
-// underlying rectangles before clipping.
-//   1  2  3   <- closest to goals (top of forward 50)
-//   4  5  6
-//   7  8  9
-//  10 11 12   <- furthest from goals (50m arc area)
-const HM_X_BANDS = [
-  [0,         CX-BP_OFFSET],   // left
-  [CX-BP_OFFSET, CX+BP_OFFSET],// middle (behind-post line to behind-post line)
-  [CX+BP_OFFSET, FIELD_W],     // right
-];
+// Forward-50 heatmap zones. The forward 50 is divided into a non-uniform
+// grid:
+//   - Row 0 (closest to goals): 3 zones — left, middle, right
+//   - Rows 1, 2, 3 (further out): 5 zones each — left and right wide
+//     columns are split into an inner zone (next to the middle column) and
+//     a wider outer zone reaching the boundary. The middle column (between
+//     the behind posts) stays as one zone.
+// Zones are numbered row-major top-to-bottom, left-to-right.
+//   1   2   3              <- closest to goals
+//   4  5  6  7  8          <- left-outer / left-inner / middle / right-inner / right-outer
+//   9 10 11 12 13
+//  14 15 16 17 18          <- 50m arc area
+// Middle column (zones 2, 6, 11, 16) is bounded by the behind-post line
+// (x = CX±BP_OFFSET) so it captures shots roughly between the behind posts.
+// In rows 1 and 2, the inner split zones (5, 7, 10, 12) are sized to MATCH
+// the middle column width — so 5/6/7 are all the same width and 10/11/12
+// likewise. The outer zones (4, 8, 9, 13) absorb the rest of the field out
+// to the boundary, and so are wider — these are deeper, less-common goal-
+// kicking spots. Row 3 keeps a geometric-midpoint split because shots from
+// 50m+ are spread more evenly across the wider field at that depth.
+const HM_X_LEFT_INNER_R12  = CX - 3 * BP_OFFSET;     // inner-left split for rows 1-2 (= middle col width away from CX-BP_OFFSET)
+const HM_X_RIGHT_INNER_R12 = CX + 3 * BP_OFFSET;     // inner-right split for rows 1-2
+const HM_X_LEFT_SPLIT_R3   = (CX - BP_OFFSET) / 2;   // geometric midpoint of left col (row 3)
+const HM_X_RIGHT_SPLIT_R3  = CX + BP_OFFSET + (FIELD_W - (CX + BP_OFFSET)) / 2; // geometric midpoint of right col (row 3)
 const HM_Y_BANDS = [
   [0, 8],
   [8, 18],
   [18, 30],
   [30, 47],
 ];
+// Per-row column band lists.
+const HM_X_BANDS_ROW0 = [
+  [0,                       CX - BP_OFFSET],   // left
+  [CX - BP_OFFSET,          CX + BP_OFFSET],   // middle (between behind posts)
+  [CX + BP_OFFSET,          FIELD_W],          // right
+];
+// Rows 1 & 2 — inner zones match middle column width.
+const HM_X_BANDS_R12 = [
+  [0,                       HM_X_LEFT_INNER_R12],   // left-outer (wide)
+  [HM_X_LEFT_INNER_R12,     CX - BP_OFFSET],        // left-inner (= middle col width)
+  [CX - BP_OFFSET,          CX + BP_OFFSET],        // middle
+  [CX + BP_OFFSET,          HM_X_RIGHT_INNER_R12],  // right-inner (= middle col width)
+  [HM_X_RIGHT_INNER_R12,    FIELD_W],               // right-outer (wide)
+];
+// Row 3 — geometric midpoint split (50/50 within each wide column).
+const HM_X_BANDS_R3 = [
+  [0,                       HM_X_LEFT_SPLIT_R3],
+  [HM_X_LEFT_SPLIT_R3,      CX - BP_OFFSET],
+  [CX - BP_OFFSET,          CX + BP_OFFSET],
+  [CX + BP_OFFSET,          HM_X_RIGHT_SPLIT_R3],
+  [HM_X_RIGHT_SPLIT_R3,     FIELD_W],
+];
 const HEATMAP_ZONES = (() => {
   const out = [];
   let id = 1;
-  for (let r=0; r<HM_Y_BANDS.length; r++) {
-    for (let c=0; c<HM_X_BANDS.length; c++) {
-      const [x1,x2] = HM_X_BANDS[c];
-      const [y1,y2] = HM_Y_BANDS[r];
+  for (let r = 0; r < HM_Y_BANDS.length; r++) {
+    const xBands = r === 0 ? HM_X_BANDS_ROW0
+                : r === 3 ? HM_X_BANDS_R3
+                : HM_X_BANDS_R12;
+    for (let c = 0; c < xBands.length; c++) {
+      const [x1, x2] = xBands[c];
+      const [y1, y2] = HM_Y_BANDS[r];
       out.push({
-        id, row:r, col:c,
-        x:x1, y:y1, w:x2-x1, h:y2-y1,
-        cx:(x1+x2)/2, cy:(y1+y2)/2,
+        id, row: r, col: c,
+        x: x1, y: y1, w: x2 - x1, h: y2 - y1,
+        cx: (x1 + x2) / 2, cy: (y1 + y2) / 2, // geometric centre (fallback)
       });
       id++;
     }
   }
   return out;
 })();
+// Mapping for one-time migration of `shotHeatmap` entries from the old
+// 12-zone layout to the new 18-zone layout. Top-row zones (1-3) keep the
+// same physical shape AND the same id. Middle-column zones in rows 1-3
+// keep the same physical shape but get a new id (5→6, 8→11, 11→16). The
+// six wide zones that were split (old 4, 6, 7, 9, 10, 12) cannot be
+// recovered — we don't know which half each shot came from — so they are
+// dropped during migration.
+const HEATMAP_ZONE_MIGRATION_V1_TO_V2 = {
+  1: 1, 2: 2, 3: 3,
+  5: 6,
+  8: 11,
+  11: 16,
+  // 4, 6, 7, 9, 10, 12 -> unknown, drop
+};
+
+// Visible centre of a zone — finds the midpoint of the rectangle's
+// intersection with the oval at the zone's mid-y. Used so labels sit in
+// the visible area of each zone even when the rectangle extends outside
+// the oval (true for upper-row split halves). Falls back to geometric
+// centre if the oval doesn't intersect at all.
+function heatmapZoneVisibleCenter(zone) {
+  const midY = zone.y + zone.h / 2;
+  const t = 1 - ((midY - CY) / RY) ** 2;
+  if (t < 0) return { cx: zone.cx, cy: midY };
+  const dx = RX * Math.sqrt(t);
+  const ovalLeft = CX - dx, ovalRight = CX + dx;
+  const lo = Math.max(zone.x, ovalLeft);
+  const hi = Math.min(zone.x + zone.w, ovalRight);
+  if (lo >= hi) return { cx: zone.cx, cy: midY };
+  return { cx: (lo + hi) / 2, cy: midY };
+}
 
 // Field positions. The four midfield "stack" positions (Ruck, Centre, Ruck Rover, Rover)
 // are vertically aligned at x=50 and stepped down the y-axis so they read top-to-bottom
@@ -217,6 +281,37 @@ function migrateLegacyIfNeeded() {
   Object.values(LEGACY_SK).forEach(lsRemove);
   lsSave(SK_PROFILES, profileList);
   lsSave(SK_ACTIVE, id);
+}
+
+// Heatmap zone migration. The forward-50 grid was originally 12 zones; some
+// of those were split, taking us to 18. Old shotHeatmap entries reference the
+// 12-zone IDs and need rewriting so they line up with the new grid.
+//
+// Idempotent: each game carries `shotHeatmapVersion`; once it's set to 2 we
+// skip. Games created in the old code don't have the flag and get migrated
+// the first time they're loaded. Migration is per-game and pure — returns a
+// new array, doesn't mutate input.
+//
+// Mapping: zones whose physical shape didn't change keep their entries
+// (renumbered if needed). The six zones that were split can't be recovered
+// (we don't know which half each shot came from), so those entries are
+// dropped — the goal/behind in the team stats stays put, only the location
+// data is lost.
+function migrateHeatmapZones(games) {
+  if (!Array.isArray(games)) return games;
+  return games.map(g => {
+    if (!g || g.shotHeatmapVersion === 2) return g;
+    const old = Array.isArray(g.shotHeatmap) ? g.shotHeatmap : [];
+    const migrated = old
+      .map(s => {
+        if (!s || typeof s.zone !== "number") return null;
+        const newZone = HEATMAP_ZONE_MIGRATION_V1_TO_V2[s.zone];
+        if (newZone === undefined) return null;          // dropped — split zone
+        return { ...s, zone: newZone };
+      })
+      .filter(Boolean);
+    return { ...g, shotHeatmap: migrated, shotHeatmapVersion: 2 };
+  });
 }
 
 function pGet(profileId, field, fallback) { return lsGet(profileKey(profileId, field), fallback); }
@@ -1664,9 +1759,10 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
       ratings:{},
       // Per-shot location data — populated by the heatmap modal that pops up
       // after a goal/behind is attributed to a player. Each entry is
-      // {quarter, type:"goal"|"behind", zone:1-12, playerId}. Rushed behinds
+      // {quarter, type:"goal"|"behind", zone:1-18, playerId}. Rushed behinds
       // and unattributed shots are skipped (no zone recorded).
       shotHeatmap:[],
+      shotHeatmapVersion:2,    // current zone-numbering version (see migrateHeatmapZones)
       interchangeLog:[]
     };
     setGames(prev=>[...prev,game]);
@@ -2780,9 +2876,12 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
     const maxGoals   = Math.max(0, ...Object.values(goalsByZone));
     const maxBehinds = Math.max(0, ...Object.values(behindsByZone));
     // Render one F50 SVG with shaded zones. `byZone` maps zone id -> count;
-    // `max` is the count of the hottest zone (for normalisation); `accent`
-    // is the base hue (yellow for goals, blue for behinds).
-    const renderHeatmapSvg = (byZone, max, accent) => {
+    // `max` is the count of the hottest zone (for normalisation); `total` is
+    // the sum across zones (for percentages); `accent` is the base hue
+    // (yellow for goals, blue for behinds). Each zone's label shows the
+    // percentage of total shots from that zone with the raw count in
+    // brackets — e.g. "45% (5)". Empty zones show no label.
+    const renderHeatmapSvg = (byZone, max, total, accent) => {
       const M = 3;
       const VB_H = 50;
       // accent rgb extraction: facc15 -> 250,204,21 / 60a5fa -> 96,165,250
@@ -2811,15 +2910,22 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
               const count = byZone[z.id] || 0;
               const intensity = max > 0 ? count / max : 0;     // 0..1
               const opacity = count === 0 ? 0 : 0.18 + 0.62 * intensity;
+              const pct = total > 0 ? Math.round((count/total)*100) : 0;
+              const ctr = heatmapZoneVisibleCenter(z);
               return html`
                 <g key=${z.id}>
                   <rect x=${z.x} y=${z.y} width=${z.w} height=${z.h}
                     fill=${`rgba(${rgb},${opacity})`}
                     stroke=${`rgba(${rgb},0.55)`} stroke-width="0.3" stroke-dasharray="0.6 0.6"/>
-                  <text x=${z.cx} y=${z.cy+1.4} text-anchor="middle"
-                    font-size="3.6" font-weight="900"
-                    fill=${count>0?"#fff":`rgba(${rgb},0.4)`}
-                    style="pointer-events:none;font-family:ui-monospace,monospace">${count}</text>
+                  ${count > 0 ? html`
+                    <text x=${ctr.cx} y=${ctr.cy} text-anchor="middle"
+                      font-size="3.2" font-weight="900" fill="#fff"
+                      style="pointer-events:none;font-family:ui-monospace,monospace">${pct}%</text>
+                    <text x=${ctr.cx} y=${ctr.cy+2.7} text-anchor="middle"
+                      font-size="2.0" font-weight="700"
+                      fill=${`rgba(${rgb},0.95)`}
+                      style="pointer-events:none;font-family:ui-monospace,monospace">(${count})</text>
+                  ` : null}
                 </g>`;
             })}
           </g>
@@ -2873,7 +2979,13 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
               ${goalsHot ? html`
                 <div style="font-size:11px;color:#a8a29e;margin-bottom:6px">Hottest zone: <span style="color:#facc15;font-weight:900">#${goalsHot.id}</span> (${goalsHot.count} goal${goalsHot.count===1?"":"s"})</div>
               ` : html`<div style="font-size:11px;color:#78716c;margin-bottom:6px;font-style:italic">No goals with location yet.</div>`}
-              ${renderHeatmapSvg(goalsByZone, maxGoals, "goals")}
+              <!-- Colour-intensity legend: brighter yellow = more goals from that zone. -->
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:9px;color:#78716c;font-weight:700;letter-spacing:.05em">
+                <span>FEW</span>
+                <div style="flex:1;height:7px;border-radius:3px;background:linear-gradient(to right, rgba(250,204,21,0.18), rgba(250,204,21,0.80));border:1px solid rgba(250,204,21,0.4)"></div>
+                <span>MANY</span>
+              </div>
+              ${renderHeatmapSvg(goalsByZone, maxGoals, goalsTotal, "goals")}
             </div>
             <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid rgba(96,165,250,.25)">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
@@ -2883,7 +2995,13 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
               ${behindsHot ? html`
                 <div style="font-size:11px;color:#a8a29e;margin-bottom:6px">Hottest zone: <span style="color:#60a5fa;font-weight:900">#${behindsHot.id}</span> (${behindsHot.count} behind${behindsHot.count===1?"":"s"})</div>
               ` : html`<div style="font-size:11px;color:#78716c;margin-bottom:6px;font-style:italic">No behinds with location yet.</div>`}
-              ${renderHeatmapSvg(behindsByZone, maxBehinds, "behinds")}
+              <!-- Colour-intensity legend: brighter blue = more behinds from that zone. -->
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:9px;color:#78716c;font-weight:700;letter-spacing:.05em">
+                <span>FEW</span>
+                <div style="flex:1;height:7px;border-radius:3px;background:linear-gradient(to right, rgba(96,165,250,0.18), rgba(96,165,250,0.80));border:1px solid rgba(96,165,250,0.4)"></div>
+                <span>MANY</span>
+              </div>
+              ${renderHeatmapSvg(behindsByZone, maxBehinds, behindsTotal, "behinds")}
             </div>
           </div>
           <div style="font-size:10px;color:#57534e;font-style:italic;text-align:center">Rushed behinds and unattributed shots aren't mapped (no location recorded).</div>
@@ -3115,20 +3233,22 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
                 <line x1=${CX-GP_HALF} y1="0" x2=${CX+GP_HALF} y2="0" stroke="#fff" stroke-width="0.6"/>
                 <!-- Oval boundary -->
                 <ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY} fill="none" stroke="#fff" stroke-width="0.5"/>
-                <!-- 12 ZONE TAP TARGETS -->
-                ${HEATMAP_ZONES.map(z => html`
-                  <g key=${z.id}>
-                    <rect x=${z.x} y=${z.y} width=${z.w} height=${z.h}
-                      fill=${isGoal?"rgba(250,204,21,0.06)":"rgba(96,165,250,0.06)"}
-                      stroke=${isGoal?"#facc15":"#60a5fa"} stroke-width="0.35" stroke-dasharray="0.6 0.6"
-                      style="cursor:pointer"
-                      onClick=${()=>confirmHeatmapZone(z.id)}/>
-                    <text x=${z.cx} y=${z.cy+1.4} text-anchor="middle"
-                      font-size="3.2" font-weight="900"
-                      fill=${isGoal?"#facc15":"#60a5fa"}
-                      style="pointer-events:none;font-family:ui-monospace,monospace">${z.id}</text>
-                  </g>
-                `)}
+                <!-- 18 ZONE TAP TARGETS -->
+                ${HEATMAP_ZONES.map(z => {
+                  const ctr = heatmapZoneVisibleCenter(z);
+                  return html`
+                    <g key=${z.id}>
+                      <rect x=${z.x} y=${z.y} width=${z.w} height=${z.h}
+                        fill=${isGoal?"rgba(250,204,21,0.06)":"rgba(96,165,250,0.06)"}
+                        stroke=${isGoal?"#facc15":"#60a5fa"} stroke-width="0.35" stroke-dasharray="0.6 0.6"
+                        style="cursor:pointer"
+                        onClick=${()=>confirmHeatmapZone(z.id)}/>
+                      <text x=${ctr.cx} y=${ctr.cy+1.0} text-anchor="middle"
+                        font-size="2.8" font-weight="900"
+                        fill=${isGoal?"#facc15":"#60a5fa"}
+                        style="pointer-events:none;font-family:ui-monospace,monospace">${z.id}</text>
+                    </g>`;
+                })}
               </g>
               <!-- Posts above goal line — drawn outside the clip so they show -->
               <line x1=${CX-GP_HALF} y1="0" x2=${CX-GP_HALF} y2="-3" stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
@@ -3301,7 +3421,7 @@ function App() {
   const [teamName, setTeamName]       = useState(()=>activeId ? pGet(activeId,"teamName","Team 1") : "Team 1");
   const [roster, setRoster]           = useState(()=>activeId ? pGet(activeId,"roster",[]) : []);
   const [lineup, setLineup]           = useState(()=>activeId ? pGet(activeId,"lineup",{}) : {});
-  const [games, setGames]             = useState(()=>activeId ? pGet(activeId,"games",[]) : []);
+  const [games, setGames]             = useState(()=>activeId ? migrateHeatmapZones(pGet(activeId,"games",[])) : []);
   const [customStats, setCustomStats] = useState(()=>activeId ? pGet(activeId,"customStats",[]) : []);
   const [currentGameId, setCurrentGameId] = useState(()=>activeId ? pGet(activeId,"currentGame",null) : null);
   // Whiteboard strokes per mode and saved plays library — also per-profile.
@@ -3342,7 +3462,7 @@ function App() {
     setTeamName(pGet(activeId,"teamName","Team 1"));
     setRoster(pGet(activeId,"roster",[]));
     setLineup(pGet(activeId,"lineup",{}));
-    setGames(pGet(activeId,"games",[]));
+    setGames(migrateHeatmapZones(pGet(activeId,"games",[])));
     setCustomStats(pGet(activeId,"customStats",[]));
     setCurrentGameId(pGet(activeId,"currentGame",null));
     setWbFull(pGet(activeId,"wbFull",[]));
