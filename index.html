@@ -42,10 +42,13 @@ svg{touch-action:none;user-select:none;-webkit-user-select:none}
 <div id="app"><div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#a8a29e;font-size:14px">Loading…</div></div>
 <script>
 
+
 !function(e,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports):"function"==typeof define&&define.amd?define(["exports"],n):n(e.htmPreact={})}(this,function(e){var n,_,t,o,r,u,l,i={},c=[],f=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function s(e,n){for(var _ in n)e[_]=n[_];return e}function a(e){var n=e.parentNode;n&&n.removeChild(e)}function p(e,_,t){var o,r,u,l={};for(u in _)"key"==u?o=_[u]:"ref"==u?r=_[u]:l[u]=_[u];if(arguments.length>2&&(l.children=arguments.length>3?n.call(arguments,2):t),"function"==typeof e&&null!=e.defaultProps)for(u in e.defaultProps)void 0===l[u]&&(l[u]=e.defaultProps[u]);return h(e,l,o,r,null)}function h(e,n,o,r,u){var l={type:e,props:n,key:o,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==u?++t:u};return null!=_.vnode&&_.vnode(l),l}function d(e){return e.children}function v(e,n){this.props=e,this.context=n}function y(e,n){if(null==n)return e.__?y(e.__,e.__.__k.indexOf(e)+1):null;for(var _;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e)return _.__e;return"function"==typeof e.type?y(e):null}function m(e){var n,_;if(null!=(e=e.__)&&null!=e.__c){for(e.__e=e.__c.base=null,n=0;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e){e.__e=e.__c.base=_.__e;break}return m(e)}}function g(e){(!e.__d&&(e.__d=!0)&&o.push(e)&&!k.__r++||u!==_.debounceRendering)&&((u=_.debounceRendering)||r)(k)}function k(){for(var e;k.__r=o.length;)e=o.sort(function(e,n){return e.__v.__b-n.__v.__b}),o=[],e.some(function(e){var n,_,t,o,r,u;e.__d&&(r=(o=(n=e).__v).__e,(u=n.__P)&&(_=[],(t=s({},o)).__v=o.__v+1,D(u,o,t,n.__n,void 0!==u.ownerSVGElement,null!=o.__h?[r]:null,_,null==r?y(o):r,o.__h),w(_,o),o.__e!=r&&m(o)))})}function b(e,n,_,t,o,r,u,l,f,s){var a,p,v,m,g,k,b,H=t&&t.__k||c,E=H.length;for(_.__k=[],a=0;a<n.length;a++)if(null!=(m=_.__k[a]=null==(m=n[a])||"boolean"==typeof m?null:"string"==typeof m||"number"==typeof m||"bigint"==typeof m?h(null,m,null,null,m):Array.isArray(m)?h(d,{children:m},null,null,null):m.__b>0?h(m.type,m.props,m.key,null,m.__v):m)){if(m.__=_,m.__b=_.__b+1,null===(v=H[a])||v&&m.key==v.key&&m.type===v.type)H[a]=void 0;else for(p=0;p<E;p++){if((v=H[p])&&m.key==v.key&&m.type===v.type){H[p]=void 0;break}v=null}D(e,m,v=v||i,o,r,u,l,f,s),g=m.__e,(p=m.ref)&&v.ref!=p&&(b||(b=[]),v.ref&&b.push(v.ref,null,m),b.push(p,m.__c||g,m)),null!=g?(null==k&&(k=g),"function"==typeof m.type&&null!=m.__k&&m.__k===v.__k?m.__d=f=C(m,f,e):f=x(e,m,v,H,g,f),s||"option"!==_.type?"function"==typeof _.type&&(_.__d=f):e.value=""):f&&v.__e==f&&f.parentNode!=e&&(f=y(v))}for(_.__e=k,a=E;a--;)null!=H[a]&&("function"==typeof _.type&&null!=H[a].__e&&H[a].__e==_.__d&&(_.__d=y(t,a+1)),A(H[a],H[a]));if(b)for(a=0;a<b.length;a++)U(b[a],b[++a],b[++a])}function C(e,n,_){var t,o;for(t=0;t<e.__k.length;t++)(o=e.__k[t])&&(o.__=e,n="function"==typeof o.type?C(o,n,_):x(_,o,o,e.__k,o.__e,n));return n}function x(e,n,_,t,o,r){var u,l,i;if(void 0!==n.__d)u=n.__d,n.__d=void 0;else if(null==_||o!=r||null==o.parentNode)e:if(null==r||r.parentNode!==e)e.appendChild(o),u=null;else{for(l=r,i=0;(l=l.nextSibling)&&i<t.length;i+=2)if(l==o)break e;e.insertBefore(o,r),u=r}return void 0!==u?u:o.nextSibling}function H(e,n,_){"-"===n[0]?e.setProperty(n,_):e[n]=null==_?"":"number"!=typeof _||f.test(n)?_:_+"px"}function E(e,n,_,t,o){var r;e:if("style"===n)if("string"==typeof _)e.style.cssText=_;else{if("string"==typeof t&&(e.style.cssText=t=""),t)for(n in t)_&&n in _||H(e.style,n,"");if(_)for(n in _)t&&_[n]===t[n]||H(e.style,n,_[n])}else if("o"===n[0]&&"n"===n[1])r=n!==(n=n.replace(/Capture$/,"")),n=n.toLowerCase()in e?n.toLowerCase().slice(2):n.slice(2),e.l||(e.l={}),e.l[n+r]=_,_?t||e.addEventListener(n,r?S:P,r):e.removeEventListener(n,r?S:P,r);else if("dangerouslySetInnerHTML"!==n){if(o)n=n.replace(/xlink[H:h]/,"h").replace(/sName$/,"s");else if("href"!==n&&"list"!==n&&"form"!==n&&"tabIndex"!==n&&"download"!==n&&n in e)try{e[n]=null==_?"":_;break e}catch(e){}"function"==typeof _||(null!=_&&(!1!==_||"a"===n[0]&&"r"===n[1])?e.setAttribute(n,_):e.removeAttribute(n))}}function P(e){this.l[e.type+!1](_.event?_.event(e):e)}function S(e){this.l[e.type+!0](_.event?_.event(e):e)}function D(e,n,t,o,r,u,l,i,c){var f,a,p,h,y,m,g,k,C,x,H,E=n.type;if(void 0!==n.constructor)return null;null!=t.__h&&(c=t.__h,i=n.__e=t.__e,n.__h=null,u=[i]),(f=_.__b)&&f(n);try{e:if("function"==typeof E){if(k=n.props,C=(f=E.contextType)&&o[f.__c],x=f?C?C.props.value:f.__:o,t.__c?g=(a=n.__c=t.__c).__=a.__E:("prototype"in E&&E.prototype.render?n.__c=a=new E(k,x):(n.__c=a=new v(k,x),a.constructor=E,a.render=M),C&&C.sub(a),a.props=k,a.state||(a.state={}),a.context=x,a.__n=o,p=a.__d=!0,a.__h=[]),null==a.__s&&(a.__s=a.state),null!=E.getDerivedStateFromProps&&(a.__s==a.state&&(a.__s=s({},a.__s)),s(a.__s,E.getDerivedStateFromProps(k,a.__s))),h=a.props,y=a.state,p)null==E.getDerivedStateFromProps&&null!=a.componentWillMount&&a.componentWillMount(),null!=a.componentDidMount&&a.__h.push(a.componentDidMount);else{if(null==E.getDerivedStateFromProps&&k!==h&&null!=a.componentWillReceiveProps&&a.componentWillReceiveProps(k,x),!a.__e&&null!=a.shouldComponentUpdate&&!1===a.shouldComponentUpdate(k,a.__s,x)||n.__v===t.__v){a.props=k,a.state=a.__s,n.__v!==t.__v&&(a.__d=!1),a.__v=n,n.__e=t.__e,n.__k=t.__k,n.__k.forEach(function(e){e&&(e.__=n)}),a.__h.length&&l.push(a);break e}null!=a.componentWillUpdate&&a.componentWillUpdate(k,a.__s,x),null!=a.componentDidUpdate&&a.__h.push(function(){a.componentDidUpdate(h,y,m)})}a.context=x,a.props=k,a.state=a.__s,(f=_.__r)&&f(n),a.__d=!1,a.__v=n,a.__P=e,f=a.render(a.props,a.state,a.context),a.state=a.__s,null!=a.getChildContext&&(o=s(s({},o),a.getChildContext())),p||null==a.getSnapshotBeforeUpdate||(m=a.getSnapshotBeforeUpdate(h,y)),H=null!=f&&f.type===d&&null==f.key?f.props.children:f,b(e,Array.isArray(H)?H:[H],n,t,o,r,u,l,i,c),a.base=n.__e,n.__h=null,a.__h.length&&l.push(a),g&&(a.__E=a.__=null),a.__e=!1}else null==u&&n.__v===t.__v?(n.__k=t.__k,n.__e=t.__e):n.__e=T(t.__e,n,t,o,r,u,l,c);(f=_.diffed)&&f(n)}catch(e){n.__v=null,(c||null!=u)&&(n.__e=i,n.__h=!!c,u[u.indexOf(i)]=null),_.__e(e,n,t)}}function w(e,n){_.__c&&_.__c(n,e),e.some(function(n){try{e=n.__h,n.__h=[],e.some(function(e){e.call(n)})}catch(e){_.__e(e,n.__v)}})}function T(e,_,t,o,r,u,l,c){var f,s,p,h=t.props,d=_.props,v=_.type,m=0;if("svg"===v&&(r=!0),null!=u)for(;m<u.length;m++)if((f=u[m])&&(f===e||(v?f.localName==v:3==f.nodeType))){e=f,u[m]=null;break}if(null==e){if(null===v)return document.createTextNode(d);e=r?document.createElementNS("http://www.w3.org/2000/svg",v):document.createElement(v,d.is&&d),u=null,c=!1}if(null===v)h===d||c&&e.data===d||(e.data=d);else{if(u=u&&n.call(e.childNodes),s=(h=t.props||i).dangerouslySetInnerHTML,p=d.dangerouslySetInnerHTML,!c){if(null!=u)for(h={},m=0;m<e.attributes.length;m++)h[e.attributes[m].name]=e.attributes[m].value;(p||s)&&(p&&(s&&p.__html==s.__html||p.__html===e.innerHTML)||(e.innerHTML=p&&p.__html||""))}if(function(e,n,_,t,o){var r;for(r in _)"children"===r||"key"===r||r in n||E(e,r,null,_[r],t);for(r in n)o&&"function"!=typeof n[r]||"children"===r||"key"===r||"value"===r||"checked"===r||_[r]===n[r]||E(e,r,n[r],_[r],t)}(e,d,h,r,c),p)_.__k=[];else if(m=_.props.children,b(e,Array.isArray(m)?m:[m],_,t,o,r&&"foreignObject"!==v,u,l,u?u[0]:t.__k&&y(t,0),c),null!=u)for(m=u.length;m--;)null!=u[m]&&a(u[m]);c||("value"in d&&void 0!==(m=d.value)&&(m!==e.value||"progress"===v&&!m)&&E(e,"value",m,h.value,!1),"checked"in d&&void 0!==(m=d.checked)&&m!==e.checked&&E(e,"checked",m,h.checked,!1))}return e}function U(e,n,t){try{"function"==typeof e?e(n):e.current=n}catch(e){_.__e(e,t)}}function A(e,n,t){var o,r;if(_.unmount&&_.unmount(e),(o=e.ref)&&(o.current&&o.current!==e.__e||U(o,null,n)),null!=(o=e.__c)){if(o.componentWillUnmount)try{o.componentWillUnmount()}catch(e){_.__e(e,n)}o.base=o.__P=null}if(o=e.__k)for(r=0;r<o.length;r++)o[r]&&A(o[r],n,"function"!=typeof e.type);t||null==e.__e||a(e.__e),e.__e=e.__d=void 0}function M(e,n,_){return this.constructor(e,_)}n=c.slice,_={__e:function(e,n){for(var _,t,o;n=n.__;)if((_=n.__c)&&!_.__)try{if((t=_.constructor)&&null!=t.getDerivedStateFromError&&(_.setState(t.getDerivedStateFromError(e)),o=_.__d),null!=_.componentDidCatch&&(_.componentDidCatch(e),o=_.__d),o)return _.__E=_}catch(n){e=n}throw e}},t=0,v.prototype.setState=function(e,n){var _;_=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=s({},this.state),"function"==typeof e&&(e=e(s({},_),this.props)),e&&s(_,e),null!=e&&this.__v&&(n&&this.__h.push(n),g(this))},v.prototype.forceUpdate=function(e){this.__v&&(this.__e=!0,e&&this.__h.push(e),g(this))},v.prototype.render=d,o=[],r="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,k.__r=0,l=0;var F,L,N,W=0,R=[],I=_.__b,O=_.__r,V=_.diffed,q=_.__c,B=_.unmount;function $(e,n){_.__h&&_.__h(L,e,W||n),W=0;var t=L.__H||(L.__H={__:[],__h:[]});return e>=t.__.length&&t.__.push({}),t.__[e]}function j(e){return W=1,G(ee,e)}function G(e,n,_){var t=$(F++,2);return t.t=e,t.__c||(t.__=[_?_(n):ee(void 0,n),function(e){var n=t.t(t.__[0],e);t.__[0]!==n&&(t.__=[n,t.__[1]],t.__c.setState({}))}],t.__c=L),t.__}function z(e,n){var t=$(F++,4);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__h.push(t))}function J(e,n){var _=$(F++,7);return Z(_.__H,n)&&(_.__=e(),_.__H=n,_.__h=e),_.__}function K(){R.forEach(function(e){if(e.__P)try{e.__H.__h.forEach(X),e.__H.__h.forEach(Y),e.__H.__h=[]}catch(n){e.__H.__h=[],_.__e(n,e.__v)}}),R=[]}_.__b=function(e){L=null,I&&I(e)},_.__r=function(e){O&&O(e),F=0;var n=(L=e.__c).__H;n&&(n.__h.forEach(X),n.__h.forEach(Y),n.__h=[])},_.diffed=function(e){V&&V(e);var n=e.__c;n&&n.__H&&n.__H.__h.length&&(1!==R.push(n)&&N===_.requestAnimationFrame||((N=_.requestAnimationFrame)||function(e){var n,_=function(){clearTimeout(t),Q&&cancelAnimationFrame(n),setTimeout(e)},t=setTimeout(_,100);Q&&(n=requestAnimationFrame(_))})(K)),L=void 0},_.__c=function(e,n){n.some(function(e){try{e.__h.forEach(X),e.__h=e.__h.filter(function(e){return!e.__||Y(e)})}catch(t){n.some(function(e){e.__h&&(e.__h=[])}),n=[],_.__e(t,e.__v)}}),q&&q(e,n)},_.unmount=function(e){B&&B(e);var n=e.__c;if(n&&n.__H)try{n.__H.__.forEach(X)}catch(e){_.__e(e,n.__v)}};var Q="function"==typeof requestAnimationFrame;function X(e){var n=L;"function"==typeof e.__c&&e.__c(),L=n}function Y(e){var n=L;e.__c=e.__(),L=n}function Z(e,n){return!e||e.length!==n.length||n.some(function(n,_){return n!==e[_]})}function ee(e,n){return"function"==typeof n?n(e):n}var ne=function(e,n,_,t){var o;n[0]=0;for(var r=1;r<n.length;r++){var u=n[r++],l=n[r]?(n[0]|=u?1:2,_[n[r++]]):n[++r];3===u?t[0]=l:4===u?t[1]=Object.assign(t[1]||{},l):5===u?(t[1]=t[1]||{})[n[++r]]=l:6===u?t[1][n[++r]]+=l+"":u?(o=e.apply(l,ne(e,l,_,["",null])),t.push(o),l[0]?n[0]|=2:(n[r-2]=0,n[r]=o)):t.push(l)}return t},_e=new Map,te=function(e){var n=_e.get(this);return n||(n=new Map,_e.set(this,n)),(n=ne(this,n.get(e)||(n.set(e,n=function(e){for(var n,_,t=1,o="",r="",u=[0],l=function(e){1===t&&(e||(o=o.replace(/^\s*\n\s*|\s*\n\s*$/g,"")))?u.push(0,e,o):3===t&&(e||o)?(u.push(3,e,o),t=2):2===t&&"..."===o&&e?u.push(4,e,0):2===t&&o&&!e?u.push(5,0,!0,o):t>=5&&((o||!e&&5===t)&&(u.push(t,0,o,_),t=6),e&&(u.push(t,e,0,_),t=6)),o=""},i=0;i<e.length;i++){i&&(1===t&&l(),l(i));for(var c=0;c<e[i].length;c++)n=e[i][c],1===t?"<"===n?(l(),u=[u],t=3):o+=n:4===t?"--"===o&&">"===n?(t=1,o=""):o=n+o[0]:r?n===r?r="":o+=n:'"'===n||"'"===n?r=n:">"===n?(l(),t=1):t&&("="===n?(t=5,_=o,o=""):"/"===n&&(t<5||">"===e[i][c+1])?(l(),3===t&&(u=u[0]),t=u,(u=u[0]).push(2,0,t),t=0):" "===n||"\t"===n||"\n"===n||"\r"===n?(l(),t=2):o+=n),3===t&&"!--"===o&&(t=4,u=u[0])}return l(),u}(e)),n),arguments,[])).length>1?n:n[0]}.bind(p);e.h=p,e.html=te,e.render=function(e,t,o){var r,u,l;_.__&&_.__(e,t),u=(r="function"==typeof o)?null:o&&o.__k||t.__k,l=[],D(t,e=(!r&&o||t).__k=p(d,null,[e]),u||i,i,void 0!==t.ownerSVGElement,!r&&o?[o]:u?null:t.firstChild?n.call(t.childNodes):null,l,!r&&o?o:u?u.__e:t.firstChild,r),w(l,e)},e.Component=v,e.createContext=function(e,n){var _={__c:n="__cC"+l++,__:e,Consumer:function(e,n){return e.children(n)},Provider:function(e){var _,t;return this.getChildContext||(_=[],(t={})[n]=this,this.getChildContext=function(){return t},this.shouldComponentUpdate=function(e){this.props.value!==e.value&&_.some(g)},this.sub=function(e){_.push(e);var n=e.componentWillUnmount;e.componentWillUnmount=function(){_.splice(_.indexOf(e),1),n&&n.call(e)}}),e.children}};return _.Provider.__=_.Consumer.contextType=_},e.useState=j,e.useReducer=G,e.useEffect=function(e,n){var t=$(F++,3);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__H.__h.push(t))},e.useLayoutEffect=z,e.useRef=function(e){return W=5,J(function(){return{current:e}},[])},e.useImperativeHandle=function(e,n,_){W=6,z(function(){"function"==typeof e?e(n()):e&&(e.current=n())},null==_?_:_.concat(e))},e.useMemo=J,e.useCallback=function(e,n){return W=8,J(function(){return e},n)},e.useContext=function(e){var n=L.context[e.__c],_=$(F++,9);return _.c=e,n?(null==_.__&&(_.__=!0,n.sub(L)),n.props.value):e.__},e.useDebugValue=function(e,n){_.useDebugValue&&_.useDebugValue(n?n(e):e)},e.useErrorBoundary=function(e){var n=$(F++,10),_=j();return n.__=e,L.componentDidCatch||(L.componentDidCatch=function(e){n.__&&n.__(e),_[1](e)}),[_[0],function(){_[1](void 0)}]}});
+
 
 </script>
 <script>
+
 
 // ============ CONSTANTS ============
 const FIELD_W = 100, FIELD_H = 122, CX = 50, CY = 61, RX = 49, RY = 60;
@@ -78,7 +81,7 @@ const FIELD_POSITIONS = [
 ];
 const BENCH_SLOTS = ["B1","B2","B3","B4","B5","B6"];
 const QUARTERS = ["Q1","Q2","Q3","Q4"];
-const DEFAULT_STATS = ["Goals","Behinds","Kicks","Handballs","Marks","Tackles","Boost Runs","Blocks"];
+const DEFAULT_STATS = ["Goals","Behinds","Kicks","Handballs","Marks","Tackles","Clearances","Hit Outs","Inside 50","Boost Runs","Blocks"];
 const DRAW_COLORS = ["#1E3A8A","#DC2626","#FFFFFF","#FFD400","#3DD68C","#0E1F14"];
 const UNK = "__unknown__";
 const STATUS = {ACTIVE:"active", UNAVAILABLE:"unavailable", INJURED:"injured"};
@@ -380,6 +383,24 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [saveName, setSaveName] = useState("");
   const [showPlaysDrawer, setShowPlaysDrawer] = useState(false); // mobile drawer
+  // Quarter timer — count-up clock in seconds. Auto-stops at 20:00, the
+  // longest typical women's AFL quarter. Not persisted: it's a live coaching
+  // tool, and a stale value carrying over between sessions would be confusing.
+  const QUARTER_CAP_S = 20 * 60;
+  const [timerSec, setTimerSec] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(false);
+  useEffect(() => {
+    if (!timerRunning) return;
+    const id = setInterval(() => {
+      setTimerSec(prev => {
+        const next = prev + 1;
+        if (next >= QUARTER_CAP_S) { setTimerRunning(false); return QUARTER_CAP_S; }
+        return next;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [timerRunning]);
+  const fmtTime = (s) => `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
   // When loading a saved lineup-mode play, we want to show the lineup snapshot
   // baked into the play instead of the live lineup. `frozenLineup` holds that
   // snapshot; null means "use the live lineup".
@@ -642,6 +663,32 @@ function Whiteboard({wbFull, setWbFull, wbHalf, setWbHalf, wbBlank, setWbBlank, 
             onInput=${e=>setSize(parseFloat(e.target.value))}
             onChange=${e=>setSize(parseFloat(e.target.value))} style="width:70px;accent-color:#3b82f6"/>
         </div>
+        <!-- QUARTER TIMER — count-up clock, caps at 20:00. Coach can start, pause,
+             reset between quarters. Bright red flash at 20:00 to signal end of qtr. -->
+        <div style=${{display:"flex",alignItems:"center",gap:"4px",
+                      background:timerSec>=QUARTER_CAP_S?"#7f1d1d":"#0e1f14",
+                      border:`1px solid ${timerSec>=QUARTER_CAP_S?"#dc2626":"#166534"}`,
+                      borderRadius:"7px",padding:"4px 6px"}}
+              aria-label="Quarter timer">
+          <span style=${{fontSize:"15px",fontWeight:"900",fontVariantNumeric:"tabular-nums",
+                         color:timerSec>=QUARTER_CAP_S?"#fff":timerRunning?"#86efac":"#d6d3d1",
+                         minWidth:"42px",textAlign:"center",letterSpacing:".02em",fontFamily:"ui-monospace,monospace"}}>
+            ${fmtTime(timerSec)}
+          </span>
+          <button onClick=${()=>setTimerRunning(r=>!r)}
+            disabled=${timerSec>=QUARTER_CAP_S}
+            aria-label=${timerRunning?"Pause timer":"Start timer"}
+            style=${{padding:"3px 7px",borderRadius:"5px",
+                     background:timerRunning?"#dc2626":"#16a34a",
+                     color:"#fff",border:"none",cursor:timerSec>=QUARTER_CAP_S?"not-allowed":"pointer",
+                     fontFamily:"inherit",fontWeight:"900",fontSize:"11px",
+                     opacity:timerSec>=QUARTER_CAP_S?".5":"1"}}>
+            ${timerRunning?"❚❚":"▶"}
+          </button>
+          <button onClick=${()=>{setTimerRunning(false);setTimerSec(0);}}
+            aria-label="Reset timer"
+            style="padding:3px 7px;border-radius:5px;background:#292524;color:#d6d3d1;border:none;cursor:pointer;font-family:inherit;font-weight:900;font-size:11px">↺</button>
+        </div>
         <div style="margin-left:auto;display:flex;gap:6px">
           <button onClick=${()=>setShowPlaysDrawer(true)}
             style="padding:7px 10px;border-radius:7px;background:#292524;color:#d6d3d1;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:900;font-family:inherit">
@@ -750,6 +797,77 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
     setRoster(prev=>[...prev,p]);
     setNewName(""); setNewNumber("");
   };
+  // Edit a player's name or number IN PLACE — the player id stays the same so
+  // all existing game stats / ratings / interchange logs remain attributed
+  // correctly. Previously the only way to fix a typo was to delete and re-add,
+  // which orphaned the player's stats under the old id.
+  const editPlayer = (id, patch) => {
+    setRoster(prev=>prev.map(p=>p.id===id?{...p, ...patch}:p));
+  };
+  // CSV import — accept files with two columns in either order: number,name OR
+  // name,number. A header row is allowed (we sniff it). Duplicates (case-
+  // insensitive name match against the current roster) are skipped, not
+  // overwritten — editing an existing player is done via inline edit.
+  const csvFileRef = useRef(null);
+  const [csvSummary, setCsvSummary] = useState(null);
+  const handleCsvFile = (file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const text = String(ev.target.result || "");
+      const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(l => l.trim().length > 0);
+      if (!lines.length) { setCsvSummary({added:0, skipped:0, error:"File is empty."}); return; }
+      const splitRow = (row) => {
+        const out = []; let cur = ""; let inQ = false;
+        for (let i=0; i<row.length; i++) {
+          const ch = row[i];
+          if (inQ) {
+            if (ch === '"' && row[i+1] === '"') { cur += '"'; i++; }
+            else if (ch === '"') { inQ = false; }
+            else { cur += ch; }
+          } else {
+            if (ch === '"') { inQ = true; }
+            else if (ch === ',') { out.push(cur); cur = ""; }
+            else { cur += ch; }
+          }
+        }
+        out.push(cur);
+        return out.map(s => s.trim());
+      };
+      let startIdx = 0;
+      let nameFirst = true;
+      const first = splitRow(lines[0]);
+      const f0 = (first[0]||"").toLowerCase(), f1 = (first[1]||"").toLowerCase();
+      const headerLabels = ["name","player","player name","#","number","jersey","no","no."];
+      const isHeader = headerLabels.includes(f0) || headerLabels.includes(f1);
+      if (isHeader) {
+        startIdx = 1;
+        if (["#","number","jersey","no","no."].includes(f0)) nameFirst = false;
+      } else {
+        nameFirst = !/^\d+$/.test(first[0]);
+      }
+      const existingNames = new Set(roster.map(p => p.name.toLowerCase()));
+      const newPlayers = [];
+      let skipped = 0;
+      for (let i=startIdx; i<lines.length; i++) {
+        const cells = splitRow(lines[i]);
+        const name = (nameFirst ? cells[0] : cells[1]) || "";
+        const number = (nameFirst ? cells[1] : cells[0]) || "";
+        const cleanName = name.trim();
+        if (!cleanName) { skipped++; continue; }
+        if (existingNames.has(cleanName.toLowerCase())) { skipped++; continue; }
+        existingNames.add(cleanName.toLowerCase());
+        newPlayers.push({
+          id:`p_${Date.now()}_${Math.random().toString(36).slice(2,6)}_${i}`,
+          name:cleanName, number:number.trim(), status:STATUS.ACTIVE
+        });
+      }
+      if (newPlayers.length) setRoster(prev=>[...prev, ...newPlayers]);
+      setCsvSummary({added:newPlayers.length, skipped, error:null});
+    };
+    reader.onerror = () => setCsvSummary({added:0, skipped:0, error:"Couldn't read file."});
+    reader.readAsText(file);
+  };
   const removePlayer = id => {
     setRoster(prev=>prev.filter(p=>p.id!==id));
     const n={...lineup}; Object.keys(n).forEach(k=>{if(n[k]===id)delete n[k];}); setLineup(n);
@@ -784,6 +902,51 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
       setGames(prev=>prev.map(g=>g.id===currentGameId?{...g,interchangeLog:[...(g.interchangeLog||[]),entry]}:g));
     }
     setSwapSlot1(null);
+  };
+
+  // Direct slot-to-slot swap — used by the long-press quick-sub flow. Mirrors
+  // handleSwap but doesn't rely on the persistent swapSlot1 state, so the
+  // popup can be self-contained.
+  const directSwap = (slotA, slotB) => {
+    if (!slotA || !slotB || slotA === slotB) return;
+    const p1=lineup[slotA], p2=lineup[slotB];
+    const pl1=roster.find(p=>p.id===p1), pl2=roster.find(p=>p.id===p2);
+    const next={...lineup};
+    if(p1) next[slotB]=p1; else delete next[slotB];
+    if(p2) next[slotA]=p2; else delete next[slotA];
+    setLineup(next);
+    if (cg) {
+      const entry={
+        id:`ic_${Date.now()}`,
+        time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}),
+        slot1:slotA, slot2:slotB,
+        player1Id:p1||null, player2Id:p2||null,
+        player1Name:pl1?pl1.name:"Empty",
+        player2Name:pl2?pl2.name:"Empty"
+      };
+      setGames(prev=>prev.map(g=>g.id===currentGameId?{...g,interchangeLog:[...(g.interchangeLog||[]),entry]}:g));
+    }
+  };
+
+  // Long-press → "swap with…" popup. The popup is keyed to a slot id (which
+  // player on the field was held). Tapping a target swaps via directSwap.
+  const [longPressSlot, setLongPressSlot] = useState(null);
+  const longPressTimer = useRef(null);
+  const longPressFired = useRef(false);
+  const longPressStart = (slotId) => (e) => {
+    // Only trigger for slots that actually have a player — pressing an empty
+    // position is meaningless ("swap empty with empty").
+    if (!lineup[slotId]) return;
+    longPressFired.current = false;
+    longPressTimer.current = setTimeout(() => {
+      longPressFired.current = true;
+      setLongPressSlot(slotId);
+      // Mild haptic feedback if the device supports it.
+      if (navigator && navigator.vibrate) try { navigator.vibrate(15); } catch(_) {}
+    }, 500);
+  };
+  const longPressCancel = () => {
+    if (longPressTimer.current) { clearTimeout(longPressTimer.current); longPressTimer.current = null; }
   };
 
   const slotLabel = id => (FIELD_POSITIONS.find(p=>p.id===id)||{label:id}).label;
@@ -845,7 +1008,14 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                 const w=21, h=10.5;
                 return html`
                   <g key=${pos.id} transform=${`translate(${pos.x-w/2},${pos.y-h/2})`} style="cursor:pointer"
-                    onClick=${()=>tapToPlace(pos.id)}
+                    onClick=${()=>{ if(longPressFired.current){ longPressFired.current=false; return; } tapToPlace(pos.id); }}
+                    onmousedown=${longPressStart(pos.id)}
+                    onmouseup=${longPressCancel}
+                    onmouseleave=${longPressCancel}
+                    ontouchstart=${longPressStart(pos.id)}
+                    ontouchend=${longPressCancel}
+                    ontouchmove=${longPressCancel}
+                    ontouchcancel=${longPressCancel}
                     ondragover=${handleDragOver(pos.id)}
                     ondrop=${handleDrop(pos.id)}>
                     <rect width=${w} height=${h} rx="2"
@@ -863,7 +1033,10 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
         </div>
         <div style="padding:0 12px 12px">
           <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524">
-            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px">BENCH</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span>BENCH</span>
+              <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ press &amp; hold a player to swap</span>
+            </div>
             <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px">
               ${BENCH_SLOTS.map(b=>{
                 const player=playerInSlot(b);
@@ -871,7 +1044,14 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                 const isOver=dragOverSlot===b;
                 return html`
                   <button key=${b}
-                    onClick=${()=>tapToPlace(b)}
+                    onClick=${()=>{ if(longPressFired.current){ longPressFired.current=false; return; } tapToPlace(b); }}
+                    onmousedown=${longPressStart(b)}
+                    onmouseup=${longPressCancel}
+                    onmouseleave=${longPressCancel}
+                    ontouchstart=${longPressStart(b)}
+                    ontouchend=${longPressCancel}
+                    ontouchmove=${longPressCancel}
+                    ontouchcancel=${longPressCancel}
                     ondragover=${handleDragOver(b)}
                     ondrop=${handleDrop(b)}
                     style=${{aspectRatio:"1/1",borderRadius:"8px",padding:"4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"11px",fontWeight:"700",background:isOver?"#FFD400":player?"#1d4ed8":"#292524",color:isOver?"#000":player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":isOver?"2px solid #FFD400":"2px solid transparent",cursor:"pointer"}}>
@@ -922,6 +1102,23 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                 <${Icon} name="plus" size=${18}/>
               </button>
             </div>
+            <!-- CSV import: file input is hidden, the visible button proxies to it. -->
+            <div style="margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <button onClick=${()=>{ setCsvSummary(null); if(csvFileRef.current) csvFileRef.current.click(); }}
+                style="background:#0e1f14;color:#86efac;border:1px solid #166534;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.05em;cursor:pointer;font-family:inherit">
+                ⬆ IMPORT CSV
+              </button>
+              <span style="font-size:10px;color:#78716c">columns: <code style="color:#a8a29e">name, number</code> (header optional)</span>
+              <input type="file" accept=".csv,text/csv,text/plain" ref=${csvFileRef}
+                onChange=${e=>{ const f=e.target.files&&e.target.files[0]; handleCsvFile(f); e.target.value=""; }}
+                style="display:none"/>
+            </div>
+            ${csvSummary ? html`
+              <div style=${{marginTop:"6px",fontSize:"11px",color:csvSummary.error?"#f87171":"#86efac"}}>
+                ${csvSummary.error
+                  ? csvSummary.error
+                  : `Imported ${csvSummary.added} player${csvSummary.added===1?"":"s"}${csvSummary.skipped?` — ${csvSummary.skipped} skipped (duplicate or blank)`:""}.`}
+              </div>` : null}
           </div>` : null}
         ${selectedSlot && !editing && lineup[selectedSlot.id] ? html`
           <div style="padding:8px 12px;background:#1e3a8a;display:flex;align-items:center;gap:8px;border-bottom:1px solid #292524">
@@ -938,6 +1135,22 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
               const st=p.status||STATUS.ACTIVE;
               const unavail=st!==STATUS.ACTIVE;
               const picked = pickedPlayer && pickedPlayer.id===p.id;
+              // EDIT MODE: render the row as inline number + name inputs so the
+              // coach can fix typos without losing the player's stats history.
+              // The player id is unchanged, so all game stats stay linked.
+              if (editing) {
+                return html`
+                  <div key=${p.id} style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid #292524;background:transparent">
+                    <input type="text" value=${p.number||""} onInput=${e=>editPlayer(p.id,{number:e.target.value})}
+                      placeholder="#" aria-label="Player number"
+                      style="width:42px;flex-shrink:0;background:#292524;color:#fff;padding:6px 4px;border-radius:6px;border:1px solid #44403c;font-size:13px;font-family:inherit;text-align:center;font-weight:700"/>
+                    <input type="text" value=${p.name} onInput=${e=>editPlayer(p.id,{name:e.target.value})}
+                      placeholder="Player name" aria-label="Player name"
+                      style="flex:1;min-width:0;background:#292524;color:#fff;padding:6px 8px;border-radius:6px;border:1px solid #44403c;font-size:13px;font-family:inherit"/>
+                    <button onClick=${(e)=>{e.stopPropagation();removePlayer(p.id)}} aria-label="Delete player"
+                      style="background:none;border:none;cursor:pointer;color:#ef4444;display:flex;flex-shrink:0;padding:4px"><${Icon} name="trash" size=${16}/></button>
+                  </div>`;
+              }
               return html`
                 <div key=${p.id}
                   draggable=${!editing && !unavail ? "true" : "false"}
@@ -960,7 +1173,6 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                       st===STATUS.UNAVAILABLE?html`<div style="font-size:10px;color:#78716c">UNAVAILABLE</div>`:
                       a?html`<div style="font-size:10px;color:#60a5fa">${slotLabel(Object.keys(lineup).find(k=>lineup[k]===p.id))}</div>`:null}
                   </div>
-                  ${editing?html`<button onClick=${(e)=>{e.stopPropagation();removePlayer(p.id)}} style="background:none;border:none;cursor:pointer;color:#ef4444;display:flex"><${Icon} name="trash" size=${16}/></button>`:null}
                 </div>`;
             })
           }
@@ -1139,6 +1351,71 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
       </div>
     </div>`;
 
+  // Long-press "swap with…" popup. Triggered when the coach holds a player
+  // token on the field (or bench) for ~500ms. Shows bench slots first (the most
+  // common quick-sub action), then field slots grouped by area. Tapping a target
+  // does the swap immediately + logs the interchange. ESC/backdrop dismisses.
+  const lpSlot = longPressSlot;
+  const lpPlayer = lpSlot ? roster.find(p => p.id === lineup[lpSlot]) : null;
+  const swapModal = !lpSlot ? null : html`
+    <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.8)"
+         onClick=${()=>setLongPressSlot(null)}>
+      <div style="background:#1c1917;border-radius:16px 16px 0 0;padding:16px 16px 20px;width:100%;max-width:480px;border:1px solid #1e3a8a;max-height:80vh;display:flex;flex-direction:column"
+           onClick=${e=>e.stopPropagation()}>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <h3 style="color:#fff;font-weight:900;font-size:16px;margin:0">⇄ Swap <span style="color:#60a5fa">${slotLabel(lpSlot)}</span>${lpPlayer?html` (${lpPlayer.name})`:""} with…</h3>
+          <button onClick=${()=>setLongPressSlot(null)} aria-label="Close swap"
+            style="background:none;border:none;cursor:pointer;color:#78716c;display:flex"><${Icon} name="x" size=${20}/></button>
+        </div>
+        <div style="font-size:11px;color:#78716c;margin-bottom:10px">Tap a destination. Auto-logs the interchange.</div>
+        <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1">
+          <!-- BENCH first — by far the most common quick-sub action during a game. -->
+          <div style="font-size:10px;font-weight:900;letter-spacing:.1em;color:#a8a29e;margin:6px 0 6px">BENCH</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px">
+            ${BENCH_SLOTS.map(b => {
+              const benchPlayer = playerInSlot(b);
+              const isSource = b === lpSlot;
+              return html`
+                <button key=${b} disabled=${isSource}
+                  onClick=${()=>{ directSwap(lpSlot, b); setLongPressSlot(null); }}
+                  style=${{padding:"10px 8px",borderRadius:"8px",border:"1px solid "+(isSource?"#44403c":"#1e3a8a"),
+                           background:isSource?"#1c1917":benchPlayer?"#0c2545":"#0c0a09",
+                           color:isSource?"#57534e":"#fff",cursor:isSource?"not-allowed":"pointer",
+                           fontFamily:"inherit",textAlign:"center",opacity:isSource?".4":"1"}}>
+                  <div style="font-size:10px;color:#a8a29e;font-weight:700">${b}</div>
+                  ${benchPlayer ? html`
+                    <div style="font-size:13px;font-weight:900;margin-top:2px">${benchPlayer.number?`#${benchPlayer.number}`:""}</div>
+                    <div style="font-size:11px;color:#facc15;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${benchPlayer.name}</div>
+                  ` : html`<div style="font-size:11px;color:#57534e;margin-top:6px">empty</div>`}
+                </button>`;
+            })}
+          </div>
+          <!-- FIELD positions — for repositioning on the field rather than substituting. -->
+          <div style="font-size:10px;font-weight:900;letter-spacing:.1em;color:#a8a29e;margin:6px 0 6px">FIELD POSITIONS</div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">
+            ${FIELD_POSITIONS.map(pos => {
+              const slotPlayer = playerInSlot(pos.id);
+              const isSource = pos.id === lpSlot;
+              return html`
+                <button key=${pos.id} disabled=${isSource}
+                  onClick=${()=>{ directSwap(lpSlot, pos.id); setLongPressSlot(null); }}
+                  style=${{padding:"8px 10px",borderRadius:"8px",border:"1px solid "+(isSource?"#44403c":"#292524"),
+                           background:isSource?"#1c1917":"#0c0a09",
+                           color:isSource?"#57534e":"#fff",cursor:isSource?"not-allowed":"pointer",
+                           fontFamily:"inherit",textAlign:"left",display:"flex",alignItems:"center",gap:"8px",opacity:isSource?".4":"1"}}>
+                  <div style=${{width:"36px",fontSize:"10px",fontWeight:"900",letterSpacing:".05em",color:"#60a5fa",flexShrink:"0"}}>${pos.label}</div>
+                  <div style="flex:1;min-width:0">
+                    ${slotPlayer ? html`
+                      <div style="font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${slotPlayer.number?`#${slotPlayer.number} `:""}${slotPlayer.name}</div>
+                    ` : html`<div style="font-size:11px;color:#57534e">empty</div>`}
+                  </div>
+                </button>`;
+            })}
+          </div>
+        </div>
+      </div>
+    </div>`;
+
   const subTabs = [{id:"field",label:"FIELD",icon:"users"},{id:"interchange",label:"INTERCHANGE",icon:"swap"},{id:"availability",label:"AVAILABILITY",icon:"alert"}];
 
   return html`
@@ -1153,6 +1430,7 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
       ${subView==="field"?fieldTab
         :subView==="interchange"?interchangeTab
         :availTab}
+      ${swapModal}
     </div>`;
 }
 
@@ -1294,6 +1572,14 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
   // whole squad without exposing individual ratings/notes. State is local to
   // the session — not persisted.
   const [compareSubView, setCompareSubView] = useState("team");
+  // COMPARE → PLAYER lets the coach drill into a single player. "" means
+  // "show all players in the totals table".
+  const [comparePid, setComparePid] = useState("");
+  // PRESENT MODE — when true, COMPARE switches to a low-density, big-text
+  // layout suitable for plugging the iPad into a TV at a team meeting. It
+  // hides individual numbers in the per-player views and emphasises bars and
+  // totals. Local to the session.
+  const [presentMode, setPresentMode] = useState(false);
   // Optional new-game fields. Round can be a number ("12") or label ("Final");
   // time is HH:MM in 24h or whatever the user types; venue is one of home/away/neutral.
   const [newRound, setNewRound] = useState("");
@@ -1325,7 +1611,10 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
   });
 
   const cg = games.find(g=>g.id===currentGameId);
-  const allStats = [...DEFAULT_STATS, ...customStats];
+  // Dedupe: a user may have previously added one of the new default stats
+  // (Clearances, Hit Outs, Inside 50) as a custom stat. Keep DEFAULT_STATS
+  // first so the column order matches the standard layout.
+  const allStats = [...DEFAULT_STATS, ...customStats.filter(s => !DEFAULT_STATS.includes(s))];
 
   const startGame = () => {
     if (!newOpp.trim()) return;
@@ -2036,8 +2325,185 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
         </div>
       </div>`;
 
-    // ---- PLAYER sub-view: per-player totals across all games ----
-    const playerSection = html`
+    // ---- PLAYER sub-view: per-player totals across all games, with a
+    // dropdown to drill into a single player. When a player is selected, we
+    // show their season totals (one card), a per-game goals + behinds bar
+    // breakdown, and a per-game stats table (mirroring TEAM TOTALS BY GAME). ----
+    const playersWithStats = new Set();
+    sorted.forEach(g => Object.keys(g.stats.players||{}).forEach(pid => playersWithStats.add(pid)));
+    const dropdownPlayers = [
+      ...[...roster].sort((a,b) => (parseInt(a.number,10)||999) - (parseInt(b.number,10)||999) || a.name.localeCompare(b.name))
+    ];
+    const rosterIds = new Set(roster.map(p=>p.id));
+    Array.from(playersWithStats).forEach(pid => {
+      if (pid === UNK) return;
+      if (!rosterIds.has(pid)) dropdownPlayers.push({id:pid, name:"(removed player)", number:""});
+    });
+    const unkHasStats = sorted.some(g => {
+      const u = g.stats.players && g.stats.players[UNK];
+      if (!u) return false;
+      return QUARTERS.some(q => u[q] && Object.values(u[q]).some(v => v>0));
+    });
+    if (unkHasStats) dropdownPlayers.push({id:UNK, name:"Unattributed", number:""});
+
+    let drillSection = null;
+    if (comparePid) {
+      const player = dropdownPlayers.find(p => p.id === comparePid)
+                  || roster.find(p => p.id === comparePid)
+                  || {id:comparePid, name:"Unknown", number:""};
+      const seasonTotals = {};
+      allStats.forEach(s => { seasonTotals[s] = sorted.reduce((sum,g) => sum + getTotal(s, g.id, "player", comparePid), 0); });
+      const totalGoals = seasonTotals["Goals"] || 0;
+      const totalBehinds = seasonTotals["Behinds"] || 0;
+      const perGame = sorted.map(g => ({
+        g, goals: getTotal("Goals", g.id, "player", comparePid),
+        behinds: getTotal("Behinds", g.id, "player", comparePid)
+      }));
+      const maxGoals = Math.max(1, ...perGame.map(x => x.goals));
+      const gamesWithGoals = perGame.filter(x => x.goals > 0).length;
+      const avgGoals = sorted.length ? (totalGoals / sorted.length) : 0;
+      const accuracy = (totalGoals + totalBehinds) > 0
+        ? Math.round((totalGoals / (totalGoals + totalBehinds)) * 100)
+        : null;
+      // Key stats shown in PLAYER TOTALS BY GAME — mirrors the TEAM TOTALS BY
+      // GAME layout. We pick the six most coaching-relevant defaults rather
+      // than every stat (so the table fits on an iPad without horizontal scroll).
+      const KEY_STATS = ["Goals","Behinds","Kicks","Handballs","Marks","Tackles"];
+      const playerKeyStats = KEY_STATS.filter(s => allStats.includes(s));
+
+      drillSection = html`
+        <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+            <${AflBall} size=${18}/>
+            <div style="font-size:14px;font-weight:900;color:#fff">
+              ${player.number?html`<span style="color:#60a5fa">#${player.number} </span>`:null}${player.name}
+            </div>
+            <div style="font-size:10px;color:#78716c;letter-spacing:.08em;font-weight:700">SEASON</div>
+          </div>
+
+          <!-- Headline scoring stats -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px">
+            <div style="background:#0c0a09;border-radius:8px;padding:10px;border:1px solid #292524">
+              <div style="font-size:10px;color:#78716c;letter-spacing:.08em;font-weight:700">GOALS</div>
+              <div style="font-size:22px;color:#facc15;font-weight:900;font-variant-numeric:tabular-nums">${totalGoals}</div>
+              <div style="font-size:10px;color:#a8a29e">${avgGoals.toFixed(1)} per game</div>
+            </div>
+            <div style="background:#0c0a09;border-radius:8px;padding:10px;border:1px solid #292524">
+              <div style="font-size:10px;color:#78716c;letter-spacing:.08em;font-weight:700">BEHINDS</div>
+              <div style="font-size:22px;color:#fb923c;font-weight:900;font-variant-numeric:tabular-nums">${totalBehinds}</div>
+              <div style="font-size:10px;color:#a8a29e">${gamesWithGoals} of ${sorted.length} games scored</div>
+            </div>
+            <div style="background:#0c0a09;border-radius:8px;padding:10px;border:1px solid #292524">
+              <div style="font-size:10px;color:#78716c;letter-spacing:.08em;font-weight:700">ACCURACY</div>
+              <div style="font-size:22px;color:${accuracy==null?"#57534e":accuracy>=50?"#4ade80":"#f87171"};font-weight:900;font-variant-numeric:tabular-nums">
+                ${accuracy==null?"—":`${accuracy}%`}
+              </div>
+              <div style="font-size:10px;color:#a8a29e">goals ÷ shots</div>
+            </div>
+          </div>
+
+          <!-- Per-game goals breakdown — bars sized to max goals in any one game -->
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px">GOALS BY GAME</div>
+          ${perGame.length === 0 ? html`<div style="font-size:12px;color:#78716c">No games yet.</div>` :
+            html`<div style="display:flex;flex-direction:column;gap:6px">
+              ${perGame.map(({g, goals, behinds}) => {
+                const barW = Math.max(0, (goals / maxGoals) * 100);
+                return html`<div key=${g.id} style="display:flex;align-items:center;gap:10px">
+                  <div style="font-size:11px;color:#d6d3d1;width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">vs ${g.opponent}</div>
+                  <div style="flex:1;background:#0c0a09;border-radius:4px;height:14px;position:relative;overflow:hidden">
+                    <div style=${{position:"absolute",top:"0",left:"0",height:"100%",width:`${barW}%`,background:goals>0?"#facc15":"transparent",borderRadius:"4px",transition:"width .2s"}}/>
+                  </div>
+                  <div style="font-size:12px;font-weight:900;color:#facc15;width:24px;text-align:right;font-variant-numeric:tabular-nums">${goals}</div>
+                  <div style="font-size:10px;color:#fb923c;width:34px;text-align:right;font-variant-numeric:tabular-nums">${behinds?`+${behinds}b`:""}</div>
+                </div>`;
+              })}
+            </div>`}
+        </div>
+
+        <!-- Full season-stats row for the player (all stats, not just goals).
+             Hidden in PRESENT mode — too many small numbers to project. -->
+        ${presentMode ? null : html`
+        <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">ALL SEASON STATS</div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:13px">
+              <thead><tr style="border-bottom:1px solid #292524">
+                ${allStats.map(s=>html`<th key=${s} style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">${s}</th>`)}
+              </tr></thead>
+              <tbody>
+                <tr>
+                  ${allStats.map(s=>html`<td key=${s} style="padding:6px 8px;text-align:right;color:#60a5fa;font-weight:700;font-variant-numeric:tabular-nums">${seasonTotals[s]||"—"}</td>`)}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>`}
+
+        <!-- PLAYER TOTALS BY GAME — mirrors the TEAM TOTALS BY GAME card.
+             Shows the six most coaching-relevant stats per game with an AVG row.
+             Hidden in PRESENT mode (too dense for a TV view). -->
+        ${presentMode ? null : html`
+        <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">PLAYER TOTALS BY GAME</div>
+          ${sorted.length === 0 ? html`<div style="font-size:12px;color:#78716c">No games yet.</div>` :
+            html`<div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <thead><tr style="border-bottom:1px solid #292524">
+                  <th style="text-align:left;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">GAME</th>
+                  ${playerKeyStats.map(s=>html`<th key=${s} style="text-align:right;padding:6px 8px;color:#a8a29e;font-size:11px;white-space:nowrap">${s}</th>`)}
+                </tr></thead>
+                <tbody>
+                  ${sorted.map(g=>{
+                    return html`<tr key=${g.id} style="border-bottom:1px solid rgba(41,37,36,.5)">
+                      <td style="padding:6px 8px;color:#fff;font-weight:600;white-space:nowrap">vs ${g.opponent}</td>
+                      ${playerKeyStats.map(s=>{
+                        const v = getTotal(s, g.id, "player", comparePid);
+                        return html`<td key=${s} style="padding:6px 8px;text-align:right;color:#60a5fa;font-weight:700;font-variant-numeric:tabular-nums">${v||"—"}</td>`;
+                      })}
+                    </tr>`;
+                  })}
+                  <tr style="background:rgba(41,37,36,.5)">
+                    <td style="padding:6px 8px;color:#d6d3d1;font-weight:700;font-size:11px">AVG</td>
+                    ${playerKeyStats.map(s=>{
+                      const total = sorted.reduce((sum,g)=>sum+getTotal(s, g.id, "player", comparePid), 0);
+                      const avg = sorted.length ? total / sorted.length : 0;
+                      return html`<td key=${s} style="padding:6px 8px;text-align:right;color:#d6d3d1;font-weight:700;font-variant-numeric:tabular-nums">${avg.toFixed(1)}</td>`;
+                    })}
+                  </tr>
+                </tbody>
+              </table>
+            </div>`}
+        </div>`}`;
+    }
+
+    // The all-players totals table (default view when no player is selected).
+    // In presentMode we collapse into a leaderboard-style display: just goals
+    // bars, no per-stat columns, so it reads at a glance from across the room.
+    const allPlayersTable = presentMode ? html`
+      <div style="background:#1c1917;border-radius:12px;padding:16px;border:1px solid #292524">
+        <div style="font-size:14px;font-weight:900;letter-spacing:.1em;color:#a8a29e;margin-bottom:14px">SEASON GOAL KICKERS</div>
+        ${(() => {
+          const tally = {};
+          sorted.forEach(g => Object.keys(g.stats.players||{}).forEach(pid => {
+            if (!tally[pid]) tally[pid] = 0;
+            QUARTERS.forEach(q => { tally[pid] += (g.stats.players[pid][q] && g.stats.players[pid][q]["Goals"]) || 0; });
+          }));
+          const ranked = Object.entries(tally).filter(([,v])=>v>0).sort(([,a],[,b])=>b-a);
+          if (!ranked.length) return html`<div style="font-size:14px;color:#78716c">No goals recorded yet.</div>`;
+          const top = ranked[0][1];
+          return html`<div style="display:flex;flex-direction:column;gap:14px">
+            ${ranked.map(([pid,goals],idx) => html`
+              <div key=${pid} style="display:flex;align-items:center;gap:14px">
+                <div style="font-size:18px;font-weight:900;color:#78716c;width:28px;text-align:center">${idx+1}</div>
+                <div style="flex:1;font-size:18px;color:#fff;font-weight:700">${pName(pid)}</div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style=${{height:"14px",borderRadius:"6px",background:"#facc15",width:`${Math.max(20,(goals/top)*200)}px`}}/>
+                  <span style="color:#facc15;font-weight:900;font-size:26px;width:48px;text-align:right;font-variant-numeric:tabular-nums">${goals}</span>
+                </div>
+              </div>`)}
+          </div>`;
+        })()}
+      </div>` : html`
       <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524">
         <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:12px">PLAYER TOTALS — ALL GAMES</div>
         <div style="overflow-x:auto">
@@ -2062,6 +2528,26 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
             </tbody>
           </table>
         </div>
+      </div>`;
+
+    const playerSection = html`
+      <div>
+        <!-- Player picker — switches between the all-players table and a per-player drill view. -->
+        <div style="background:#1c1917;border-radius:12px;padding:12px;border:1px solid #292524;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <label style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e">PLAYER</label>
+          <select value=${comparePid} onChange=${e=>setComparePid(e.target.value)}
+            style="flex:1;min-width:160px;background:#0c0a09;color:#fff;border:1px solid #44403c;border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit;font-weight:600">
+            <option value="">All players (totals table)</option>
+            ${dropdownPlayers.map(p => html`
+              <option key=${p.id} value=${p.id}>
+                ${p.number ? `#${p.number} ${p.name}` : p.name}
+              </option>`)}
+          </select>
+          ${comparePid ? html`
+            <button onClick=${()=>setComparePid("")}
+              style="background:#292524;color:#d6d3d1;border:1px solid #44403c;border-radius:6px;padding:7px 10px;font-size:11px;font-weight:700;letter-spacing:.05em;cursor:pointer;font-family:inherit">CLEAR</button>` : null}
+        </div>
+        ${comparePid ? drillSection : allPlayersTable}
       </div>`;
 
     // ---- RATINGS sub-view: average rating per player + notes ----
@@ -2091,7 +2577,13 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
       })
       .filter(Boolean)
       .sort((a, b) => b.avg - a.avg);
-    const ratingsSection = ratedPlayers.length === 0 ? html`
+    const ratingsSection = presentMode ? html`
+      <div style="background:#1c1917;border-radius:12px;padding:32px;border:1px solid #292524;text-align:center">
+        <div style="font-size:36px;margin-bottom:12px">📺</div>
+        <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:6px">Ratings hidden in PRESENT mode</div>
+        <div style="color:#78716c;font-size:13px">Individual player ratings and coach's notes are kept private. Tap PRESENT off to view.</div>
+      </div>
+    ` : ratedPlayers.length === 0 ? html`
       <div style="background:#1c1917;border-radius:12px;padding:24px;border:1px solid #292524;text-align:center">
         <div style="color:#78716c;font-size:13px">No ratings recorded yet.</div>
         <div style="color:#57534e;font-size:11px;margin-top:6px;font-style:italic">Use the RATINGS tab during a game to score players 1–5 stars.</div>
@@ -2136,17 +2628,31 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
 
     return html`
       <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
-        <div style="display:flex;background:#0c0a09;border-bottom:1px solid #292524">
-          ${[
-            {id:"team",   label:"TEAM"},
-            {id:"player", label:"PLAYER"},
-            {id:"ratings",label:"RATINGS"}
-          ].map(t => html`
-            <button key=${t.id} onClick=${()=>setCompareSubView(t.id)}
-              style=${{padding:"10px 14px",fontSize:"11px",fontWeight:"900",letterSpacing:".1em",background:"none",border:"none",borderBottom:compareSubView===t.id?"2px solid #2563eb":"2px solid transparent",color:compareSubView===t.id?"#60a5fa":"#78716c",cursor:"pointer",fontFamily:"inherit"}}>
-              ${t.label}
-            </button>
-          `)}
+        <div style="display:flex;background:#0c0a09;border-bottom:1px solid #292524;align-items:center">
+          <div style="display:flex;flex:1">
+            ${[
+              {id:"team",   label:"TEAM"},
+              {id:"player", label:"PLAYER"},
+              {id:"ratings",label:"RATINGS"}
+            ].map(t => html`
+              <button key=${t.id} onClick=${()=>setCompareSubView(t.id)}
+                style=${{padding:"10px 14px",fontSize:"11px",fontWeight:"900",letterSpacing:".1em",background:"none",border:"none",borderBottom:compareSubView===t.id?"2px solid #2563eb":"2px solid transparent",color:compareSubView===t.id?"#60a5fa":"#78716c",cursor:"pointer",fontFamily:"inherit"}}>
+                ${t.label}
+              </button>
+            `)}
+          </div>
+          <!-- PRESENT toggle — when on, individual numbers in the player views are
+               hidden in favour of bars and totals. Lets the coach plug into a TV
+               at a team meeting without exposing per-player stats to the room. -->
+          <button onClick=${()=>setPresentMode(!presentMode)} aria-pressed=${presentMode}
+            title="Show to players (low-density TV mode)"
+            style=${{margin:"4px 8px",padding:"6px 10px",fontSize:"10px",fontWeight:"900",letterSpacing:".08em",
+                     background:presentMode?"#1e3a8a":"transparent",
+                     color:presentMode?"#fff":"#a8a29e",
+                     border:`1px solid ${presentMode?"#3b82f6":"#44403c"}`,
+                     borderRadius:"6px",cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap",flexShrink:0}}>
+            📺 ${presentMode?"PRESENT ON":"PRESENT"}
+          </button>
         </div>
         <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px">
           ${compareSubView==="team"    ? teamSection
@@ -2163,6 +2669,22 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
   // and steal keyboard focus from any input inside it.
   const goalModal = !goalPending ? null : (() => {
     const active=roster.filter(p=>!p.status||p.status===STATUS.ACTIVE);
+    // Sort the list so players who have already kicked goals THIS game appear at
+    // the top, ordered by goals descending. When one player is having a hot
+    // quarter, the coach can tap them without scrolling. Everyone else follows
+    // in jersey-number order.
+    const goalsThisGame = (pid) => {
+      if (!cg || !cg.stats.players[pid]) return 0;
+      let t = 0;
+      QUARTERS.forEach(q => { t += (cg.stats.players[pid][q] && cg.stats.players[pid][q]["Goals"]) || 0; });
+      return t;
+    };
+    const sortedActive = [...active].sort((a, b) => {
+      const ga = goalsThisGame(a.id), gb = goalsThisGame(b.id);
+      if (ga !== gb) return gb - ga; // scorers first, hottest at top
+      // Both have same goal count (often 0) — fall back to jersey number.
+      return (parseInt(a.number,10)||999) - (parseInt(b.number,10)||999) || a.name.localeCompare(b.name);
+    });
     return html`
       <div style="position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.8)">
         <div style="background:#1c1917;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px;border:1px solid rgba(250,204,21,.3)">
@@ -2170,19 +2692,32 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
             <h3 style="color:#fff;font-weight:900;font-size:18px;margin:0;display:flex;align-items:center;gap:8px"><${AflBall} size=${20}/> GOAL — Who kicked it?</h3>
             <button onClick=${()=>{applyUpdate("Goals",1,UNK);setGoalPending(false);}} style="background:none;border:none;cursor:pointer;color:#78716c;display:flex"><${Icon} name="x" size=${22}/></button>
           </div>
-          <div style="font-size:12px;color:#a8a29e;margin-bottom:16px">Tap a player. Tap ✕ to skip.</div>
+          <div style="font-size:12px;color:#a8a29e;margin-bottom:16px">Tap a player. Tap ✕ to skip. <span style="color:#facc15">★</span> = scored already this game.</div>
           <div style="display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto;-webkit-overflow-scrolling:touch">
-            ${active.map(p=>html`
+            ${sortedActive.map(p=>{
+              const tally = goalsThisGame(p.id);
+              const isHot = tally > 0;
+              return html`
               <button key=${p.id} onClick=${()=>confirmKicker(p.id)}
-                style="display:flex;align-items:center;gap:12px;padding:12px;background:#292524;border-radius:12px;border:none;cursor:pointer;text-align:left;font-family:inherit">
-                <div style="width:40px;height:40px;border-radius:8px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0">
+                style=${{display:"flex",alignItems:"center",gap:"12px",padding:"12px",
+                         background:isHot?"#3a2e0a":"#292524",
+                         borderRadius:"12px",
+                         border:isHot?"1px solid #facc15":"none",
+                         cursor:"pointer",textAlign:"left",fontFamily:"inherit"}}>
+                <div style=${{width:"40px",height:"40px",borderRadius:"8px",
+                              background:isHot?"#facc15":"#1d4ed8",
+                              color:isHot?"#1c1917":"#fff",
+                              display:"flex",alignItems:"center",justifyContent:"center",
+                              fontWeight:"900",fontSize:"14px",flexShrink:"0"}}>
                   ${p.number||p.name.slice(0,1).toUpperCase()}
                 </div>
-                <div>
+                <div style="flex:1;min-width:0">
                   <div style="color:#fff;font-weight:700;font-size:14px">${p.name}</div>
                   ${p.number?html`<div style="color:#a8a29e;font-size:12px">#${p.number}</div>`:null}
                 </div>
-              </button>`)}
+                ${isHot?html`<div style="color:#facc15;font-weight:900;font-size:13px;flex-shrink:0">${tally} ⚽</div>`:null}
+              </button>`;
+            })}
             <button onClick=${()=>{applyUpdate("Goals",1,UNK);setGoalPending(false);}}
               style="padding:12px;background:#292524;border-radius:12px;border:none;cursor:pointer;color:#a8a29e;font-size:13px;font-weight:700;text-align:left;font-family:inherit">
               Unknown / Don't attribute
@@ -2833,6 +3368,7 @@ function App() {
 }
 
 render(html`<${App}/>`, document.getElementById("app"));
+
 
 </script>
 </body>
