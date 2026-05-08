@@ -1136,13 +1136,13 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
           </div>
           <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:4px">⬇ ATTACKING END</div>
         </div>
-        <div style="padding:0 12px 12px">
-          <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524">
+        <div style="padding:0 12px 12px;display:flex;justify-content:center">
+          <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524;width:100%;max-width:560px">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
               <span>BENCH</span>
               <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ press and hold a player to swap</span>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+            <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:340px;margin:0 auto">
               ${BENCH_SLOTS.map(b=>{
                 const player=playerInSlot(b);
                 const sel=selectedSlot&&selectedSlot.id===b;
