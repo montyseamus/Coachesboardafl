@@ -1140,7 +1140,7 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
           <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
               <span>BENCH</span>
-              <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ press &amp; hold a player to swap</span>
+              <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ press and hold a player to swap</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
               ${BENCH_SLOTS.map(b=>{
@@ -1159,12 +1159,12 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                     ontouchcancel=${longPressCancel}
                     ondragover=${handleDragOver(b)}
                     ondrop=${handleDrop(b)}
-                    style=${{aspectRatio:"1/1",borderRadius:"8px",padding:"4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"11px",fontWeight:"700",background:isOver?"#FFD400":player?"#1d4ed8":"#292524",color:isOver?"#000":player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":isOver?"2px solid #FFD400":"2px solid transparent",cursor:"pointer"}}>
-                    <div style="font-size:9px;opacity:.7">${b}</div>
+                    style=${{aspectRatio:"2/1",borderRadius:"6px",padding:"3px 4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"1px",fontSize:"10px",fontWeight:"700",background:isOver?"#FFD400":player?"#1d4ed8":"#292524",color:isOver?"#000":player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":isOver?"2px solid #FFD400":"2px solid transparent",cursor:"pointer",lineHeight:"1.1"}}>
+                    <div style="font-size:8px;opacity:.7;line-height:1">${b}</div>
                     ${player ? html`
-                      <div style="font-size:13px;font-weight:900">#${player.number||"•"}</div>
-                      <div style="font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:${isOver?'#000':'#fde047'}">${player.name.slice(0,7)}</div>
-                    ` : html`<div style="font-size:9px;opacity:.5">empty</div>`}
+                      <div style="font-size:12px;font-weight:900;line-height:1">#${player.number||"•"}</div>
+                      <div style="font-size:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:${isOver?'#000':'#fde047'};line-height:1">${player.name.slice(0,7)}</div>
+                    ` : html`<div style="font-size:8px;opacity:.5;line-height:1">empty</div>`}
                   </button>`;
               })}
             </div>
