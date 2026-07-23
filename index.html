@@ -24,9 +24,7 @@ input:focus,textarea:focus,select:focus{outline:none}
 select{background-image:none}
 svg{touch-action:none;user-select:none;-webkit-user-select:none}
 
-/* Phone (<720px): roster lives on the side, not below the field. The field
-   area shrinks to ~50% width when the roster is open, and back to full width
-   when collapsed. The collapsed state is a small tab on the right edge. */
+/* Phone (<720px): roster lives on the side, not below the field. */
 .field-layout{flex-direction:row}
 .field-roster{width:50%;max-height:none;border-top:none;border-left:1px solid #292524;flex-shrink:0}
 .field-roster-collapsed{width:28px;max-height:none;min-height:0;border-top:none;border-left:1px solid #292524;flex-shrink:0}
@@ -48,13 +46,16 @@ svg{touch-action:none;user-select:none;-webkit-user-select:none}
 
 
 
+
 !function(e,n){"object"==typeof exports&&"undefined"!=typeof module?n(exports):"function"==typeof define&&define.amd?define(["exports"],n):n(e.htmPreact={})}(this,function(e){var n,_,t,o,r,u,l,i={},c=[],f=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function s(e,n){for(var _ in n)e[_]=n[_];return e}function a(e){var n=e.parentNode;n&&n.removeChild(e)}function p(e,_,t){var o,r,u,l={};for(u in _)"key"==u?o=_[u]:"ref"==u?r=_[u]:l[u]=_[u];if(arguments.length>2&&(l.children=arguments.length>3?n.call(arguments,2):t),"function"==typeof e&&null!=e.defaultProps)for(u in e.defaultProps)void 0===l[u]&&(l[u]=e.defaultProps[u]);return h(e,l,o,r,null)}function h(e,n,o,r,u){var l={type:e,props:n,key:o,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==u?++t:u};return null!=_.vnode&&_.vnode(l),l}function d(e){return e.children}function v(e,n){this.props=e,this.context=n}function y(e,n){if(null==n)return e.__?y(e.__,e.__.__k.indexOf(e)+1):null;for(var _;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e)return _.__e;return"function"==typeof e.type?y(e):null}function m(e){var n,_;if(null!=(e=e.__)&&null!=e.__c){for(e.__e=e.__c.base=null,n=0;n<e.__k.length;n++)if(null!=(_=e.__k[n])&&null!=_.__e){e.__e=e.__c.base=_.__e;break}return m(e)}}function g(e){(!e.__d&&(e.__d=!0)&&o.push(e)&&!k.__r++||u!==_.debounceRendering)&&((u=_.debounceRendering)||r)(k)}function k(){for(var e;k.__r=o.length;)e=o.sort(function(e,n){return e.__v.__b-n.__v.__b}),o=[],e.some(function(e){var n,_,t,o,r,u;e.__d&&(r=(o=(n=e).__v).__e,(u=n.__P)&&(_=[],(t=s({},o)).__v=o.__v+1,D(u,o,t,n.__n,void 0!==u.ownerSVGElement,null!=o.__h?[r]:null,_,null==r?y(o):r,o.__h),w(_,o),o.__e!=r&&m(o)))})}function b(e,n,_,t,o,r,u,l,f,s){var a,p,v,m,g,k,b,H=t&&t.__k||c,E=H.length;for(_.__k=[],a=0;a<n.length;a++)if(null!=(m=_.__k[a]=null==(m=n[a])||"boolean"==typeof m?null:"string"==typeof m||"number"==typeof m||"bigint"==typeof m?h(null,m,null,null,m):Array.isArray(m)?h(d,{children:m},null,null,null):m.__b>0?h(m.type,m.props,m.key,null,m.__v):m)){if(m.__=_,m.__b=_.__b+1,null===(v=H[a])||v&&m.key==v.key&&m.type===v.type)H[a]=void 0;else for(p=0;p<E;p++){if((v=H[p])&&m.key==v.key&&m.type===v.type){H[p]=void 0;break}v=null}D(e,m,v=v||i,o,r,u,l,f,s),g=m.__e,(p=m.ref)&&v.ref!=p&&(b||(b=[]),v.ref&&b.push(v.ref,null,m),b.push(p,m.__c||g,m)),null!=g?(null==k&&(k=g),"function"==typeof m.type&&null!=m.__k&&m.__k===v.__k?m.__d=f=C(m,f,e):f=x(e,m,v,H,g,f),s||"option"!==_.type?"function"==typeof _.type&&(_.__d=f):e.value=""):f&&v.__e==f&&f.parentNode!=e&&(f=y(v))}for(_.__e=k,a=E;a--;)null!=H[a]&&("function"==typeof _.type&&null!=H[a].__e&&H[a].__e==_.__d&&(_.__d=y(t,a+1)),A(H[a],H[a]));if(b)for(a=0;a<b.length;a++)U(b[a],b[++a],b[++a])}function C(e,n,_){var t,o;for(t=0;t<e.__k.length;t++)(o=e.__k[t])&&(o.__=e,n="function"==typeof o.type?C(o,n,_):x(_,o,o,e.__k,o.__e,n));return n}function x(e,n,_,t,o,r){var u,l,i;if(void 0!==n.__d)u=n.__d,n.__d=void 0;else if(null==_||o!=r||null==o.parentNode)e:if(null==r||r.parentNode!==e)e.appendChild(o),u=null;else{for(l=r,i=0;(l=l.nextSibling)&&i<t.length;i+=2)if(l==o)break e;e.insertBefore(o,r),u=r}return void 0!==u?u:o.nextSibling}function H(e,n,_){"-"===n[0]?e.setProperty(n,_):e[n]=null==_?"":"number"!=typeof _||f.test(n)?_:_+"px"}function E(e,n,_,t,o){var r;e:if("style"===n)if("string"==typeof _)e.style.cssText=_;else{if("string"==typeof t&&(e.style.cssText=t=""),t)for(n in t)_&&n in _||H(e.style,n,"");if(_)for(n in _)t&&_[n]===t[n]||H(e.style,n,_[n])}else if("o"===n[0]&&"n"===n[1])r=n!==(n=n.replace(/Capture$/,"")),n=n.toLowerCase()in e?n.toLowerCase().slice(2):n.slice(2),e.l||(e.l={}),e.l[n+r]=_,_?t||e.addEventListener(n,r?S:P,r):e.removeEventListener(n,r?S:P,r);else if("dangerouslySetInnerHTML"!==n){if(o)n=n.replace(/xlink[H:h]/,"h").replace(/sName$/,"s");else if("href"!==n&&"list"!==n&&"form"!==n&&"tabIndex"!==n&&"download"!==n&&n in e)try{e[n]=null==_?"":_;break e}catch(e){}"function"==typeof _||(null!=_&&(!1!==_||"a"===n[0]&&"r"===n[1])?e.setAttribute(n,_):e.removeAttribute(n))}}function P(e){this.l[e.type+!1](_.event?_.event(e):e)}function S(e){this.l[e.type+!0](_.event?_.event(e):e)}function D(e,n,t,o,r,u,l,i,c){var f,a,p,h,y,m,g,k,C,x,H,E=n.type;if(void 0!==n.constructor)return null;null!=t.__h&&(c=t.__h,i=n.__e=t.__e,n.__h=null,u=[i]),(f=_.__b)&&f(n);try{e:if("function"==typeof E){if(k=n.props,C=(f=E.contextType)&&o[f.__c],x=f?C?C.props.value:f.__:o,t.__c?g=(a=n.__c=t.__c).__=a.__E:("prototype"in E&&E.prototype.render?n.__c=a=new E(k,x):(n.__c=a=new v(k,x),a.constructor=E,a.render=M),C&&C.sub(a),a.props=k,a.state||(a.state={}),a.context=x,a.__n=o,p=a.__d=!0,a.__h=[]),null==a.__s&&(a.__s=a.state),null!=E.getDerivedStateFromProps&&(a.__s==a.state&&(a.__s=s({},a.__s)),s(a.__s,E.getDerivedStateFromProps(k,a.__s))),h=a.props,y=a.state,p)null==E.getDerivedStateFromProps&&null!=a.componentWillMount&&a.componentWillMount(),null!=a.componentDidMount&&a.__h.push(a.componentDidMount);else{if(null==E.getDerivedStateFromProps&&k!==h&&null!=a.componentWillReceiveProps&&a.componentWillReceiveProps(k,x),!a.__e&&null!=a.shouldComponentUpdate&&!1===a.shouldComponentUpdate(k,a.__s,x)||n.__v===t.__v){a.props=k,a.state=a.__s,n.__v!==t.__v&&(a.__d=!1),a.__v=n,n.__e=t.__e,n.__k=t.__k,n.__k.forEach(function(e){e&&(e.__=n)}),a.__h.length&&l.push(a);break e}null!=a.componentWillUpdate&&a.componentWillUpdate(k,a.__s,x),null!=a.componentDidUpdate&&a.__h.push(function(){a.componentDidUpdate(h,y,m)})}a.context=x,a.props=k,a.state=a.__s,(f=_.__r)&&f(n),a.__d=!1,a.__v=n,a.__P=e,f=a.render(a.props,a.state,a.context),a.state=a.__s,null!=a.getChildContext&&(o=s(s({},o),a.getChildContext())),p||null==a.getSnapshotBeforeUpdate||(m=a.getSnapshotBeforeUpdate(h,y)),H=null!=f&&f.type===d&&null==f.key?f.props.children:f,b(e,Array.isArray(H)?H:[H],n,t,o,r,u,l,i,c),a.base=n.__e,n.__h=null,a.__h.length&&l.push(a),g&&(a.__E=a.__=null),a.__e=!1}else null==u&&n.__v===t.__v?(n.__k=t.__k,n.__e=t.__e):n.__e=T(t.__e,n,t,o,r,u,l,c);(f=_.diffed)&&f(n)}catch(e){n.__v=null,(c||null!=u)&&(n.__e=i,n.__h=!!c,u[u.indexOf(i)]=null),_.__e(e,n,t)}}function w(e,n){_.__c&&_.__c(n,e),e.some(function(n){try{e=n.__h,n.__h=[],e.some(function(e){e.call(n)})}catch(e){_.__e(e,n.__v)}})}function T(e,_,t,o,r,u,l,c){var f,s,p,h=t.props,d=_.props,v=_.type,m=0;if("svg"===v&&(r=!0),null!=u)for(;m<u.length;m++)if((f=u[m])&&(f===e||(v?f.localName==v:3==f.nodeType))){e=f,u[m]=null;break}if(null==e){if(null===v)return document.createTextNode(d);e=r?document.createElementNS("http://www.w3.org/2000/svg",v):document.createElement(v,d.is&&d),u=null,c=!1}if(null===v)h===d||c&&e.data===d||(e.data=d);else{if(u=u&&n.call(e.childNodes),s=(h=t.props||i).dangerouslySetInnerHTML,p=d.dangerouslySetInnerHTML,!c){if(null!=u)for(h={},m=0;m<e.attributes.length;m++)h[e.attributes[m].name]=e.attributes[m].value;(p||s)&&(p&&(s&&p.__html==s.__html||p.__html===e.innerHTML)||(e.innerHTML=p&&p.__html||""))}if(function(e,n,_,t,o){var r;for(r in _)"children"===r||"key"===r||r in n||E(e,r,null,_[r],t);for(r in n)o&&"function"!=typeof n[r]||"children"===r||"key"===r||"value"===r||"checked"===r||_[r]===n[r]||E(e,r,n[r],_[r],t)}(e,d,h,r,c),p)_.__k=[];else if(m=_.props.children,b(e,Array.isArray(m)?m:[m],_,t,o,r&&"foreignObject"!==v,u,l,u?u[0]:t.__k&&y(t,0),c),null!=u)for(m=u.length;m--;)null!=u[m]&&a(u[m]);c||("value"in d&&void 0!==(m=d.value)&&(m!==e.value||"progress"===v&&!m)&&E(e,"value",m,h.value,!1),"checked"in d&&void 0!==(m=d.checked)&&m!==e.checked&&E(e,"checked",m,h.checked,!1))}return e}function U(e,n,t){try{"function"==typeof e?e(n):e.current=n}catch(e){_.__e(e,t)}}function A(e,n,t){var o,r;if(_.unmount&&_.unmount(e),(o=e.ref)&&(o.current&&o.current!==e.__e||U(o,null,n)),null!=(o=e.__c)){if(o.componentWillUnmount)try{o.componentWillUnmount()}catch(e){_.__e(e,n)}o.base=o.__P=null}if(o=e.__k)for(r=0;r<o.length;r++)o[r]&&A(o[r],n,"function"!=typeof e.type);t||null==e.__e||a(e.__e),e.__e=e.__d=void 0}function M(e,n,_){return this.constructor(e,_)}n=c.slice,_={__e:function(e,n){for(var _,t,o;n=n.__;)if((_=n.__c)&&!_.__)try{if((t=_.constructor)&&null!=t.getDerivedStateFromError&&(_.setState(t.getDerivedStateFromError(e)),o=_.__d),null!=_.componentDidCatch&&(_.componentDidCatch(e),o=_.__d),o)return _.__E=_}catch(n){e=n}throw e}},t=0,v.prototype.setState=function(e,n){var _;_=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=s({},this.state),"function"==typeof e&&(e=e(s({},_),this.props)),e&&s(_,e),null!=e&&this.__v&&(n&&this.__h.push(n),g(this))},v.prototype.forceUpdate=function(e){this.__v&&(this.__e=!0,e&&this.__h.push(e),g(this))},v.prototype.render=d,o=[],r="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,k.__r=0,l=0;var F,L,N,W=0,R=[],I=_.__b,O=_.__r,V=_.diffed,q=_.__c,B=_.unmount;function $(e,n){_.__h&&_.__h(L,e,W||n),W=0;var t=L.__H||(L.__H={__:[],__h:[]});return e>=t.__.length&&t.__.push({}),t.__[e]}function j(e){return W=1,G(ee,e)}function G(e,n,_){var t=$(F++,2);return t.t=e,t.__c||(t.__=[_?_(n):ee(void 0,n),function(e){var n=t.t(t.__[0],e);t.__[0]!==n&&(t.__=[n,t.__[1]],t.__c.setState({}))}],t.__c=L),t.__}function z(e,n){var t=$(F++,4);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__h.push(t))}function J(e,n){var _=$(F++,7);return Z(_.__H,n)&&(_.__=e(),_.__H=n,_.__h=e),_.__}function K(){R.forEach(function(e){if(e.__P)try{e.__H.__h.forEach(X),e.__H.__h.forEach(Y),e.__H.__h=[]}catch(n){e.__H.__h=[],_.__e(n,e.__v)}}),R=[]}_.__b=function(e){L=null,I&&I(e)},_.__r=function(e){O&&O(e),F=0;var n=(L=e.__c).__H;n&&(n.__h.forEach(X),n.__h.forEach(Y),n.__h=[])},_.diffed=function(e){V&&V(e);var n=e.__c;n&&n.__H&&n.__H.__h.length&&(1!==R.push(n)&&N===_.requestAnimationFrame||((N=_.requestAnimationFrame)||function(e){var n,_=function(){clearTimeout(t),Q&&cancelAnimationFrame(n),setTimeout(e)},t=setTimeout(_,100);Q&&(n=requestAnimationFrame(_))})(K)),L=void 0},_.__c=function(e,n){n.some(function(e){try{e.__h.forEach(X),e.__h=e.__h.filter(function(e){return!e.__||Y(e)})}catch(t){n.some(function(e){e.__h&&(e.__h=[])}),n=[],_.__e(t,e.__v)}}),q&&q(e,n)},_.unmount=function(e){B&&B(e);var n=e.__c;if(n&&n.__H)try{n.__H.__.forEach(X)}catch(e){_.__e(e,n.__v)}};var Q="function"==typeof requestAnimationFrame;function X(e){var n=L;"function"==typeof e.__c&&e.__c(),L=n}function Y(e){var n=L;e.__c=e.__(),L=n}function Z(e,n){return!e||e.length!==n.length||n.some(function(n,_){return n!==e[_]})}function ee(e,n){return"function"==typeof n?n(e):n}var ne=function(e,n,_,t){var o;n[0]=0;for(var r=1;r<n.length;r++){var u=n[r++],l=n[r]?(n[0]|=u?1:2,_[n[r++]]):n[++r];3===u?t[0]=l:4===u?t[1]=Object.assign(t[1]||{},l):5===u?(t[1]=t[1]||{})[n[++r]]=l:6===u?t[1][n[++r]]+=l+"":u?(o=e.apply(l,ne(e,l,_,["",null])),t.push(o),l[0]?n[0]|=2:(n[r-2]=0,n[r]=o)):t.push(l)}return t},_e=new Map,te=function(e){var n=_e.get(this);return n||(n=new Map,_e.set(this,n)),(n=ne(this,n.get(e)||(n.set(e,n=function(e){for(var n,_,t=1,o="",r="",u=[0],l=function(e){1===t&&(e||(o=o.replace(/^\s*\n\s*|\s*\n\s*$/g,"")))?u.push(0,e,o):3===t&&(e||o)?(u.push(3,e,o),t=2):2===t&&"..."===o&&e?u.push(4,e,0):2===t&&o&&!e?u.push(5,0,!0,o):t>=5&&((o||!e&&5===t)&&(u.push(t,0,o,_),t=6),e&&(u.push(t,e,0,_),t=6)),o=""},i=0;i<e.length;i++){i&&(1===t&&l(),l(i));for(var c=0;c<e[i].length;c++)n=e[i][c],1===t?"<"===n?(l(),u=[u],t=3):o+=n:4===t?"--"===o&&">"===n?(t=1,o=""):o=n+o[0]:r?n===r?r="":o+=n:'"'===n||"'"===n?r=n:">"===n?(l(),t=1):t&&("="===n?(t=5,_=o,o=""):"/"===n&&(t<5||">"===e[i][c+1])?(l(),3===t&&(u=u[0]),t=u,(u=u[0]).push(2,0,t),t=0):" "===n||"\t"===n||"\n"===n||"\r"===n?(l(),t=2):o+=n),3===t&&"!--"===o&&(t=4,u=u[0])}return l(),u}(e)),n),arguments,[])).length>1?n:n[0]}.bind(p);e.h=p,e.html=te,e.render=function(e,t,o){var r,u,l;_.__&&_.__(e,t),u=(r="function"==typeof o)?null:o&&o.__k||t.__k,l=[],D(t,e=(!r&&o||t).__k=p(d,null,[e]),u||i,i,void 0!==t.ownerSVGElement,!r&&o?[o]:u?null:t.firstChild?n.call(t.childNodes):null,l,!r&&o?o:u?u.__e:t.firstChild,r),w(l,e)},e.Component=v,e.createContext=function(e,n){var _={__c:n="__cC"+l++,__:e,Consumer:function(e,n){return e.children(n)},Provider:function(e){var _,t;return this.getChildContext||(_=[],(t={})[n]=this,this.getChildContext=function(){return t},this.shouldComponentUpdate=function(e){this.props.value!==e.value&&_.some(g)},this.sub=function(e){_.push(e);var n=e.componentWillUnmount;e.componentWillUnmount=function(){_.splice(_.indexOf(e),1),n&&n.call(e)}}),e.children}};return _.Provider.__=_.Consumer.contextType=_},e.useState=j,e.useReducer=G,e.useEffect=function(e,n){var t=$(F++,3);!_.__s&&Z(t.__H,n)&&(t.__=e,t.__H=n,L.__H.__h.push(t))},e.useLayoutEffect=z,e.useRef=function(e){return W=5,J(function(){return{current:e}},[])},e.useImperativeHandle=function(e,n,_){W=6,z(function(){"function"==typeof e?e(n()):e&&(e.current=n())},null==_?_:_.concat(e))},e.useMemo=J,e.useCallback=function(e,n){return W=8,J(function(){return e},n)},e.useContext=function(e){var n=L.context[e.__c],_=$(F++,9);return _.c=e,n?(null==_.__&&(_.__=!0,n.sub(L)),n.props.value):e.__},e.useDebugValue=function(e,n){_.useDebugValue&&_.useDebugValue(n?n(e):e)},e.useErrorBoundary=function(e){var n=$(F++,10),_=j();return n.__=e,L.componentDidCatch||(L.componentDidCatch=function(e){n.__&&n.__(e),_[1](e)}),[_[0],function(){_[1](void 0)}]}});
+
 
 
 
 
 </script>
 <script>
+
 
 
 
@@ -414,6 +415,7 @@ const ICONS = {
   alert:"M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01",
   file:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8",
   clock:"M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM12 6v6l4 2",
+  stopwatch:"M12 22a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM12 14V9M9 2h6M18.5 6.5l-1.5 1.5",
   chart:"M18 20V10M12 20V4M6 20v-6",
 };
 function Icon({name, size=18, color="currentColor"}) {
@@ -3459,6 +3461,489 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
 }
 
 // ============ APP ============
+// ============ GAME DAY ============
+// All-in-one live game screen: the field + bench with drag-and-drop
+// interchange, the 20-minute countdown clock, per-player time-on-ground and
+// bench-rotation tracking, and a bottom stat bar for recording stats on the
+// tapped player — so the coach never has to switch screens mid-game.
+//
+// It writes to the SAME shared state as STATS (games[].stats keyed by quarter,
+// lineup, interchangeLog), so everything recorded here shows up in the STATS
+// tab after the game. The clock, selected quarter, selected player and the
+// time-on-ground accumulator are session-only (like the STATS timer) — a stale
+// value carrying across launches would confuse more than it helps.
+function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, setCurrentGameId, teamName, customStats}) {
+  const QUARTER_LEN_S = 20 * 60;
+  const [timerSec, setTimerSec] = useState(QUARTER_LEN_S);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const [quarter, setQuarter] = useState(0);
+  const [selPid, setSelPid] = useState(null);
+  // Per-player accumulated seconds on the field this game (session-only).
+  const [tog, setTog] = useState({});
+  // Undo stack for quick stat corrections: [{pid, stat, q}, ...]
+  const [undoStack, setUndoStack] = useState([]);
+  const [heatmapPending, setHeatmapPending] = useState(null);
+  // Inline "start a game" form (only shown when no game is in progress).
+  const [newOpp, setNewOpp] = useState("");
+  const [newRound, setNewRound] = useState("");
+  const [newVenue, setNewVenue] = useState("home");
+  // Drag state (pointer-event based, works reliably on iPad).
+  const [ghost, setGhost] = useState(null); // {x, y, num, name}
+  const [dropSlot, setDropSlot] = useState(null);
+  const dragRef = useRef(null);
+  const dragFired = useRef(false);
+
+  const cg = games.find(g=>g.id===currentGameId);
+  const allStats = [...DEFAULT_STATS, ...customStats.filter(s => !DEFAULT_STATS.includes(s))];
+  const fmt = (s) => `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
+
+  const playerInSlot = id => roster.find(p=>p.id===lineup[id]);
+  const slotOf = pid => Object.keys(lineup).find(k=>lineup[k]===pid);
+  const slotLabel = id => (FIELD_POSITIONS.find(p=>p.id===id)||{label:id}).label;
+  const isBenchSlot = (slotId) => BENCH_SLOTS.indexOf(slotId) !== -1;
+
+  // Bench-rotation counts (field -> bench moves), derived from the log so they
+  // survive a reload even though time-on-ground doesn't.
+  const icLog = cg ? (cg.interchangeLog||[]) : [];
+  const offCounts = {};
+  icLog.forEach(e => {
+    if (e.player1Id && !isBenchSlot(e.slot1) && isBenchSlot(e.slot2)) offCounts[e.player1Id] = (offCounts[e.player1Id]||0)+1;
+    if (e.player2Id && !isBenchSlot(e.slot2) && isBenchSlot(e.slot1)) offCounts[e.player2Id] = (offCounts[e.player2Id]||0)+1;
+  });
+
+  // ---- Clock: tick once a second while running, and accrue time-on-ground
+  // for whoever is currently on a field position. A ref keeps the interval
+  // reading the live lineup without restarting the timer on every swap.
+  const lineupRef = useRef(lineup);
+  lineupRef.current = lineup;
+  useEffect(() => {
+    if (!timerRunning) return;
+    const id = setInterval(() => {
+      setTimerSec(prev => { const n = prev - 1; if (n <= 0) { setTimerRunning(false); return 0; } return n; });
+      setTog(prev => {
+        const next = {...prev};
+        FIELD_POSITIONS.forEach(pos => { const pid = lineupRef.current[pos.id]; if (pid) next[pid] = (next[pid]||0)+1; });
+        return next;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [timerRunning]);
+
+  // ---- Start a game from here (mirrors the STATS new-game shape) ----
+  const startGame = () => {
+    if (!newOpp.trim()) return;
+    const game = {
+      id:`g_${Date.now()}`, opponent:newOpp.trim(), date:new Date().toISOString(),
+      round:newRound.trim()||"", time:"", venue:newVenue||"home",
+      opponentScore:{goals:0,behinds:0},
+      stats:{team:{Q1:{},Q2:{},Q3:{},Q4:{}},players:{},opp:{Q1:{},Q2:{},Q3:{},Q4:{}}},
+      quarterNotes:{Q1:"",Q2:"",Q3:"",Q4:""},
+      ratings:{}, shotHeatmap:[], shotHeatmapVersion:2, oppShotHeatmap:[], interchangeLog:[]
+    };
+    setGames(prev=>[...prev,game]);
+    setCurrentGameId(game.id);
+    setNewOpp(""); setNewRound(""); setNewVenue("home");
+    setQuarter(0); setTimerSec(QUARTER_LEN_S); setTimerRunning(false); setTog({}); setUndoStack([]);
+  };
+
+  // ---- Stat recording (writes team + player totals for the active quarter) ----
+  const applyUpdate = (stat, delta, pid, q) => {
+    if (!cg) return;
+    const qq = q || QUARTERS[quarter];
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const ng = JSON.parse(JSON.stringify(g));
+      ng.stats.team[qq][stat] = Math.max(0,(ng.stats.team[qq][stat]||0)+delta);
+      if (!ng.stats.players[pid]) ng.stats.players[pid]={Q1:{},Q2:{},Q3:{},Q4:{}};
+      ng.stats.players[pid][qq][stat] = Math.max(0,(ng.stats.players[pid][qq][stat]||0)+delta);
+      return ng;
+    }));
+  };
+
+  const recordStat = (stat) => {
+    if (!cg || !selPid) return;
+    const q = QUARTERS[quarter];
+    applyUpdate(stat, 1, selPid, q);
+    setUndoStack(prev=>[...prev, {pid:selPid, stat, q}]);
+    if (navigator && navigator.vibrate) try { navigator.vibrate(10); } catch(_) {}
+    if (stat === "Goals" || stat === "Behinds") {
+      setHeatmapPending({ type: stat === "Goals" ? "goal" : "behind", playerId: selPid, team: "own" });
+    }
+  };
+
+  const undoLast = () => {
+    setUndoStack(prev=>{
+      if (!prev.length) return prev;
+      const last = prev[prev.length-1];
+      applyUpdate(last.stat, -1, last.pid, last.q);
+      return prev.slice(0, -1);
+    });
+  };
+
+  // ---- Opposition scoring (mirrors STATS scoreboard away buttons) ----
+  const updateOpp = (k, delta) => {
+    if (!cg) return;
+    const q = QUARTERS[quarter];
+    const stat = k === "goals" ? "Goals" : "Behinds";
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const ng = JSON.parse(JSON.stringify(g));
+      if (!ng.stats.opp) ng.stats.opp = {Q1:{},Q2:{},Q3:{},Q4:{}};
+      if (!ng.stats.opp[q]) ng.stats.opp[q] = {};
+      ng.stats.opp[q][stat] = Math.max(0, (ng.stats.opp[q][stat]||0) + delta);
+      let total = 0; QUARTERS.forEach(qq => { total += (ng.stats.opp[qq] && ng.stats.opp[qq][stat]) || 0; });
+      if (!ng.opponentScore) ng.opponentScore = {goals:0, behinds:0};
+      ng.opponentScore[k] = total;
+      return ng;
+    }));
+    if (delta > 0) setHeatmapPending({ type: k === "goals" ? "goal" : "behind", playerId: null, team: "opp" });
+  };
+
+  const confirmHeatmapZone = (zone) => {
+    if (!heatmapPending || !cg) return;
+    const q = QUARTERS[quarter];
+    const isOpp = heatmapPending.team === "opp";
+    const entry = isOpp
+      ? { quarter: q, type: heatmapPending.type, zone }
+      : { quarter: q, type: heatmapPending.type, zone, playerId: heatmapPending.playerId };
+    setGames(prev=>prev.map(g=>{
+      if (g.id!==currentGameId) return g;
+      const ng = JSON.parse(JSON.stringify(g));
+      if (isOpp) { if (!Array.isArray(ng.oppShotHeatmap)) ng.oppShotHeatmap=[]; ng.oppShotHeatmap.push(entry); }
+      else { if (!Array.isArray(ng.shotHeatmap)) ng.shotHeatmap=[]; ng.shotHeatmap.push(entry); }
+      return ng;
+    }));
+    setHeatmapPending(null);
+  };
+
+  // ---- Interchange: swap two slots and log it (so rotation counts stay right) ----
+  const directSwapLog = (slotA, slotB) => {
+    if (!slotA || !slotB || slotA === slotB) return;
+    const p1=lineup[slotA], p2=lineup[slotB];
+    const pl1=roster.find(p=>p.id===p1), pl2=roster.find(p=>p.id===p2);
+    const next={...lineup};
+    if(p1) next[slotB]=p1; else delete next[slotB];
+    if(p2) next[slotA]=p2; else delete next[slotA];
+    setLineup(next);
+    if (cg) {
+      const entry={
+        id:`ic_${Date.now()}`,
+        time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}),
+        slot1:slotA, slot2:slotB,
+        player1Id:p1||null, player2Id:p2||null,
+        player1Name:pl1?pl1.name:"Empty", player2Name:pl2?pl2.name:"Empty"
+      };
+      setGames(prev=>prev.map(g=>g.id===currentGameId?{...g,interchangeLog:[...(g.interchangeLog||[]),entry]}:g));
+    }
+    if (navigator && navigator.vibrate) try { navigator.vibrate(15); } catch(_) {}
+  };
+
+  // ---- Tap handling (select for stats, or tap-move a selected player to an
+  // empty slot). A completed drag suppresses the trailing click via dragFired.
+  const handleSlotTap = (slotId) => {
+    if (dragFired.current) { dragFired.current = false; return; }
+    const pid = lineup[slotId];
+    if (pid) { setSelPid(pid); return; }
+    if (selPid) { const from = slotOf(selPid); if (from) directSwapLog(from, slotId); }
+  };
+
+  // ---- Pointer-event drag (reliable on iPad; HTML5 DnD from SVG is not) ----
+  const onSlotPointerDown = (slotId) => (e) => {
+    const pid = lineup[slotId];
+    dragRef.current = { slotId, pid: pid||null, x0:e.clientX, y0:e.clientY, active:false };
+    if (pid) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch(_){} }
+  };
+  const onSlotPointerMove = (e) => {
+    const d = dragRef.current; if (!d || !d.pid) return;
+    const dx = e.clientX-d.x0, dy = e.clientY-d.y0;
+    if (!d.active && (Math.abs(dx)>6 || Math.abs(dy)>6)) {
+      d.active = true;
+      const p = roster.find(x=>x.id===d.pid);
+      d.num = p ? (p.number||"") : ""; d.name = p ? p.name : "";
+    }
+    if (d.active) {
+      if (e.preventDefault) e.preventDefault();
+      setGhost({ x:e.clientX, y:e.clientY, num:d.num, name:d.name });
+      let el = document.elementFromPoint(e.clientX, e.clientY);
+      let slot = null;
+      while (el) { if (el.getAttribute && el.getAttribute("data-slot")) { slot = el.getAttribute("data-slot"); break; } el = el.parentElement || el.parentNode; }
+      setDropSlot(slot);
+    }
+  };
+  const onSlotPointerUp = (e) => {
+    const d = dragRef.current; dragRef.current = null;
+    setGhost(null); setDropSlot(null);
+    if (!d) return;
+    if (d.active) {
+      dragFired.current = true;
+      let el = document.elementFromPoint(e.clientX, e.clientY);
+      let slot = null;
+      while (el) { if (el.getAttribute && el.getAttribute("data-slot")) { slot = el.getAttribute("data-slot"); break; } el = el.parentElement || el.parentNode; }
+      if (slot && slot !== d.slotId) directSwapLog(d.slotId, slot);
+    }
+  };
+
+  const selPlayer = selPid ? roster.find(p=>p.id===selPid) : null;
+  const ourScore = calcScore(cg);
+  const away = (cg && cg.opponentScore) || {goals:0,behinds:0};
+  const awayPts = away.goals*6 + away.behinds;
+
+  // ---- START PANEL (no game in progress) ----
+  if (!cg) {
+    return html`
+      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#0c0a09;display:flex;flex-direction:column;align-items:center;padding:24px 16px">
+        <div style="max-width:420px;width:100%;background:#1c1917;border:1px solid #292524;border-radius:16px;padding:20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+            <${Icon} name="stopwatch" size=${22} color="#facc15"/>
+            <h2 style="margin:0;color:#fff;font-size:20px;font-weight:900">Game Day</h2>
+          </div>
+          <div style="font-size:13px;color:#a8a29e;margin-bottom:16px;line-height:1.5">Track your interchange, clock and stats all on one screen. Start a game to begin.</div>
+          ${roster.length===0 ? html`
+            <div style="background:#0c0a09;border:1px solid #44403c;border-radius:10px;padding:14px;color:#fca5a5;font-size:13px">Add your squad first in the <strong>LINEUP</strong> tab, then come back to start the game.</div>
+          ` : html`
+            <label style="display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:#a8a29e;margin-bottom:4px">OPPONENT</label>
+            <input type="text" value=${newOpp} onInput=${e=>setNewOpp(e.target.value)} placeholder="e.g. Eastern Devils"
+              style="width:100%;background:#0c0a09;color:#fff;padding:11px;border-radius:8px;border:1px solid #44403c;font-size:15px;font-family:inherit;margin-bottom:12px"/>
+            <label style="display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:#a8a29e;margin-bottom:4px">ROUND (optional)</label>
+            <input type="text" value=${newRound} onInput=${e=>setNewRound(e.target.value)} placeholder="e.g. 12"
+              style="width:100%;background:#0c0a09;color:#fff;padding:11px;border-radius:8px;border:1px solid #44403c;font-size:15px;font-family:inherit;margin-bottom:12px"/>
+            <label style="display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:#a8a29e;margin-bottom:4px">VENUE</label>
+            <div style="display:flex;gap:6px;margin-bottom:16px">
+              ${[["home","HOME"],["away","AWAY"],["neutral","NEUTRAL"]].map(([v,l])=>html`
+                <button key=${v} onClick=${()=>setNewVenue(v)}
+                  style=${{flex:1,padding:"9px",borderRadius:"8px",fontSize:"12px",fontWeight:"800",border:"1px solid",borderColor:newVenue===v?"#2563eb":"#44403c",background:newVenue===v?"#1e3a8a":"#0c0a09",color:newVenue===v?"#fff":"#a8a29e",cursor:"pointer",fontFamily:"inherit"}}>${l}</button>`)}
+            </div>
+            <button onClick=${startGame} disabled=${!newOpp.trim()}
+              style=${{width:"100%",padding:"13px",borderRadius:"10px",fontSize:"15px",fontWeight:"900",letterSpacing:".05em",border:"none",background:newOpp.trim()?"#16a34a":"#292524",color:newOpp.trim()?"#fff":"#57534e",cursor:newOpp.trim()?"pointer":"not-allowed",fontFamily:"inherit"}}>
+              ▶  START GAME
+            </button>
+          `}
+        </div>
+        <div style="max-width:420px;width:100%;margin-top:14px;font-size:11px;color:#57534e;text-align:center;line-height:1.5">Already started a game in STATS? It'll show here automatically.</div>
+      </div>`;
+  }
+
+  // ---- SCOREBOARD ----
+  const scoreboard = html`
+    <div style="flex-shrink:0;background:#1c1917;border-bottom:1px solid #292524;padding:6px 8px">
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;max-width:640px;margin:0 auto">
+        <div style="text-align:center;min-width:0">
+          <div style="font-size:11px;font-weight:800;color:#93c5fd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${teamName||"US"}</div>
+          <div style="font-size:22px;font-weight:900;color:#fff;line-height:1.1">${ourScore.goals}.${ourScore.behinds}</div>
+          <div style="font-size:13px;font-weight:800;color:#60a5fa">${ourScore.points}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+          <div style=${{fontSize:"20px",fontWeight:"900",fontFamily:"ui-monospace,monospace",color:timerSec===0?"#fca5a5":timerRunning?"#86efac":"#fff",background:timerSec===0?"rgba(127,29,29,.5)":"rgba(0,0,0,.35)",padding:"2px 10px",borderRadius:"7px",minWidth:"74px",textAlign:"center"}}>${fmt(timerSec)}</div>
+          <div style="display:flex;gap:4px">
+            <button onClick=${()=>setTimerRunning(r=>!r)} disabled=${timerSec===0} aria-label=${timerRunning?"Pause":"Start"}
+              style=${{width:"30px",height:"26px",borderRadius:"6px",fontSize:"13px",fontWeight:"900",background:timerRunning?"#dc2626":"#16a34a",color:"#fff",border:"none",cursor:timerSec===0?"not-allowed":"pointer",opacity:timerSec===0?.5:1,fontFamily:"inherit"}}>${timerRunning?"❚❚":"▶"}</button>
+            <button onClick=${()=>{setTimerRunning(false);setTimerSec(QUARTER_LEN_S);}} aria-label="Reset timer"
+              style="width:30px;height:26px;border-radius:6px;font-size:13px;font-weight:900;background:#292524;color:#d6d3d1;border:none;cursor:pointer;font-family:inherit">↺</button>
+          </div>
+        </div>
+        <div style="text-align:center;min-width:0">
+          <div style="font-size:11px;font-weight:800;color:#fca5a5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cg.opponent}</div>
+          <div style="font-size:22px;font-weight:900;color:#fff;line-height:1.1">${away.goals}.${away.behinds}</div>
+          <div style="font-size:13px;font-weight:800;color:#f87171">${awayPts}</div>
+          <div style="display:flex;gap:3px;justify-content:center;margin-top:2px">
+            <button onClick=${()=>updateOpp("goals",1)} style="width:26px;height:24px;border-radius:5px;font-size:11px;font-weight:900;background:#7f1d1d;color:#fff;border:none;cursor:pointer;font-family:inherit">+G</button>
+            <button onClick=${()=>updateOpp("goals",-1)} style="width:26px;height:24px;border-radius:5px;font-size:11px;font-weight:900;background:#292524;color:#d6d3d1;border:none;cursor:pointer;font-family:inherit">−G</button>
+            <button onClick=${()=>updateOpp("behinds",1)} style="width:26px;height:24px;border-radius:5px;font-size:11px;font-weight:900;background:#7f1d1d;color:#fff;border:none;cursor:pointer;font-family:inherit">+B</button>
+            <button onClick=${()=>updateOpp("behinds",-1)} style="width:26px;height:24px;border-radius:5px;font-size:11px;font-weight:900;background:#292524;color:#d6d3d1;border:none;cursor:pointer;font-family:inherit">−B</button>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:4px;justify-content:center;margin-top:5px">
+        ${QUARTERS.map((q,i)=>html`
+          <button key=${q} onClick=${()=>setQuarter(i)}
+            style=${{padding:"4px 14px",borderRadius:"6px",fontSize:"12px",fontWeight:"900",letterSpacing:".05em",border:"1px solid",borderColor:quarter===i?"#2563eb":"#44403c",background:quarter===i?"#2563eb":"#0c0a09",color:quarter===i?"#fff":"#a8a29e",cursor:"pointer",fontFamily:"inherit"}}>${q}</button>`)}
+      </div>
+    </div>`;
+
+  // ---- FIELD TOKEN renderer ----
+  const renderToken = (pos) => {
+    const player = playerInSlot(pos.id);
+    const sel = player && selPid === player.id;
+    const over = dropSlot === pos.id;
+    const w=22, h=13;
+    const secs = player ? (tog[player.id]||0) : 0;
+    const offs = player ? (offCounts[player.id]||0) : 0;
+    return html`
+      <g key=${pos.id} data-slot=${pos.id} style="cursor:pointer;touch-action:none"
+        onClick=${()=>handleSlotTap(pos.id)}
+        onpointerdown=${onSlotPointerDown(pos.id)}
+        onpointermove=${onSlotPointerMove}
+        onpointerup=${onSlotPointerUp}
+        transform=${`translate(${pos.x-w/2},${pos.y-h/2})`}>
+        <rect data-slot=${pos.id} width=${w} height=${h} rx="2"
+          fill=${over?"#166534":player?(sel?"#1d4ed8":"#1E3A8A"):"rgba(0,0,0,0.7)"}
+          stroke=${sel?"#facc15":over?"#4ade80":"#fff"} stroke-width=${sel||over?"0.8":"0.4"}/>
+        ${player ? html`
+          <text x=${w/2} y="4.2" text-anchor="middle" font-size="3.4" font-weight="900" fill="#fff" style="pointer-events:none">${player.number?`#${player.number}`:pos.label}</text>
+          <text x=${w/2} y="7.6" text-anchor="middle" font-size="2.3" font-weight="700" fill="#FFD400" style="pointer-events:none">${player.name.length>13?player.name.slice(0,12)+"…":player.name}</text>
+          <text x=${w/2} y="11.1" text-anchor="middle" font-size="2.7" font-weight="800" fill="#93c5fd" style="pointer-events:none;font-family:ui-monospace,monospace">${fmt(secs)}</text>
+          ${offs>0 ? html`
+            <circle cx=${w-2.2} cy="2.4" r="2.1" fill="#dc2626" style="pointer-events:none"/>
+            <text x=${w-2.2} y="3.3" text-anchor="middle" font-size="2.6" font-weight="900" fill="#fff" style="pointer-events:none">${offs}</text>
+          ` : null}
+        ` : html`<text x=${w/2} y=${h/2+1.2} text-anchor="middle" font-size="3.2" font-weight="900" fill="#fff" style="pointer-events:none">${pos.label}</text>`}
+      </g>`;
+  };
+
+  // ---- BENCH ----
+  const benchRow = html`
+    <div style="padding:0 12px 12px;display:flex;justify-content:center">
+      <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524;width:100%;max-width:560px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <span>BENCH</span>
+          <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ drag a player on or off · red badge = bench trips</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:360px;margin:0 auto">
+          ${BENCH_SLOTS.map(b=>{
+            const player=playerInSlot(b);
+            const sel=player && selPid===player.id;
+            const over=dropSlot===b;
+            const secs=player?(tog[player.id]||0):0;
+            const offs=player?(offCounts[player.id]||0):0;
+            return html`
+              <button key=${b} data-slot=${b}
+                onClick=${()=>handleSlotTap(b)}
+                onpointerdown=${onSlotPointerDown(b)}
+                onpointermove=${onSlotPointerMove}
+                onpointerup=${onSlotPointerUp}
+                style=${{position:"relative",aspectRatio:"2/1",borderRadius:"6px",padding:"3px 4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"1px",fontSize:"10px",fontWeight:"700",background:over?"#166534":player?"#1d4ed8":"#292524",color:player?"#fff":"#a8a29e",border:sel?"2px solid #facc15":over?"2px solid #4ade80":"2px solid transparent",cursor:"pointer",lineHeight:"1.1",touchAction:"none"}}>
+                <div style="font-size:8px;opacity:.7;line-height:1">${b}</div>
+                ${player ? html`
+                  <div style="font-size:12px;font-weight:900;line-height:1">#${player.number||"•"}</div>
+                  <div style="font-size:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:#fde047;line-height:1">${player.name.slice(0,7)}</div>
+                  <div style="font-size:9px;font-weight:800;color:#93c5fd;font-family:ui-monospace,monospace;line-height:1">${fmt(secs)}</div>
+                  ${offs>0 ? html`<div style="position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;background:#dc2626;color:#fff;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;border:1px solid #1c1917">${offs}</div>` : null}
+                ` : html`<div style="font-size:8px;opacity:.5;line-height:1">empty</div>`}
+              </button>`;
+          })}
+        </div>
+      </div>
+    </div>`;
+
+  // ---- BOTTOM STAT BAR ----
+  const statBar = html`
+    <div style="flex-shrink:0;background:#1c1917;border-top:1px solid #292524;padding:7px 8px">
+      ${!selPlayer ? html`
+        <div style="text-align:center;color:#78716c;font-size:12px;padding:6px 0">Tap a player on the field to record their stats</div>
+      ` : html`
+        <div style="display:flex;align-items:center;gap:8px;max-width:720px;margin:0 auto">
+          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;min-width:56px">
+            <div style="font-size:16px;font-weight:900;color:#facc15;line-height:1">#${selPlayer.number||"•"}</div>
+            <div style="font-size:10px;color:#d6d3d1;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center">${selPlayer.name}</div>
+            <button onClick=${()=>setSelPid(null)} style="font-size:9px;color:#78716c;background:none;border:none;cursor:pointer;padding:2px 0;font-family:inherit">clear ✕</button>
+          </div>
+          <div style="flex:1;min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;display:flex;gap:5px;padding-bottom:2px">
+            ${allStats.map(s=>{
+              const isShot = s==="Goals"||s==="Behinds";
+              return html`
+                <button key=${s} onClick=${()=>recordStat(s)}
+                  style=${{flexShrink:0,padding:"9px 11px",borderRadius:"9px",fontSize:"12px",fontWeight:"800",border:"1px solid",borderColor:isShot?"#a16207":"#44403c",background:isShot?"#422006":"#0c0a09",color:isShot?"#fde047":"#e7e5e4",cursor:"pointer",fontFamily:"inherit",whiteSpace:"nowrap"}}>${s}</button>`;
+            })}
+          </div>
+          <button onClick=${undoLast} disabled=${!undoStack.length} aria-label="Undo last stat"
+            style=${{flexShrink:0,display:"flex",alignItems:"center",gap:"4px",padding:"9px 10px",borderRadius:"9px",fontSize:"11px",fontWeight:"800",border:"none",background:undoStack.length?"#292524":"#1c1917",color:undoStack.length?"#d6d3d1":"#57534e",cursor:undoStack.length?"pointer":"not-allowed",fontFamily:"inherit"}}>
+            <${Icon} name="undo" size=${14} color=${undoStack.length?"#d6d3d1":"#57534e"}/> UNDO
+          </button>
+        </div>
+      `}
+    </div>`;
+
+  // ---- HEATMAP ZONE MODAL (same picker as STATS) ----
+  const heatmapModal = !heatmapPending ? null : (() => {
+    const isGoal = heatmapPending.type === "goal";
+    const isOpp = heatmapPending.team === "opp";
+    const playerName = isOpp ? (cg?cg.opponent:"Opposition") : (() => { const p = roster.find(p=>p.id===heatmapPending.playerId); return p?`${p.name}${p.number?` (#${p.number})`:""}`:"Unknown"; })();
+    const M = 3, VB_H = 50;
+    return html`
+      <div style="position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.85)">
+        <div style="background:#1c1917;border-radius:16px 16px 0 0;padding:16px;width:100%;max-width:520px;border:1px solid ${isGoal?"rgba(250,204,21,.4)":"rgba(96,165,250,.4)"};max-height:90vh;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <h3 style="color:#fff;font-weight:900;font-size:16px;margin:0;display:flex;align-items:center;gap:8px">
+              <${AflBall} size=${18}/>
+              ${isOpp ? "OPP " : ""}${isGoal ? "GOAL" : "BEHIND"} — Where from?
+            </h3>
+            <button onClick=${()=>setHeatmapPending(null)} aria-label="Skip zone"
+              style="background:none;border:none;cursor:pointer;color:#78716c;display:flex"><${Icon} name="x" size=${22}/></button>
+          </div>
+          <div style="font-size:12px;color:${isOpp?"#fca5a5":"#a8a29e"};margin-bottom:10px">
+            ${playerName} · ${QUARTERS[quarter]} · Tap the zone the kick came from. Tap ✕ to skip.
+          </div>
+          <div style="background:#0c0a09;border-radius:10px;padding:8px;display:flex;justify-content:center;flex:1;overflow:hidden">
+            <svg viewBox=${`${-M} ${-5} ${FIELD_W+M*2} ${VB_H+5+M}`} preserveAspectRatio="xMidYMid meet"
+                 style="width:100%;max-height:55vh;display:block;touch-action:manipulation">
+              <defs>
+                <radialGradient id="gdHmFieldGrad" cx="50%" cy="20%" r="80%">
+                  <stop offset="0%" stop-color="#4ca860"/>
+                  <stop offset="60%" stop-color="#357a44"/>
+                  <stop offset="100%" stop-color="#1f5a2c"/>
+                </radialGradient>
+                <clipPath id="gdHmOvalClip"><ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY}/></clipPath>
+              </defs>
+              <g clip-path="url(#gdHmOvalClip)">
+                <rect x=${-M} y=${-5} width=${FIELD_W+M*2} height=${VB_H+10} fill="url(#gdHmFieldGrad)"/>
+                <circle cx=${CX} cy="0" r=${GOAL_RADIUS} fill="none" stroke="#fff" stroke-width="0.5"/>
+                <rect x=${CX-GS_HALF_W} y="0" width=${GS_HALF_W*2} height=${GS_DEPTH} fill="none" stroke="#fff" stroke-width="0.4"/>
+                <line x1=${CX-GP_HALF} y1="0" x2=${CX+GP_HALF} y2="0" stroke="#fff" stroke-width="0.6"/>
+                <ellipse cx=${CX} cy=${CY} rx=${RX} ry=${RY} fill="none" stroke="#fff" stroke-width="0.5"/>
+                ${HEATMAP_ZONES.map(z => {
+                  const ctr = heatmapZoneVisibleCenter(z);
+                  return html`
+                    <g key=${z.id}>
+                      <rect x=${z.x} y=${z.y} width=${z.w} height=${z.h}
+                        fill=${isGoal?"rgba(250,204,21,0.06)":"rgba(96,165,250,0.06)"}
+                        stroke=${isGoal?"#facc15":"#60a5fa"} stroke-width="0.35" stroke-dasharray="0.6 0.6"
+                        style="cursor:pointer" onClick=${()=>confirmHeatmapZone(z.id)}/>
+                      <text x=${ctr.cx} y=${ctr.cy+1.0} text-anchor="middle" font-size="2.8" font-weight="900"
+                        fill=${isGoal?"#facc15":"#60a5fa"} style="pointer-events:none;font-family:ui-monospace,monospace">${z.id}</text>
+                    </g>`;
+                })}
+              </g>
+              <line x1=${CX-GP_HALF} y1="0" x2=${CX-GP_HALF} y2="-3" stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
+              <line x1=${CX+GP_HALF} y1="0" x2=${CX+GP_HALF} y2="-3" stroke="#fff" stroke-width="0.7" stroke-linecap="round"/>
+              <line x1=${CX-BP_OFFSET} y1="0" x2=${CX-BP_OFFSET} y2="-2" stroke="#fff" stroke-width="0.5" stroke-linecap="round"/>
+              <line x1=${CX+BP_OFFSET} y1="0" x2=${CX+BP_OFFSET} y2="-2" stroke="#fff" stroke-width="0.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <button onClick=${()=>setHeatmapPending(null)}
+            style="margin-top:10px;padding:10px;background:#292524;color:#d6d3d1;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit">
+            Skip — don't record location
+          </button>
+        </div>
+      </div>`;
+  })();
+
+  const ghostEl = !ghost ? null : html`
+    <div style=${{position:"fixed",left:ghost.x+"px",top:ghost.y+"px",transform:"translate(-50%,-50%)",zIndex:80,pointerEvents:"none",background:"#1d4ed8",color:"#fff",borderRadius:"7px",padding:"4px 8px",border:"2px solid #facc15",fontWeight:"900",fontSize:"13px",boxShadow:"0 4px 12px rgba(0,0,0,.5)",textAlign:"center",lineHeight:"1.1"}}>
+      <div>#${ghost.num||"•"}</div>
+      <div style="font-size:9px;color:#fde047;font-weight:700">${(ghost.name||"").slice(0,9)}</div>
+    </div>`;
+
+  return html`
+    <div style="display:flex;flex-direction:column;flex:1;overflow:hidden;background:#0c0a09">
+      ${scoreboard}
+      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;min-height:0">
+        <div style="padding:8px 12px 0;display:flex;flex-direction:column;align-items:center">
+          <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:4px">⬆ DEFENDING END</div>
+          <div style="width:100%;max-width:560px;aspect-ratio:100/130">
+            <${AFLField}>
+              ${FIELD_POSITIONS.map(renderToken)}
+            </${AFLField}>
+          </div>
+          <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:4px;margin-bottom:8px">⬇ ATTACKING END</div>
+        </div>
+        ${benchRow}
+      </div>
+      ${statBar}
+      ${heatmapModal}
+      ${ghostEl}
+    </div>`;
+}
+
 function App() {
   // ---- Profiles ----
   // Run migration BEFORE anything else, so profile state initializers see the right data.
@@ -3637,7 +4122,7 @@ function App() {
     if (activeId) pSave(activeId, "tutorialDone", true);
   };
 
-  const mainTabs=[{id:"whiteboard",label:"BOARD",icon:"edit"},{id:"lineup",label:"LINEUP",icon:"users"},{id:"stats",label:"STATS",icon:"clipboard"}];
+  const mainTabs=[{id:"whiteboard",label:"BOARD",icon:"edit"},{id:"lineup",label:"LINEUP",icon:"users"},{id:"gameday",label:"GAME DAY",icon:"stopwatch"},{id:"stats",label:"STATS",icon:"clipboard"}];
 
   // Active profile name (from profiles list, falls back to teamName)
   const activeProf = profiles.find(p=>p.id===activeId);
@@ -3977,6 +4462,7 @@ function App() {
       <main style="flex:1;overflow:hidden;display:flex;flex-direction:column">
         ${tab==="whiteboard"?html`<${Whiteboard} wbFull=${wbFull} setWbFull=${setWbFull} wbHalf=${wbHalf} setWbHalf=${setWbHalf} wbBlank=${wbBlank} setWbBlank=${setWbBlank} wbLineup=${wbLineup} setWbLineup=${setWbLineup} plays=${plays} setPlays=${setPlays} roster=${roster} lineup=${lineup}/>`
           :tab==="lineup"?html`<${Lineup} roster=${roster} setRoster=${setRoster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId}/>`
+          :tab==="gameday"?html`<${GameDay} roster=${roster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} customStats=${customStats}/>`
           :html`<${Stats} roster=${roster} games=${games} setGames=${setGames} customStats=${customStats} setCustomStats=${setCustomStats} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} setTeamName=${setTeamName}/>`}
       </main>
       ${profileMenu}
@@ -3987,6 +4473,7 @@ function App() {
 }
 
 render(html`<${App}/>`, document.getElementById("app"));
+
 
 
 
