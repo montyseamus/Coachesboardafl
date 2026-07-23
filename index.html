@@ -1099,6 +1099,57 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
   // keystroke. With a nested `const X = () => ...`, each Lineup re-render created
   // a new component reference, causing Preact to unmount the input and discard
   // the iPad keyboard after one letter.
+  // ---- Pointer-event drag-and-drop (same reliable approach as GAME DAY) ----
+  // Applied to the FIELD tokens/bench and the INTERCHANGE grid. Dragging one
+  // slot onto another swaps via directSwap (which logs the interchange when a
+  // game is live). A 6px move threshold distinguishes drag from tap; a completed
+  // drag sets ptrFired so the trailing click is ignored. Coexists with tap-to-
+  // place, long-press-swap and the roster HTML5 drag.
+  const [ptrGhost, setPtrGhost] = useState(null);
+  const [ptrDrop, setPtrDrop] = useState(null);
+  const ptrDragRef = useRef(null);
+  const ptrFired = useRef(false);
+  const ptrFindSlot = (x, y) => {
+    let el = document.elementFromPoint(x, y), slot = null;
+    while (el) { if (el.getAttribute && el.getAttribute("data-slot")) { slot = el.getAttribute("data-slot"); break; } el = el.parentElement || el.parentNode; }
+    return slot;
+  };
+  const ptrDown = (slotId) => (e) => {
+    const pid = lineup[slotId];
+    ptrDragRef.current = { slotId, pid: pid||null, x0:e.clientX, y0:e.clientY, active:false };
+    if (pid) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch(_){} }
+  };
+  const ptrMove = (e) => {
+    const d = ptrDragRef.current; if (!d || !d.pid) return;
+    const dx = e.clientX-d.x0, dy = e.clientY-d.y0;
+    if (!d.active && (Math.abs(dx)>6 || Math.abs(dy)>6)) {
+      d.active = true;
+      longPressCancel();
+      const p = roster.find(x=>x.id===d.pid);
+      d.num = p ? (p.number||"") : ""; d.name = p ? p.name : "";
+    }
+    if (d.active) {
+      if (e.preventDefault) e.preventDefault();
+      setPtrGhost({ x:e.clientX, y:e.clientY, num:d.num, name:d.name });
+      setPtrDrop(ptrFindSlot(e.clientX, e.clientY));
+    }
+  };
+  const ptrUp = (e) => {
+    const d = ptrDragRef.current; ptrDragRef.current = null;
+    setPtrGhost(null); setPtrDrop(null);
+    if (!d) return;
+    if (d.active) {
+      ptrFired.current = true;
+      const slot = ptrFindSlot(e.clientX, e.clientY);
+      if (slot && slot !== d.slotId) directSwap(d.slotId, slot);
+    }
+  };
+  const ptrGhostEl = !ptrGhost ? null : html`
+    <div style=${{position:"fixed",left:ptrGhost.x+"px",top:ptrGhost.y+"px",transform:"translate(-50%,-50%)",zIndex:80,pointerEvents:"none",background:"#1d4ed8",color:"#fff",borderRadius:"7px",padding:"4px 8px",border:"2px solid #facc15",fontWeight:"900",fontSize:"13px",boxShadow:"0 4px 12px rgba(0,0,0,.5)",textAlign:"center",lineHeight:"1.1"}}>
+      <div>#${ptrGhost.num||"•"}</div>
+      <div style="font-size:9px;color:#fde047;font-weight:700">${(ptrGhost.name||"").slice(0,9)}</div>
+    </div>`;
+
   const fieldTab = html`
     <div style="display:flex;flex:1;overflow:hidden" class="field-layout">
       <div style="flex:1;min-width:0;background:#0c0a09;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;min-height:0">
@@ -1113,9 +1164,13 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                 // Tile size — 1.5x the original 14x7 so player numbers are easier
                 // to read at a glance during a game.
                 const w=21, h=10.5;
+                const isDrop=ptrDrop===pos.id;
                 return html`
-                  <g key=${pos.id} transform=${`translate(${pos.x-w/2},${pos.y-h/2})`} style="cursor:pointer"
-                    onClick=${()=>{ if(longPressFired.current){ longPressFired.current=false; return; } tapToPlace(pos.id); }}
+                  <g key=${pos.id} data-slot=${pos.id} transform=${`translate(${pos.x-w/2},${pos.y-h/2})`} style="cursor:pointer;touch-action:none"
+                    onClick=${()=>{ if(longPressFired.current){ longPressFired.current=false; return; } if(ptrFired.current){ ptrFired.current=false; return; } tapToPlace(pos.id); }}
+                    onpointerdown=${ptrDown(pos.id)}
+                    onpointermove=${ptrMove}
+                    onpointerup=${ptrUp}
                     onmousedown=${longPressStart(pos.id)}
                     onmouseup=${longPressCancel}
                     onmouseleave=${longPressCancel}
@@ -1125,9 +1180,9 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                     ontouchcancel=${longPressCancel}
                     ondragover=${handleDragOver(pos.id)}
                     ondrop=${handleDrop(pos.id)}>
-                    <rect width=${w} height=${h} rx="2"
-                      fill=${isOver?"#FFD400":player?"#1E3A8A":"rgba(0,0,0,0.7)"}
-                      stroke=${sel?"#DC2626":isOver?"#FFD400":"#fff"} stroke-width=${sel||isOver?"0.7":"0.4"}/>
+                    <rect data-slot=${pos.id} width=${w} height=${h} rx="2"
+                      fill=${isDrop?"#166534":isOver?"#FFD400":player?"#1E3A8A":"rgba(0,0,0,0.7)"}
+                      stroke=${sel?"#DC2626":isDrop?"#4ade80":isOver?"#FFD400":"#fff"} stroke-width=${sel||isOver||isDrop?"0.7":"0.4"}/>
                     ${player ? html`
                       <text x=${w/2} y="4.5" text-anchor="middle" font-size="3.4" font-weight="900" fill="#fff">${player.number?`#${player.number}`:pos.label}</text>
                       <text x=${w/2} y="8.4" text-anchor="middle" font-size="2.5" font-weight="700" fill="#FFD400">${player.name.length>14?player.name.slice(0,13)+"…":player.name}</text>
@@ -1142,16 +1197,20 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
           <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524;width:100%;max-width:560px">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
               <span>BENCH</span>
-              <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ press and hold a player to swap</span>
+              <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ drag a player, or press and hold, to swap</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:340px;margin:0 auto">
               ${BENCH_SLOTS.map(b=>{
                 const player=playerInSlot(b);
                 const sel=selectedSlot&&selectedSlot.id===b;
                 const isOver=dragOverSlot===b;
+                const isDrop=ptrDrop===b;
                 return html`
-                  <button key=${b}
-                    onClick=${()=>{ if(longPressFired.current){ longPressFired.current=false; return; } tapToPlace(b); }}
+                  <button key=${b} data-slot=${b}
+                    onClick=${()=>{ if(longPressFired.current){ longPressFired.current=false; return; } if(ptrFired.current){ ptrFired.current=false; return; } tapToPlace(b); }}
+                    onpointerdown=${ptrDown(b)}
+                    onpointermove=${ptrMove}
+                    onpointerup=${ptrUp}
                     onmousedown=${longPressStart(b)}
                     onmouseup=${longPressCancel}
                     onmouseleave=${longPressCancel}
@@ -1161,7 +1220,7 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                     ontouchcancel=${longPressCancel}
                     ondragover=${handleDragOver(b)}
                     ondrop=${handleDrop(b)}
-                    style=${{aspectRatio:"2/1",borderRadius:"6px",padding:"3px 4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"1px",fontSize:"10px",fontWeight:"700",background:isOver?"#FFD400":player?"#1d4ed8":"#292524",color:isOver?"#000":player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":isOver?"2px solid #FFD400":"2px solid transparent",cursor:"pointer",lineHeight:"1.1"}}>
+                    style=${{aspectRatio:"2/1",borderRadius:"6px",padding:"3px 4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"1px",fontSize:"10px",fontWeight:"700",background:isDrop?"#166534":isOver?"#FFD400":player?"#1d4ed8":"#292524",color:isOver?"#000":player?"#fff":"#a8a29e",border:sel?"2px solid #ef4444":isDrop?"2px solid #4ade80":isOver?"2px solid #FFD400":"2px solid transparent",cursor:"pointer",lineHeight:"1.1",touchAction:"none"}}>
                     <div style="font-size:8px;opacity:.7;line-height:1">${b}</div>
                     ${player ? html`
                       <div style="font-size:12px;font-weight:900;line-height:1">#${player.number||"•"}</div>
@@ -1337,7 +1396,7 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
           <div style="max-width:576px;margin:0 auto">
             <div style=${{marginBottom:"12px",padding:"12px",borderRadius:"12px",border:"1px solid",borderColor:swapSlot1?"#2563eb":"#44403c",background:swapSlot1?"rgba(30,58,138,.4)":"#1c1917",fontSize:"13px",fontWeight:"700",color:swapSlot1?"#93c5fd":"#a8a29e"}}>
               ${swapSlot1 ? `Selected: ${slotLabel(swapSlot1)} — ${(playerInSlot(swapSlot1)||{name:"Empty"}).name} · Now tap another to swap`
-                : "Tap any position or bench slot to start an interchange"}
+                : "Drag a player onto another slot to swap — or tap two slots"}
             </div>
             <div style="background:#1c1917;border-radius:12px;border:1px solid #292524;padding:12px;margin-bottom:12px">
               <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:8px">⬆ DEFENDING END</div>
@@ -1350,9 +1409,12 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
                       if (!posId) return html`<div key=${"sp_"+ri+"_"+ci} style="flex:1;max-width:90px"/>`;
                       const pos=FIELD_POSITIONS.find(p=>p.id===posId);
                       const player=playerInSlot(posId), isSel=swapSlot1===posId;
+                      const isDrop=ptrDrop===posId;
                       return html`
-                        <button key=${posId} onClick=${()=>handleSwap(posId)}
-                          style=${{flex:"1",maxWidth:"90px",padding:"8px 4px",borderRadius:"8px",border:"1px solid",borderColor:isSel?"#fde047":player?"#1d4ed8":"#44403c",background:isSel?"#facc15":player?"#1d4ed8":"#292524",color:isSel?"#1c1917":player?"#fff":"#a8a29e",cursor:"pointer",textAlign:"center"}}>
+                        <button key=${posId} data-slot=${posId}
+                          onClick=${()=>{ if(ptrFired.current){ ptrFired.current=false; return; } handleSwap(posId); }}
+                          onpointerdown=${ptrDown(posId)} onpointermove=${ptrMove} onpointerup=${ptrUp}
+                          style=${{flex:"1",maxWidth:"90px",padding:"8px 4px",borderRadius:"8px",border:"1px solid",borderColor:isDrop?"#4ade80":isSel?"#fde047":player?"#1d4ed8":"#44403c",background:isDrop?"#166534":isSel?"#facc15":player?"#1d4ed8":"#292524",color:isSel?"#1c1917":player?"#fff":"#a8a29e",cursor:"pointer",textAlign:"center",touchAction:"none"}}>
                           <div style="font-size:10px;font-weight:900;letter-spacing:.05em">${pos&&pos.label}</div>
                           ${player?html`<div style="font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:${isSel?'#1c1917':'#fde047'}">${player.number?`#${player.number}`:player.name.slice(0,6)}</div>`:null}
                         </button>`;
@@ -1367,9 +1429,12 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
                 ${BENCH_SLOTS.map(b=>{
                   const player=playerInSlot(b), isSel=swapSlot1===b;
+                  const isDrop=ptrDrop===b;
                   return html`
-                    <button key=${b} onClick=${()=>handleSwap(b)}
-                      style=${{aspectRatio:"3/2",borderRadius:"8px",padding:"6px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:"700",background:isSel?"#facc15":player?"#1d4ed8":"#292524",color:isSel?"#1c1917":player?"#fff":"#a8a29e",border:"1px solid",borderColor:isSel?"#fde047":player?"#1d4ed8":"#44403c",cursor:"pointer"}}>
+                    <button key=${b} data-slot=${b}
+                      onClick=${()=>{ if(ptrFired.current){ ptrFired.current=false; return; } handleSwap(b); }}
+                      onpointerdown=${ptrDown(b)} onpointermove=${ptrMove} onpointerup=${ptrUp}
+                      style=${{aspectRatio:"3/2",borderRadius:"8px",padding:"6px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",fontSize:"12px",fontWeight:"700",background:isDrop?"#166534":isSel?"#facc15":player?"#1d4ed8":"#292524",color:isSel?"#1c1917":player?"#fff":"#a8a29e",border:"1px solid",borderColor:isDrop?"#4ade80":isSel?"#fde047":player?"#1d4ed8":"#44403c",cursor:"pointer",touchAction:"none"}}>
                       <div style="font-size:9px;opacity:.7">${b}</div>
                       ${player?html`<div style="font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center">${player.name.slice(0,8)}</div>`:html`<div style="font-size:9px;opacity:.4">empty</div>`}
                     </button>`;
@@ -1542,6 +1607,7 @@ function Lineup({roster, setRoster, lineup, setLineup, games, setGames, currentG
         :subView==="interchange"?interchangeTab
         :availTab}
       ${swapModal}
+      ${ptrGhostEl}
     </div>`;
 }
 
@@ -1576,6 +1642,17 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
     return a.name.localeCompare(b.name);
   });
   const q = QUARTERS[quarter];
+  // Whole-game info columns: time on ground (from GAME DAY's clock, saved on the
+  // game) and interchanges = bench trips (from the interchange log). Both are
+  // game totals, so they don't change with the selected quarter.
+  const fmtSec = (s)=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+  const togMap = (cg && cg.timeOnGround) || {};
+  const benchTrips = {};
+  ((cg && cg.interchangeLog) || []).forEach(e=>{
+    const isB = id => BENCH_SLOTS.indexOf(id)!==-1;
+    if (e.player1Id && !isB(e.slot1) && isB(e.slot2)) benchTrips[e.player1Id]=(benchTrips[e.player1Id]||0)+1;
+    if (e.player2Id && !isB(e.slot2) && isB(e.slot1)) benchTrips[e.player2Id]=(benchTrips[e.player2Id]||0)+1;
+  });
   const playerVal = (pid, stat) => (cg.stats.players[pid] && cg.stats.players[pid][q] && cg.stats.players[pid][q][stat]) || 0;
   // Game total across all four quarters for a player. Shown in brackets when
   // not on Q1 so the coach sees both the per-quarter and the running total.
@@ -1607,6 +1684,8 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
           <thead>
             <tr>
               <th style=${{position:"sticky",top:"0",left:"0",zIndex:"3",background:"#0c0a09",borderBottom:"2px solid #292524",borderRight:"1px solid #292524",padding:"10px 12px",textAlign:"left",fontSize:"10px",fontWeight:"900",letterSpacing:".1em",color:"#a8a29e",width:NAME_COL+"px",minWidth:NAME_COL+"px"}}>PLAYER</th>
+              <th style=${{position:"sticky",top:"0",zIndex:"2",background:"#0c0a09",borderBottom:"2px solid #292524",padding:"8px 4px",textAlign:"center",fontSize:"10px",fontWeight:"900",letterSpacing:".05em",color:"#60a5fa",width:"58px",minWidth:"58px"}}>MINS</th>
+              <th style=${{position:"sticky",top:"0",zIndex:"2",background:"#0c0a09",borderBottom:"2px solid #292524",padding:"8px 4px",textAlign:"center",fontSize:"10px",fontWeight:"900",letterSpacing:".05em",color:"#f87171",width:"46px",minWidth:"46px"}}>IC</th>
               ${allStats.map(stat=>{
                 const isScore = stat==="Goals"||stat==="Behinds";
                 return html`
@@ -1640,6 +1719,12 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
                         ${p.number?html`<div style="font-size:10px;color:#78716c">#${p.number}</div>`:null}
                       </div>
                     </div>
+                  </td>
+                  <td style=${{background:rowBg,borderBottom:"1px solid #292524",padding:"4px",textAlign:"center",width:"58px",minWidth:"58px"}}>
+                    <span style="font-size:13px;font-weight:800;color:#93c5fd;font-variant-numeric:tabular-nums;font-family:ui-monospace,monospace">${fmtSec(togMap[p.id]||0)}</span>
+                  </td>
+                  <td style=${{background:rowBg,borderBottom:"1px solid #292524",padding:"4px",textAlign:"center",width:"46px",minWidth:"46px"}}>
+                    <span style=${{fontSize:"15px",fontWeight:"900",color:(benchTrips[p.id]||0)>0?"#fff":"#57534e",fontVariantNumeric:"tabular-nums"}}>${benchTrips[p.id]||0}</span>
                   </td>
                   ${allStats.map(stat=>{
                     const isScore = stat==="Goals"||stat==="Behinds";
@@ -2068,6 +2153,18 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
       });
       QUARTERS.forEach(q=>{const note=(g.quarterNotes||{})[q];if(note)rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,q,"Note",note]);});
       (g.interchangeLog||[]).forEach(ic=>rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,ic.time,"Interchange",`${ic.player1Name}(${ic.slot1})⇄${ic.player2Name}(${ic.slot2})`]));
+      // Per-player playing-time summary: time on ground (mm:ss) and number of
+      // interchanges (bench trips). One row each, labelled in the Scope column.
+      const togM = g.timeOnGround || {};
+      const trips = {};
+      (g.interchangeLog||[]).forEach(e=>{const isB=id=>BENCH_SLOTS.indexOf(id)!==-1;if(e.player1Id&&!isB(e.slot1)&&isB(e.slot2))trips[e.player1Id]=(trips[e.player1Id]||0)+1;if(e.player2Id&&!isB(e.slot2)&&isB(e.slot1))trips[e.player2Id]=(trips[e.player2Id]||0)+1;});
+      const playtimePids = new Set([...Object.keys(togM), ...Object.keys(trips)]);
+      playtimePids.forEach(pid=>{
+        const secs = togM[pid]||0;
+        const mins = `${Math.floor(secs/60)}:${String(Math.floor(secs%60)).padStart(2,"0")}`;
+        rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,mins,"TimeOnGround",pName(pid)]);
+        rows.push([`${teamName} vs ${g.opponent}`,d,r,t,v,g.opponent,String(trips[pid]||0),"Interchanges",pName(pid)]);
+      });
       // Ratings rows — one per rated player.
       const ratings = g.ratings || {};
       Object.keys(ratings).forEach(pid => {
@@ -3472,14 +3569,9 @@ function Stats({roster, games, setGames, customStats, setCustomStats, currentGam
 // tab after the game. The clock, selected quarter, selected player and the
 // time-on-ground accumulator are session-only (like the STATS timer) — a stale
 // value carrying across launches would confuse more than it helps.
-function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, setCurrentGameId, teamName, customStats}) {
-  const QUARTER_LEN_S = 20 * 60;
-  const [timerSec, setTimerSec] = useState(QUARTER_LEN_S);
-  const [timerRunning, setTimerRunning] = useState(false);
-  const [quarter, setQuarter] = useState(0);
+function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, setCurrentGameId, teamName, customStats,
+                  QUARTER_LEN_S, timerSec, setTimerSec, timerRunning, setTimerRunning, quarter, setQuarter, tog}) {
   const [selPid, setSelPid] = useState(null);
-  // Per-player accumulated seconds on the field this game (session-only).
-  const [tog, setTog] = useState({});
   // Undo stack for quick stat corrections: [{pid, stat, q}, ...]
   const [undoStack, setUndoStack] = useState([]);
   const [heatmapPending, setHeatmapPending] = useState(null);
@@ -3511,23 +3603,9 @@ function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, set
     if (e.player2Id && !isBenchSlot(e.slot2) && isBenchSlot(e.slot1)) offCounts[e.player2Id] = (offCounts[e.player2Id]||0)+1;
   });
 
-  // ---- Clock: tick once a second while running, and accrue time-on-ground
-  // for whoever is currently on a field position. A ref keeps the interval
-  // reading the live lineup without restarting the timer on every swap.
-  const lineupRef = useRef(lineup);
-  lineupRef.current = lineup;
-  useEffect(() => {
-    if (!timerRunning) return;
-    const id = setInterval(() => {
-      setTimerSec(prev => { const n = prev - 1; if (n <= 0) { setTimerRunning(false); return 0; } return n; });
-      setTog(prev => {
-        const next = {...prev};
-        FIELD_POSITIONS.forEach(pos => { const pid = lineupRef.current[pos.id]; if (pid) next[pid] = (next[pid]||0)+1; });
-        return next;
-      });
-    }, 1000);
-    return () => clearInterval(id);
-  }, [timerRunning]);
+  // The clock + time-on-ground now live in App state (so they survive tab
+  // switches and keep running in the background). This component just reads
+  // `timerSec`/`timerRunning`/`quarter`/`tog` and calls the passed setters.
 
   // ---- Start a game from here (mirrors the STATS new-game shape) ----
   const startGame = () => {
@@ -3538,12 +3616,13 @@ function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, set
       opponentScore:{goals:0,behinds:0},
       stats:{team:{Q1:{},Q2:{},Q3:{},Q4:{}},players:{},opp:{Q1:{},Q2:{},Q3:{},Q4:{}}},
       quarterNotes:{Q1:"",Q2:"",Q3:"",Q4:""},
-      ratings:{}, shotHeatmap:[], shotHeatmapVersion:2, oppShotHeatmap:[], interchangeLog:[]
+      ratings:{}, shotHeatmap:[], shotHeatmapVersion:2, oppShotHeatmap:[], interchangeLog:[], timeOnGround:{}
     };
     setGames(prev=>[...prev,game]);
     setCurrentGameId(game.id);
     setNewOpp(""); setNewRound(""); setNewVenue("home");
-    setQuarter(0); setTimerSec(QUARTER_LEN_S); setTimerRunning(false); setTog({}); setUndoStack([]);
+    // Clock/quarter/time-on-ground reset happens in App's currentGameId effect.
+    setUndoStack([]);
   };
 
   // ---- Stat recording (writes team + player totals for the active quarter) ----
@@ -4030,6 +4109,24 @@ function App() {
   const [wbLineup, setWbLineup] = useState(()=>activeId ? pGet(activeId,"wbLineup",[]) : []);
   const [plays, setPlays]       = useState(()=>activeId ? pGet(activeId,"plays",[]) : []);
 
+  // ---- GAME-DAY CLOCK (lifted to App so it keeps running and does NOT reset
+  // when the coach switches tabs). The 20-min countdown, the selected quarter,
+  // and the per-player time-on-ground accumulator all live here. Time-on-ground
+  // ticks whenever the clock runs (across all quarters) and is periodically
+  // folded into the current game's `timeOnGround` so it shows on the stats
+  // sheets after the game. Passed down to GameDay via props.
+  const GD_QUARTER_LEN_S = 20 * 60;
+  const [gdTimerSec, setGdTimerSec] = useState(GD_QUARTER_LEN_S);
+  const [gdTimerRunning, setGdTimerRunning] = useState(false);
+  const [gdQuarter, setGdQuarter] = useState(0);
+  const [gdTog, setGdTog] = useState(()=>{
+    const g = (activeId ? pGet(activeId,"games",[]) : []).find(x=>x.id===(activeId?pGet(activeId,"currentGame",null):null));
+    return (g && g.timeOnGround) ? {...g.timeOnGround} : {};
+  });
+  const gdLineupRef = useRef(lineup); gdLineupRef.current = lineup;
+  const gdTogRef = useRef(gdTog); gdTogRef.current = gdTog;
+  const gdLastPersist = useRef(0);
+
   // When activeId changes, reload everything from that profile's storage.
   // We use a ref to skip the very first run (initial state already came from storage).
   const prevActive = useRef(activeId);
@@ -4089,6 +4186,46 @@ function App() {
     if (!activeId) return;
     setProfiles(prev => prev.map(p => p.id===activeId ? {...p, name: teamName} : p));
   }, [teamName]);
+
+  // ---- GAME-DAY CLOCK effects (App level) ----
+  // Tick: while running, count the clock down and add a second of time-on-ground
+  // to every player currently in a FIELD position. Runs regardless of the active
+  // tab, so the clock keeps going if the coach flips to BOARD/LINEUP mid-game.
+  useEffect(() => {
+    if (!gdTimerRunning) return;
+    const id = setInterval(() => {
+      setGdTimerSec(prev => { const n = prev - 1; if (n <= 0) { setGdTimerRunning(false); return 0; } return n; });
+      setGdTog(prev => {
+        const next = {...prev};
+        FIELD_POSITIONS.forEach(pos => { const pid = gdLineupRef.current[pos.id]; if (pid) next[pid] = (next[pid]||0)+1; });
+        return next;
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [gdTimerRunning]);
+
+  // When the current game changes (new game / profile switch), reset the clock
+  // and re-seed time-on-ground from that game's saved value (so a reload mid-game
+  // continues rather than starting from zero).
+  useEffect(() => {
+    const g = games.find(x=>x.id===currentGameId);
+    setGdTog(g && g.timeOnGround ? {...g.timeOnGround} : {});
+    setGdTimerSec(GD_QUARTER_LEN_S);
+    setGdTimerRunning(false);
+    setGdQuarter(0);
+  }, [currentGameId]);
+
+  // Fold time-on-ground into the current game so it persists to the stats sheets.
+  // Throttled to ~8s while running; always writes on pause (deps include the
+  // running flag) so the end-of-quarter/end-of-game numbers are fresh.
+  useEffect(() => {
+    if (!currentGameId) return;
+    let now = 0; try { now = Date.now(); } catch(_) { now = gdLastPersist.current + 9000; }
+    if (!gdTimerRunning || now - gdLastPersist.current > 8000) {
+      gdLastPersist.current = now;
+      setGames(prev => prev.map(g => g.id===currentGameId ? {...g, timeOnGround: {...gdTogRef.current}} : g));
+    }
+  }, [gdTog, gdTimerRunning, currentGameId]);
 
   // Create a brand-new team from the main menu. Takes name + colour.
   // Triggers the tutorial for this new profile and switches to it.
@@ -4498,7 +4635,7 @@ function App() {
       <main style="flex:1;overflow:hidden;display:flex;flex-direction:column">
         ${tab==="whiteboard"?html`<${Whiteboard} wbFull=${wbFull} setWbFull=${setWbFull} wbHalf=${wbHalf} setWbHalf=${setWbHalf} wbBlank=${wbBlank} setWbBlank=${setWbBlank} wbLineup=${wbLineup} setWbLineup=${setWbLineup} plays=${plays} setPlays=${setPlays} roster=${roster} lineup=${lineup}/>`
           :tab==="lineup"?html`<${Lineup} roster=${roster} setRoster=${setRoster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId}/>`
-          :tab==="gameday"?html`<${GameDay} roster=${roster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} customStats=${customStats}/>`
+          :tab==="gameday"?html`<${GameDay} roster=${roster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} customStats=${customStats} QUARTER_LEN_S=${GD_QUARTER_LEN_S} timerSec=${gdTimerSec} setTimerSec=${setGdTimerSec} timerRunning=${gdTimerRunning} setTimerRunning=${setGdTimerRunning} quarter=${gdQuarter} setQuarter=${setGdQuarter} tog=${gdTog}/>`
           :html`<${Stats} roster=${roster} games=${games} setGames=${setGames} customStats=${customStats} setCustomStats=${setCustomStats} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} setTeamName=${setTeamName}/>`}
       </main>
       ${profileMenu}
