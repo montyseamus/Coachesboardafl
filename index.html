@@ -1756,9 +1756,10 @@ function PlayerStatsTable({cg, roster, allStats, customStats, quarter, applyUpda
 }
 
 function Stats({roster, games, setGames, customStats, setCustomStats, currentGameId, setCurrentGameId, teamName, setTeamName,
-               QUARTER_LEN_S, timerSec, setTimerSec, timerRunning, setTimerRunning}) {
+               QUARTER_LEN_S, timerSec, setTimerSec, timerRunning, setTimerRunning, quarter, setQuarter}) {
   const [view, setView] = useState("track");
-  const [quarter, setQuarter] = useState(0);
+  // `quarter`/`setQuarter` are the SAME app-level quarter as GAME DAY (linked),
+  // so the selected quarter follows you between the two screens.
   const [scope, setScope] = useState("team");
   const [selPlayer, setSelPlayer] = useState(null);
   const [showNewStat, setShowNewStat] = useState(false);
@@ -4623,7 +4624,7 @@ function App() {
         ${tab==="whiteboard"?html`<${Whiteboard} wbFull=${wbFull} setWbFull=${setWbFull} wbHalf=${wbHalf} setWbHalf=${setWbHalf} wbBlank=${wbBlank} setWbBlank=${setWbBlank} wbLineup=${wbLineup} setWbLineup=${setWbLineup} plays=${plays} setPlays=${setPlays} roster=${roster} lineup=${lineup}/>`
           :tab==="lineup"?html`<${Lineup} roster=${roster} setRoster=${setRoster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId}/>`
           :tab==="gameday"?html`<${GameDay} roster=${roster} lineup=${lineup} setLineup=${setLineup} games=${games} setGames=${setGames} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} customStats=${customStats} QUARTER_LEN_S=${GD_QUARTER_LEN_S} timerSec=${gdTimerSec} setTimerSec=${setGdTimerSec} timerRunning=${gdTimerRunning} setTimerRunning=${setGdTimerRunning} quarter=${gdQuarter} setQuarter=${setGdQuarter} tog=${gdTog}/>`
-          :html`<${Stats} roster=${roster} games=${games} setGames=${setGames} customStats=${customStats} setCustomStats=${setCustomStats} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} setTeamName=${setTeamName} QUARTER_LEN_S=${GD_QUARTER_LEN_S} timerSec=${gdTimerSec} setTimerSec=${setGdTimerSec} timerRunning=${gdTimerRunning} setTimerRunning=${setGdTimerRunning}/>`}
+          :html`<${Stats} roster=${roster} games=${games} setGames=${setGames} customStats=${customStats} setCustomStats=${setCustomStats} currentGameId=${currentGameId} setCurrentGameId=${setCurrentGameId} teamName=${teamName} setTeamName=${setTeamName} QUARTER_LEN_S=${GD_QUARTER_LEN_S} timerSec=${gdTimerSec} setTimerSec=${setGdTimerSec} timerRunning=${gdTimerRunning} setTimerRunning=${setGdTimerRunning} quarter=${gdQuarter} setQuarter=${setGdQuarter}/>`}
       </main>
       ${profileMenu}
       ${profileModal}
