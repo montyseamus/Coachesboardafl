@@ -3791,7 +3791,40 @@ function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, set
   };
 
   // ---- BENCH ----
-  const benchRow = html`
+  // One tile renderer used in BOTH layouts. `extraStyle` sizes it: on a wide
+  // iPad the tiles stack in the black space either side of the ground (§ layout
+  // below); on a narrow phone they sit in a row under the field.
+  const benchButton = (b, extraStyle) => {
+    const player=playerInSlot(b);
+    const sel=player && selPid===player.id;
+    const over=dropSlot===b;
+    const secs=player?(tog[player.id]||0):0;
+    const offs=player?(offCounts[player.id]||0):0;
+    return html`
+      <button key=${b} data-slot=${b}
+        onClick=${()=>handleSlotTap(b)}
+        onpointerdown=${onSlotPointerDown(b)}
+        onpointermove=${onSlotPointerMove}
+        onpointerup=${onSlotPointerUp}
+        style=${{position:"relative",borderRadius:"7px",padding:"3px 4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"1px",fontWeight:"700",background:over?"#166534":player?"#1d4ed8":"#292524",color:player?"#fff":"#a8a29e",border:sel?"2px solid #facc15":over?"2px solid #4ade80":"2px solid transparent",cursor:"pointer",lineHeight:"1.1",touchAction:"none",...extraStyle}}>
+        <div style="font-size:8px;opacity:.7;line-height:1">${b}</div>
+        ${player ? html`
+          <div style="font-size:13px;font-weight:900;line-height:1">#${player.number||"•"}</div>
+          <div style="font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:#fde047;line-height:1.1">${player.name.length>10?player.name.slice(0,9)+"…":player.name}</div>
+          <div style="font-size:10px;font-weight:800;color:#93c5fd;font-family:ui-monospace,monospace;line-height:1">${fmt(secs)}</div>
+          ${offs>0 ? html`<div style="position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;background:#dc2626;color:#fff;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;border:1px solid #1c1917">${offs}</div>` : null}
+        ` : html`<div style="font-size:8px;opacity:.5;line-height:1">empty</div>`}
+      </button>`;
+  };
+
+  // A vertical column of bench tiles (used in the side spaces on wide screens).
+  const benchColumn = (slots) => html`
+    <div style="width:128px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:4px 6px">
+      ${slots.map(b=>benchButton(b,{width:"100%",height:"80px"}))}
+    </div>`;
+
+  // Bottom bench row (narrow phones only — no room in the side margins).
+  const bottomBench = html`
     <div style="padding:0 12px 12px;display:flex;justify-content:center">
       <div style="background:#1c1917;border-radius:12px;padding:10px;border:1px solid #292524;width:100%;max-width:560px">
         <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:#a8a29e;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px">
@@ -3799,28 +3832,7 @@ function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, set
           <span style="font-size:9px;font-weight:600;letter-spacing:0;color:#57534e;text-transform:none">↳ drag a player on or off · red badge = bench trips</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:360px;margin:0 auto">
-          ${BENCH_SLOTS.map(b=>{
-            const player=playerInSlot(b);
-            const sel=player && selPid===player.id;
-            const over=dropSlot===b;
-            const secs=player?(tog[player.id]||0):0;
-            const offs=player?(offCounts[player.id]||0):0;
-            return html`
-              <button key=${b} data-slot=${b}
-                onClick=${()=>handleSlotTap(b)}
-                onpointerdown=${onSlotPointerDown(b)}
-                onpointermove=${onSlotPointerMove}
-                onpointerup=${onSlotPointerUp}
-                style=${{position:"relative",aspectRatio:"2/1",borderRadius:"6px",padding:"3px 4px",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"1px",fontSize:"10px",fontWeight:"700",background:over?"#166534":player?"#1d4ed8":"#292524",color:player?"#fff":"#a8a29e",border:sel?"2px solid #facc15":over?"2px solid #4ade80":"2px solid transparent",cursor:"pointer",lineHeight:"1.1",touchAction:"none"}}>
-                <div style="font-size:8px;opacity:.7;line-height:1">${b}</div>
-                ${player ? html`
-                  <div style="font-size:12px;font-weight:900;line-height:1">#${player.number||"•"}</div>
-                  <div style="font-size:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;color:#fde047;line-height:1">${player.name.slice(0,7)}</div>
-                  <div style="font-size:9px;font-weight:800;color:#93c5fd;font-family:ui-monospace,monospace;line-height:1">${fmt(secs)}</div>
-                  ${offs>0 ? html`<div style="position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;background:#dc2626;color:#fff;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;border:1px solid #1c1917">${offs}</div>` : null}
-                ` : html`<div style="font-size:8px;opacity:.5;line-height:1">empty</div>`}
-              </button>`;
-          })}
+          ${BENCH_SLOTS.map(b=>benchButton(b,{aspectRatio:"2/1"}))}
         </div>
       </div>
     </div>`;
@@ -3923,21 +3935,45 @@ function GameDay({roster, lineup, setLineup, games, setGames, currentGameId, set
       <div style="font-size:9px;color:#fde047;font-weight:700">${(ghost.name||"").slice(0,9)}</div>
     </div>`;
 
+  // On a wide screen (iPad) put three bench tiles in the black space on each
+  // side of the ground, and size the field to fit the available height so
+  // nothing needs scrolling. On a narrow phone there's no side room, so keep
+  // the field full-width with the bench in a row underneath. Re-evaluated every
+  // render (the 1s clock tick keeps it fresh after an orientation change).
+  const sideBench = (() => { try { return typeof window !== "undefined" && window.innerWidth >= 720; } catch(_) { return true; } })();
+
+  const fieldSvg = html`
+    <${AFLField}>
+      ${FIELD_POSITIONS.map(renderToken)}
+    </${AFLField}>`;
+
+  const wideLayout = html`
+    <div style="flex:1;min-height:0;display:flex;align-items:stretch;overflow:hidden">
+      ${benchColumn(["B1","B2","B3"])}
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;min-height:0">
+        <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:4px;flex-shrink:0">⬆ DEFENDING END</div>
+        <div style="flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center">
+          <div style="height:100%;max-width:100%;aspect-ratio:100/130">${fieldSvg}</div>
+        </div>
+        <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:4px;flex-shrink:0">⬇ ATTACKING END</div>
+      </div>
+      ${benchColumn(["B4","B5","B6"])}
+    </div>`;
+
+  const narrowLayout = html`
+    <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;min-height:0">
+      <div style="padding:8px 12px 0;display:flex;flex-direction:column;align-items:center">
+        <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:4px">⬆ DEFENDING END</div>
+        <div style="width:100%;max-width:560px;aspect-ratio:100/130">${fieldSvg}</div>
+        <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:4px;margin-bottom:8px">⬇ ATTACKING END</div>
+      </div>
+      ${bottomBench}
+    </div>`;
+
   return html`
     <div style="display:flex;flex-direction:column;flex:1;overflow:hidden;background:#0c0a09">
       ${scoreboard}
-      <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;min-height:0">
-        <div style="padding:8px 12px 0;display:flex;flex-direction:column;align-items:center">
-          <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#60a5fa;margin-bottom:4px">⬆ DEFENDING END</div>
-          <div style="width:100%;max-width:560px;aspect-ratio:100/130">
-            <${AFLField}>
-              ${FIELD_POSITIONS.map(renderToken)}
-            </${AFLField}>
-          </div>
-          <div style="font-size:10px;font-weight:900;letter-spacing:.3em;color:#ef4444;margin-top:4px;margin-bottom:8px">⬇ ATTACKING END</div>
-        </div>
-        ${benchRow}
-      </div>
+      ${sideBench ? wideLayout : narrowLayout}
       ${statBar}
       ${heatmapModal}
       ${ghostEl}
